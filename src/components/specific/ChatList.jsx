@@ -41,7 +41,7 @@ const ChatList = ({
               index={index}
               handleDeleteChat={handleDeleteChat}
               newMessage={newMessage}
-              onClick={onClickHandler} // Notify parent
+              onClick={onClickHandler}
             />
           </div>
         );

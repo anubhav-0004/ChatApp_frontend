@@ -47,7 +47,7 @@ const AppLayout = (WrappedComponent) => {
       <>
         <Tittle />
         <Header />
-        <div className="w-auto h-[calc(100vh-4rem)] max-lg:h-[calc(100vh-3rem)] relative grid grid-cols-1 md:grid-cols-[40%_60%] lg:grid-cols-[30%_40%_30%]">
+        <div className="w-auto h-[calc(100vh-4rem)] relative grid grid-cols-1 md:grid-cols-[40%_60%] lg:grid-cols-[30%_40%_30%]">
           {isMobile ? (
             showChatList ? (
               <div className="w-full h-full border-r-2 border-slate-500 overflow-y-auto bg-[#3d3d5c] flex flex-col">
@@ -57,7 +57,7 @@ const AppLayout = (WrappedComponent) => {
                   newMessageAlert={[{ chatId, count: 4 }]}
                   onlineUsers={["1", "2"]}
                   handleDeleteChat={handleDeleteChat}
-                  onChatSelect={handleChatSelect} // Pass handleChatSelect
+                  onChatSelect={handleChatSelect}
                 />
               </div>
             ) : (
@@ -67,7 +67,7 @@ const AppLayout = (WrappedComponent) => {
                     setShowChatList(true);
                     navigate(-1);
                   }}
-                  className="absolute -top-[2.5rem] border border-[#4c4c7d] right-1 z-50 px-2 py-1 bg-[#383857] text-slate-300 rounded"
+                  className="absolute -top-[2.9rem] right-[1rem] scale-125  border border-[#4c4c7d] z-50 px-2 py-1 bg-[#383857] text-slate-300 rounded"
                 >
                   Back
                 </button>
@@ -83,7 +83,7 @@ const AppLayout = (WrappedComponent) => {
                   newMessageAlert={[{ chatId, count: 4 }]}
                   onlineUsers={["1", "2"]}
                   handleDeleteChat={handleDeleteChat}
-                  onChatSelect={handleChatSelect} // Pass handleChatSelect
+                  onChatSelect={handleChatSelect} 
                 />
               </div>
               <div className="w-full bg-slate-200 overflow-y-auto">
