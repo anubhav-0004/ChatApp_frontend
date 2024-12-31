@@ -51,7 +51,7 @@ const Header = () => {
           alt="Logo"
           className="rounded-[50%] max-w-12 max-lg:max-w-10 max-md:max-w-9"
         />
-        <span className="text-2xl pt-[0.2rem] font-semibold bg-gradient-to-r from-[#ff9c3f] via-white to-[#27f527] bg-clip-text text-transparent animate-bounce">Sandesh</span>
+        <span className="text-2xl pt-[0.2rem] font-semibold bg-gradient-to-r from-[#ff9c3f] via-white to-[#27f527] bg-clip-text text-transparent max-md:animate-bounce">Sandesh</span>
         <div className=" flex-grow"></div>
         <div className="flex lg:gap-x-5 lg:pr-2 gap-x-1 max-md:hidden">
           <IoSearch
