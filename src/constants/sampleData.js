@@ -304,3 +304,106 @@ export const sampleNotifications = [
     _id: "6",
   },
 ]
+
+
+
+
+
+export const sampleMesssages = [
+  {
+    attachments: [
+      {
+        public_id: "abcd",
+        url: "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg", // React logo in SVG format
+      },
+    ],
+    content: "Hello, how are you?",
+    _id: "asdfgfdshg",
+    sender: {
+      _id: "user._id",
+      name: "Chaman",
+    },
+    chat: "chatId",
+    createdAt: "2024-12-30T10:00:00.000Z",
+  },
+  {
+    attachments: [
+      {
+        public_id: "image1234",
+        url: "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4", 
+      },
+    ],
+    content: "Good morning! Hope you have a great day!",
+    _id: "msg1",
+    sender: {
+      _id: "sender1",
+      name: "Rohan",
+    },
+    chat: "chatId1",
+    createdAt: "2024-12-30T12:15:00.000Z",
+  },
+  {
+    attachments: [
+      {
+        public_id: "meme123",
+        url: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf", // A funny meme
+      },
+    ],
+    content: "This made my day 😂",
+    _id: "msg3",
+    sender: {
+      _id: "sender3",
+      name: "Rahul",
+    },
+    chat: "chatId3",
+    createdAt: "2024-12-30T14:45:00.000Z",
+  },
+  {
+    attachments: [
+      {
+        public_id: "file123",
+        url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", // A sample PDF file
+      },
+    ],
+    content: "Please review this report and share your feedback.",
+    _id: "msg5",
+    sender: {
+      _id: "20072003",
+      name: "Vikram",
+    },
+    chat: "chatId5",
+    createdAt: "2024-12-30T16:10:00.000Z",
+  },
+  {
+    attachments: [
+      {
+        public_id: "photo123",
+        url: "https://upload.wikimedia.org/wikipedia/en/thumb/4/49/Avensis2_modelcar.jpg/180px-Avensis2_modelcar.jpg", // A photo of Golden Gate Bridge
+      },
+    ],
+    content: "Look at this beautiful view I captured!",
+    _id: "msg7",
+    sender: {
+      _id: "20072003",
+      name: "Amit",
+    },
+    chat: "chatId7",
+    createdAt: "2024-12-30T18:45:00.000Z",
+  },
+  {
+    attachments: [
+      {
+        public_id: "link123",
+        url: "https://www.hloom.com/downloads/sample-resume.docx", // Rick Astley's "Never Gonna Give You Up" video on YouTube
+      },
+    ],
+    content: "Check out this amazing video!",
+    _id: "msg9",
+    sender: {
+      _id: "20072003",
+      name: "Anjali",
+    },
+    chat: "chatId9",
+    createdAt: "2024-12-30T20:10:00.000Z",
+  },
+];
