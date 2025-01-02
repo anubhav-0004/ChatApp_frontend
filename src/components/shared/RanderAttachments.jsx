@@ -2,7 +2,7 @@ import React from "react";
 
 const RanderAttachments = (fileName, url) => {
   const cleanUrl = (url = "") => {
-    return url.replace(/^"(.+)"$/, "$1"); // Removes surrounding quotes if present
+    return url.replace(/^"(.+)"$/, "$1");
   };
 
   const handleClick = (e) => {
@@ -11,6 +11,7 @@ const RanderAttachments = (fileName, url) => {
   };
 
   const processedUrl = cleanUrl(url);
+
   switch (fileName) {
     case "image":
       return (
@@ -34,7 +35,7 @@ const RanderAttachments = (fileName, url) => {
         />
       );
     case "audio":
-      return <audio src={processedUrl} controls preload="none" />;
+      return <audio src={processedUrl} controls preload="none" className="max-w-[90%] mx-auto"/>;
     case "pdf":
       return (
         <a href={processedUrl} target="_blank" rel="noopener noreferrer" className="text-blue-900 bg-[white] p-1 rounded-md bg-opacity-50">

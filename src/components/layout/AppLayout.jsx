@@ -30,11 +30,17 @@ const AppLayout = (WrappedComponent) => {
       return () => window.removeEventListener("resize", handleResize);
     }, [showChatList]);
 
+    useEffect(() => {
+      if (chatId) {
+        setShowChatList(false);
+      }
+    }, [chatId]);
+
     const handleChatSelect = (selectedChatId) => {
-      navigate(`/chat/${selectedChatId}`); // Update URL
-      setChatId(selectedChatId); // Update state immediately
+      navigate(`/chat/${selectedChatId}`);
+      setChatId(selectedChatId);
       if (isMobile) {
-        setShowChatList(false); // Close chat list on mobile
+        setShowChatList(false);
       }
     };
 
@@ -65,13 +71,14 @@ const AppLayout = (WrappedComponent) => {
                 <button
                   onClick={() => {
                     setShowChatList(true);
-                    navigate(-1);
+                    navigate(`/chat`);
+                    setChatId(null);
                   }}
                   className="absolute -top-[2.9rem] right-[1rem] scale-125  border border-[#4c4c7d] z-50 px-2 py-1 bg-[#383857] text-slate-300 rounded"
                 >
                   Back
                 </button>
-                <WrappedComponent chatId={chatId} {...props} /> 
+                <WrappedComponent chatId={chatId} {...props} />
               </div>
             )
           ) : (
@@ -83,11 +90,11 @@ const AppLayout = (WrappedComponent) => {
                   newMessageAlert={[{ chatId, count: 4 }]}
                   onlineUsers={["1", "2"]}
                   handleDeleteChat={handleDeleteChat}
-                  onChatSelect={handleChatSelect} 
+                  onChatSelect={handleChatSelect}
                 />
               </div>
               <div className="w-full bg-slate-200 overflow-y-auto">
-                <WrappedComponent chatId={chatId} {...props} /> 
+                <WrappedComponent chatId={chatId} {...props} />
               </div>
               <div className="w-full max-lg:hidden border-l-2 border-slate-500 bg-[#3d3d5c] text-[#dfd3ad] p-2">
                 <ProfileCard />

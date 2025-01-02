@@ -394,7 +394,7 @@ export const sampleMesssages = [
     attachments: [
       {
         public_id: "link123",
-        url: "https://www.hloom.com/downloads/sample-resume.docx", // Rick Astley's "Never Gonna Give You Up" video on YouTube
+        url: "https://www.hloom.com/downloads/sample-resume.docx", 
       },
     ],
     content: "Check out this amazing video!",

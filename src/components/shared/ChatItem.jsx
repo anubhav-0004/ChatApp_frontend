@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-import ChatList from "../specific/ChatList";
 import { Link } from "react-router-dom";
 
 const ChatItem = ({
@@ -12,14 +11,14 @@ const ChatItem = ({
   newMessage,
   index = 0,
   handleDeleteChat,
-  onClick, // New prop
+  onClick,
 }) => {
   const sameSender = chatId === String(_id)
   return (
     <Link
       to={`/chat/${_id}`}
       onContextMenu={(e) => handleDeleteChat(e, _id, groupChat)}
-      onClick={onClick} // Notify parent
+      onClick={onClick} 
     >
       <div
         className="flex items-center gap-4 p-4 relative border-b border-zinc-400 rounded-r-sm"

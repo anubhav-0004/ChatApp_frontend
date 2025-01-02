@@ -13,7 +13,7 @@ const ChatList = ({
     },
   ],
   handleDeleteChat,
-  onChatSelect = () => {},
+  onChatSelect ,
 }) => {
   const onClickHandler = (e) => {
     e.stopPropagation();

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useState, useEffect } from "react";
 import AppLayout from "../components/layout/AppLayout";
 import { IoMdAttach } from "react-icons/io";
 import { IoSendSharp } from "react-icons/io5";
@@ -12,8 +12,21 @@ const Chat = () => {
     _id: "20072003",
     name: "Anubhav Mishra",
   };
+
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    const handleResize = () => setViewportHeight(window.innerHeight);
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <div className="w-full h-full max-sm:h-[99%] flex flex-col">
+    <div
+      className="w-full h flex flex-col"
+      style={{ height: viewportHeight - 64 }}
+    >
       <div
         className="text-[#dfd3ad] w-full h-[92%] text-xl opacity-95 p-2 overflow-y-auto flex flex-col"
         style={{
@@ -51,46 +64,5 @@ const Chat = () => {
   );
 };
 
-const Chatss = () => (
-  <div>
-    <p className="m-1 bg-[#2a2a2f] max-w-[75%] w-fit rounded-md text-[#bc9898] py-1 px-2  leading-6">
-      1 asdfg sdfg asdfs sdfs srrfcf mkjhu dsfg sdfg gfvdcth hyrtgdftyr
-    </p>
-    <p className="m-1 bg-[#2a2a2f] max-w-[75%] w-fit rounded-md text-[#bc9898] py-1 px-2 leading-6">
-      2 asdfg sdfg asdfs sdfs srrfcf mkjhu trgfde egdd d
-    </p>
-    <p className="m-1 bg-[#2a2a2f] max-w-[75%] w-fit rounded-md text-[#bc9898] py-1 px-2 leading-6">
-      3 asdfg sdfg asdfs sdfs srrfcf mkjhu ae trge rgrg k rgvsef{" "}
-    </p>
-    <p className="m-1 bg-[#2a2a2f] max-w-[75%] w-fit rounded-md text-[#bc9898] py-1 px-2 leading-6">
-      4 asdfg sdfg asdfs sdfs srrfcf mkjhu helloo hello helloooo helloooo
-    </p>
-    <p className="m-1 bg-[#2a2a2f] max-w-[75%] w-fit rounded-md text-[#bc9898] py-1 px-2 leading-6">
-      5 asdfg sdfg asdfs sdfs srrfcf mkjhu df df hgtfd
-    </p>
-    <p className="m-1 bg-[#2a2a2f] max-w-[75%] w-fit rounded-md text-[#bc9898] py-1 px-2 leading-6">
-      6 asdfg sdfg asdfs sdfs srrfcf mkjhu ert uy dftr wrtf sr5trwrt 455 edred
-      dsrtrgfd
-    </p>
-    <p className="m-1 bg-[#2a2a2f] max-w-[75%] w-fit rounded-md text-[#bc9898] py-1 px-2 leading-6">
-      1 asdfg sdfg asdfs sdfs srrfcf mkjhu ert rtfe y dgyt yhdfhr rw 23 edr
-    </p>
-    <p className="m-1 bg-[#2a2a2f] max-w-[75%] w-fit rounded-md text-[#bc9898] py-1 px-2 leading-6">
-      2 asdfg sdfg asdfs sdfs srrfcf mkjhu werty etyhrte tuyrtdgtyr trtry teyr
-    </p>
-    <p className="m-1 bg-[#2a2a2f] max-w-[75%] w-fit rounded-md text-[#bc9898] py-1 px-2 leading-6">
-      3 asdfg sdfg asdfs sdfs srrfcf mkjhu rtytwretgtjtk ghh hyeg hyrge r
-    </p>
-    <p className="m-1 bg-[#2a2a2f] max-w-[75%] w-fit rounded-md text-[#bc9898] py-1 px-2 leading-6">
-      4 asdfg sdfg asdfs sdfs srrfcf mkjhudergf frte srtes e453r756r6 dt5
-    </p>
-    <p className="m-1 bg-[#2a2a2f] max-w-[75%] w-fit rounded-md text-[#bc9898] py-1 px-2 leading-6">
-      5 asdfg sdfg asdfs sdfs srrfcf mkjhus s sqre sfertwef tew
-    </p>
-    <p className="m-1 bg-[#2a2a2f] max-w-[75%] w-fit rounded-md text-[#bc9898] py-1 px-2 leading-6">
-      6 asdfg sdfg asdfs sdfs srrfcf mkjhu wert der 962 fggb 54tb tt
-    </p>
-  </div>
-);
 
 export default AppLayout(Chat);
