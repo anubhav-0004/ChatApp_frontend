@@ -53,7 +53,7 @@ const AppLayout = (WrappedComponent) => {
       <>
         <Tittle />
         <Header />
-        <div className="w-auto h-[calc(100vh-4rem)] relative grid grid-cols-1 md:grid-cols-[40%_60%] lg:grid-cols-[30%_40%_30%]">
+        <div className="w-auto h-[calc(100vh-4rem)] relative grid grid-cols-1 md:grid-cols-[40%_60%] lg:grid-cols-[30%_40%_30%] overflow-hidden">
           {isMobile ? (
             showChatList ? (
               <div className="w-full h-full border-r-2 border-slate-500 overflow-y-auto bg-[#3d3d5c] flex flex-col">
