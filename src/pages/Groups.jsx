@@ -41,7 +41,7 @@ const Groups = () => {
         <GroupList myGroups={sampleChats} chatId={chatId} />
       </div>
 
-      <div className="overflow-y-auto bg-[#7772aa] w-full h-full">
+      <div className="overflow-y-hidden bg-[#7772aa] w-full h-full">
         {chatId ? (
           <>
             <div className="flex h-[7.5%] items-center px-4 justify-between py-2 bg-[#2e1f7bcd] md:hidden">
@@ -57,7 +57,7 @@ const Groups = () => {
                 onClick={handleMobile}
               />
             </div>
-            <div className="px-2 py-1 w-full max-md:h-[85%] overflow-y-auto flex flex-col">
+            <div className="px-2 py-1 w-full max-md:h-[85%] h-[92.5%] overflow-y-auto flex flex-col">
               {sampleMesssages.map((message, index) => (
                 <MessageComponent key={index} message={message} user={user} />
               ))}
@@ -87,10 +87,11 @@ const Groups = () => {
             </form>
           </>
         ) : (
-          <div>
-            <div className="border bg-[#6158c2] overflow-y-auto relative w-full h-full">
+          <div className="flex items-center justify-center h-full">
+            <div className="border bg-[#6158c2] overflow-y-auto relative w-full h-full md:hidden">
               <GroupList myGroups={sampleChats} chatId={chatId} />
             </div>
+            <p className="w-fit mx-auto text-3xl py-1 px-4 rounded-lg border border-[#4e4d4d] text-[#7d3415] bg-[#ece3e341]">Click on a Group</p>
           </div>
         )}
       </div>
