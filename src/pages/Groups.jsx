@@ -7,6 +7,7 @@ import { sampleChats, sampleMesssages } from "../constants/sampleData";
 import MessageComponent from "../components/shared/MessageComponent";
 import { IoMdAttach } from "react-icons/io";
 import { LuSendHorizontal } from "react-icons/lu";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 const Groups = () => {
   const chatId = useSearchParams()[0].get("group");
@@ -16,7 +17,7 @@ const Groups = () => {
     setIsMobileMenuOpen((prev) => !prev);
   };
   const navigateBack = () => {
-    navigate("/");
+    navigate(-1);
   };
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
 
@@ -45,7 +46,7 @@ const Groups = () => {
         {chatId ? (
           <>
             <div className="flex h-[7.5%] items-center px-4 justify-between py-2 bg-[#2e1f7bcd] md:hidden">
-              <AiOutlineHome
+              <IoMdArrowRoundBack
                 className="bg-black rounded-[50%] text-[white] p-2 w-10 h-10 cursor-pointer"
                 onClick={navigateBack}
               />
@@ -118,25 +119,35 @@ const Groups = () => {
   );
 };
 
-const GroupList = ({ w = "100%", myGroups = [], chatId, handleMobile }) => (
-  <div className="w-[98%] mx-auto">
-    <p className="w-full rounded-lg flex justify-center items-center text-3xl font-medium text-zinc-300 h-[3.5rem] shadow-lg border-b-2 border-[#342b58d3] bg-[#3c2b7c]">
-      Groups
-    </p>
-    {myGroups.length > 0 ? (
-      myGroups.map((group) => (
-        <GroupListItem
-          group={group}
-          key={group._id}
-          chatId={chatId}
-          handleMobile={handleMobile}
+const GroupList = ({ w = "100%", myGroups = [], chatId, handleMobile }) => {
+  const navigate = useNavigate();
+  const navigateBack = () => {
+    navigate("/");
+  };
+  return (
+    <div className="w-[96%] mx-auto py-2 relative">
+      <div className="w-full rounded-lg flex justify-between px-7 items-center text-3xl font-medium text-zinc-300 h-[3.5rem] shadow-lg border-b-2 border-[#342b58d3] bg-[#3c2b7c]">
+        <span>Groups</span>
+        <AiOutlineHome
+          className="bg-[#361b6a74] rounded-[50%] text-[white] border p-2 w-10 h-10 cursor-pointer"
+          onClick={navigateBack}
         />
-      ))
-    ) : (
-      <div className=" text-center">No Groups</div>
-    )}
-  </div>
-);
+      </div>
+      {myGroups.length > 0 ? (
+        myGroups.map((group) => (
+          <GroupListItem
+            group={group}
+            key={group._id}
+            chatId={chatId}
+            handleMobile={handleMobile}
+          />
+        ))
+      ) : (
+        <div className=" text-center">No Groups</div>
+      )}
+    </div>
+  );
+};
 
 const GroupListItem = memo(({ group, chatId, handleMobile }) => {
   const { name, avatar, _id } = group;

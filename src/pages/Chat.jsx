@@ -24,10 +24,10 @@ const Chat = () => {
   return (
     <div
       className="w-full flex flex-col overflow-hidden"
-      style={{ height: viewportHeight - 64 }}
+      style={{ height: viewportHeight - 56 }}
     >
       <div
-        className="text-[#dfd3ad] w-full h-[92%] text-xl opacity-95 p-2 overflow-y-auto flex flex-col"
+        className="text-[#dfd3ad] w-full max-md:h-[92%] h-[91%] text-xl opacity-95 p-2 overflow-y-auto flex flex-col"
         style={{
           backgroundImage: `url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW0GqVqurY1V77t3jqPKUVYKRXa_HzZ4BBkw&s")`,
           backgroundRepeat: "no-repeat",
@@ -40,7 +40,7 @@ const Chat = () => {
           <MessageComponent key={index} message={message} user={user} />
         ))}
       </div>
-      <form className="flex items-center relative justify-between border border-[#86869d] gap-x-3 px-2 py-1 bg-[#2d2d56] h-[8%]">
+      <form className="flex items-center relative justify-between border border-[#86869d] gap-x-3 px-2 py-1 bg-[#2d2d56] max-md:h-[8%] h-[9%]">
         <input type="file" name="fileInput" id="fileInput" className="hidden"/>
         <label
           htmlFor="fileInput"

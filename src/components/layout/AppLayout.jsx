@@ -53,7 +53,21 @@ const AppLayout = (WrappedComponent) => {
       <>
         <Tittle />
         <Header />
-        <div className="w-auto h-[calc(100vh-4rem)] relative grid grid-cols-1 md:grid-cols-[40%_60%] lg:grid-cols-[30%_40%_30%] overflow-hidden">
+        {
+          isMobile && !showChatList && (
+            <button
+                  onClick={() => {
+                    setShowChatList(true);
+                    navigate(`/chat`);
+                    setChatId(null);
+                  }}
+                  className="absolute flex top-[0.7rem] right-[1rem] scale-125  border border-[#8282d1] z-50 px-2 py-1 bg-[#383857] text-slate-300 rounded"
+                >
+                  Back
+                </button>
+          )
+        }
+        <div className="w-auto h-[calc(100vh-4rem)] max-md:h-[calc(100vh-3.5rem)] relative grid grid-cols-1 md:grid-cols-[40%_60%] lg:grid-cols-[30%_40%_30%] overflow-hidden">
           {isMobile ? (
             showChatList ? (
               <div className="w-full h-full border-r-2 border-slate-500 overflow-y-auto bg-[#3d3d5c] flex flex-col">
@@ -67,17 +81,8 @@ const AppLayout = (WrappedComponent) => {
                 />
               </div>
             ) : (
-              <div className="w-full h-full bg-slate-200 flex overflow-x-hidden overflow-y-auto">
-                <button
-                  onClick={() => {
-                    setShowChatList(true);
-                    navigate(`/chat`);
-                    setChatId(null);
-                  }}
-                  className="absolute -top-[2.9rem] right-[1rem] scale-125  border border-[#4c4c7d] z-50 px-2 py-1 bg-[#383857] text-slate-300 rounded"
-                >
-                  Back
-                </button>
+              <div className="w-full relative h-full bg-slate-200 flex overflow-x-hidden overflow-y-auto">
+                
                 <WrappedComponent chatId={chatId} {...props} />
               </div>
             )

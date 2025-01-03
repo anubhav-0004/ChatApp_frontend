@@ -40,7 +40,7 @@ const Header = () => {
   return (
     <>
       <div
-        className="w-full sticky h-[4rem] bg-[rgb(142,121,73)] py-2 max-md:py-1 px-4 flex justify-start items-center gap-x-2 border-b-2 border-[#322b70]"
+        className="w-full brightness-110 sticky max-md:h-[3.5rem] h-[4rem] bg-[rgb(190,172,129)] py-2 max-md:py-1 px-4 flex justify-start items-center gap-x-2 border-b-2 border-[#322b70]"
         style={{
           backgroundImage:
             "linear-gradient(to right bottom, rgb(82 77 168), rgb(2 9 47 / 69%))",
@@ -51,7 +51,7 @@ const Header = () => {
           alt="Logo"
           className="rounded-[50%] max-w-12 max-lg:max-w-10 max-md:hidden max-md:max-w-9"
         />
-        <span className="text-2xl pt-[0.2rem] font-semibold max-md:pl-[0.1rem] max-md:pt-3 bg-gradient-to-r from-[#ff9c3f] via-white to-[#27f527] bg-clip-text text-transparent max-md:animate-pulse">Sandesh</span>
+        <span className="text-2xl pt-[0.2rem] font-semibold max-md:pl-[0.1rem] max-md:pt-[0.4rem] bg-gradient-to-r from-[#ff9c3f] via-white to-[#27f527] bg-clip-text text-transparent">Sandesh</span>
         <div className=" flex-grow"></div>
         <div className="flex lg:gap-x-5 lg:pr-2 gap-x-1 max-md:hidden">
           <IoSearch
@@ -82,7 +82,7 @@ const Header = () => {
       </div>
       {showOption && (
         <div
-          className="absolute inset-0 h-[100vh] flex items-start pt-[4rem] justify-end bg-black bg-opacity-50 z-50"
+          className="absolute inset-0 h-[100vh] flex items-start pt-[4rem] justify-end bg-black bg-opacity-50 z-40"
           role="dialog"
           aria-modal="true"
           aria-labelledby="search-dialog-title"
