@@ -91,7 +91,9 @@ const Groups = () => {
             <div className="border bg-[#6158c2] overflow-y-auto relative w-full h-full md:hidden">
               <GroupList myGroups={sampleChats} chatId={chatId} />
             </div>
-            <p className="w-fit mx-auto text-3xl py-1 px-4 rounded-lg border border-[#4e4d4d] text-[#7d3415] bg-[#ece3e341]">Click on a Group</p>
+            <p className="w-fit mx-auto text-3xl py-1 px-4 rounded-lg border border-[#4e4d4d] text-[#7d3415] bg-[#ece3e341] max-md:hidden">
+              Click on a Group
+            </p>
           </div>
         )}
       </div>
@@ -100,7 +102,11 @@ const Groups = () => {
           isMobileMenuOpen ? "-translate-x-[0.2rem]" : "-translate-x-[15.75rem]"
         }`}
       >
-        <GroupList myGroups={sampleChats} chatId={chatId} handleMobile={handleMobile}/>
+        <GroupList
+          myGroups={sampleChats}
+          chatId={chatId}
+          handleMobile={handleMobile}
+        />
       </div>
       {isMobileMenuOpen && (
         <div
@@ -119,7 +125,12 @@ const GroupList = ({ w = "100%", myGroups = [], chatId, handleMobile }) => (
     </p>
     {myGroups.length > 0 ? (
       myGroups.map((group) => (
-        <GroupListItem group={group} key={group._id} chatId={chatId} handleMobile={handleMobile}/>
+        <GroupListItem
+          group={group}
+          key={group._id}
+          chatId={chatId}
+          handleMobile={handleMobile}
+        />
       ))
     ) : (
       <div className=" text-center">No Groups</div>
