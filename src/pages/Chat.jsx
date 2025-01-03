@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AppLayout from "../components/layout/AppLayout";
 import { IoMdAttach } from "react-icons/io";
-import { IoSendSharp } from "react-icons/io5";
 import { LuSendHorizontal } from "react-icons/lu";
 import FileMenu from "../components/dialogs/FileMenu";
 import { sampleMesssages } from "../constants/sampleData";
@@ -24,7 +23,7 @@ const Chat = () => {
 
   return (
     <div
-      className="w-full h flex flex-col"
+      className="w-full flex flex-col"
       style={{ height: viewportHeight - 64 }}
     >
       <div
@@ -41,11 +40,11 @@ const Chat = () => {
           <MessageComponent key={index} message={message} user={user} />
         ))}
       </div>
-      <form className="flex items-center relative justify-between border border-[#6d6d75] gap-x-3 px-2 py-1 bg-[#646471] h-[8%]">
-        <input type="file" name="fileInput" id="fileInput" className="hidden" />
+      <form className="flex items-center relative justify-between border border-[#86869d] gap-x-3 px-2 py-1 bg-[#2d2d56] h-[8%]">
+        <input type="file" name="fileInput" id="fileInput" className="hidden"/>
         <label
           htmlFor="fileInput"
-          className="text-[#e9e0f9] text-2xl absolute cursor-pointer left-4 mb-1 bg-[#5c5c8a] rotate-[45deg] border border-slate-400 p-[.4rem] w-10 h-10 rounded-[50%]"
+          className="text-[#e9e0f9] text-2xl absolute cursor-pointer left-4 bg-[#5c5c8a] rotate-[45deg] border border-slate-400 p-[.4rem] w-10 h-10 rounded-[50%]"
         >
           <IoMdAttach />
         </label>
@@ -56,7 +55,7 @@ const Chat = () => {
         />
         <LuSendHorizontal
           type="submit"
-          className="text-2xl text-[#e9e0f9] cursor-pointer absolute right-4 bg-[#5c5c8a] border border-slate-400 p-[.4rem] w-10 h-10 rounded-[50%] -rotate-[35deg] mb-1"
+          className="text-2xl text-[#e9e0f9] cursor-pointer absolute right-4 bg-[#5c5c8a] border border-slate-400 p-[.4rem] w-10 h-10 rounded-[50%] -rotate-[35deg]"
         />
       </form>
       <FileMenu />

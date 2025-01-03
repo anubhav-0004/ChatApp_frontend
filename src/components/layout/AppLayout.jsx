@@ -67,7 +67,7 @@ const AppLayout = (WrappedComponent) => {
                 />
               </div>
             ) : (
-              <div className="w-full h-full bg-slate-200 flex overflow-y-auto">
+              <div className="w-full h-full bg-slate-200 flex overflow-x-hidden overflow-y-auto">
                 <button
                   onClick={() => {
                     setShowChatList(true);
@@ -93,7 +93,7 @@ const AppLayout = (WrappedComponent) => {
                   onChatSelect={handleChatSelect}
                 />
               </div>
-              <div className="w-full bg-slate-200 overflow-y-auto">
+              <div className="w-full bg-slate-200">
                 <WrappedComponent chatId={chatId} {...props} />
               </div>
               <div className="w-full max-lg:hidden border-l-2 border-slate-500 bg-[#3d3d5c] text-[#dfd3ad] p-2">

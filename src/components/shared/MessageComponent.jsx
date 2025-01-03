@@ -12,7 +12,7 @@ const MessageComponent = ({ message, user }) => {
       className="max-md:bg-[#514f4f] max-w-[90%] bg-[#7b7a7a] border border-zinc-400 rounded-md px-1 py-[0.1rem] my-1 w-fit"
       style={{ alignSelf: sameSender ? "flex-end" : "flex-start" }}
     >
-      {!sameSender && (
+      {sameSender ? (<p className="text-[#fdb6b6] text-sm font-semibold">You</p>) : (
         <p className="text-[#fdb6b6] text-sm font-semibold">{sender?.name}</p>
       )}
       {content && <div className=" text-base text-[#f9e193]">{content}</div>}

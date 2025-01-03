@@ -22,7 +22,7 @@ const Notificaions = ({ onClose }) => {
       aria-modal="true"
       aria-labelledby="search-dialog-title"
     >
-      <div className="bg-white rounded-lg shadow-lg max-w-xl w-full">
+      <div className="bg-white rounded-lg shadow-lg max-w-xl w-full min-h-[60%] max-h-[70%]">
         <div className="flex justify-between items-center border-b p-4">
           <h3
             id="search-dialog-title"
@@ -39,7 +39,7 @@ const Notificaions = ({ onClose }) => {
           </button>
         </div>
 
-        <div className="px-4 py-2 h-[35rem] overflow-y-auto">
+        <div className="px-4 py-2 overflow-y-auto max-h-[28rem] md:max-h-[20rem]">
         {sampleNotifications.length > 0 ? (
           sampleNotifications.map((i) => (
             <div>

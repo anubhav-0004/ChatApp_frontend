@@ -22,7 +22,7 @@ const Search = ({ onClose }) => {
       aria-modal="true"
       aria-labelledby="search-dialog-title"
     >
-      <div className="bg-white rounded-lg shadow-lg max-w-md max-md:max-w-[90%] w-full">
+      <div className="bg-white rounded-lg max-h-[80%] shadow-lg max-w-md max-md:max-w-[90%] w-full">
         <div className="flex justify-between items-center border-b p-4">
           <h3 id="search-dialog-title" className="text-lg font-semibold">
             Find People
@@ -44,7 +44,7 @@ const Search = ({ onClose }) => {
             placeholder="Search here..."
           />
         </div>
-        <div className="px-4 h-[30rem] overflow-y-auto">
+        <div className="px-4 h-[20rem] overflow-y-auto">
           {users.map((user) => (
             <UserItem
               user={user}
