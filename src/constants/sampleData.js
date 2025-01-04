@@ -3,7 +3,7 @@ export const sampleChats = [
     avatar: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
     ],
-    name: "John Doe 1",
+    name: "John Doe 1A",
     _id: "1",
     groupChat: false,
     isOnline: true,
@@ -11,12 +11,13 @@ export const sampleChats = [
       count: 5,
     },
     members: ["1", "2"],
+    bio: "Bio Here",
   },
   {
     avatar: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGN1LBQag8wQQIY-WWwyZ8SMr5c8WZgfF4UQ&s",
     ],
-    name: "John Doe 2",
+    name: "John Doe 2A",
     _id: "2",
     groupChat: false,
     isOnline: true,
@@ -24,12 +25,13 @@ export const sampleChats = [
       count: 4,
     },
     members: ["1", "2"],
+    bio: "Bio Here",
   },
   {
     avatar: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
     ],
-    name: "John Doe 3",
+    name: "John Doe 3A",
     _id: "3",
     groupChat: false,
     isOnline: true,
@@ -37,12 +39,13 @@ export const sampleChats = [
       count: 3,
     },
     members: ["1", "2"],
+    bio: "Bio Here",
   },
   {
     avatar: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
     ],
-    name: "Doe 4",
+    name: "Doe 4A",
     _id: "4",
     groupChat: false,
     isOnline: true,
@@ -50,11 +53,12 @@ export const sampleChats = [
       count: 1,
     },
     members: ["1", "2"],
+    bio: "Bio Here",
   },{
     avatar: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
     ],
-    name: "John Doe",
+    name: "John Doe A",
     _id: "5",
     groupChat: false,
     isOnline: true,
@@ -62,12 +66,13 @@ export const sampleChats = [
       count: 5,
     },
     members: ["1", "2"],
+    bio: "Bio Here",
   },
   {
     avatar: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGN1LBQag8wQQIY-WWwyZ8SMr5c8WZgfF4UQ&s",
     ],
-    name: "John Doe 2",
+    name: "John Doe 2A Example",
     _id: "6",
     groupChat: false,
     isOnline: true,
@@ -75,12 +80,13 @@ export const sampleChats = [
       count: 4,
     },
     members: ["1", "2"],
+    bio: "Bio Here",
   },
   {
     avatar: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
     ],
-    name: "John Doe 3",
+    name: "John Doe 3A",
     _id: "7",
     groupChat: false,
     isOnline: true,
@@ -88,12 +94,13 @@ export const sampleChats = [
       count: 3,
     },
     members: ["1", "2"],
+    bio: "Bio Here",
   },
   {
     avatar: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
     ],
-    name: "Doe 4",
+    name: "Doe 4A",
     _id: "8",
     groupChat: false,
     isOnline: true,
@@ -101,11 +108,12 @@ export const sampleChats = [
       count: 1,
     },
     members: ["1", "2"],
+    bio: "Bio Here",
   },{
     avatar: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
     ],
-    name: "John Doe",
+    name: "John Doe A",
     _id: "9",
     groupChat: false,
     isOnline: true,
@@ -113,12 +121,13 @@ export const sampleChats = [
       count: 5,
     },
     members: ["1", "2"],
+    bio: "Bio Here",
   },
   {
     avatar: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGN1LBQag8wQQIY-WWwyZ8SMr5c8WZgfF4UQ&s",
     ],
-    name: "John Doe 2",
+    name: "John Doe 2A",
     _id: "10",
     groupChat: false,
     isOnline: true,
@@ -126,12 +135,13 @@ export const sampleChats = [
       count: 4,
     },
     members: ["1", "2"],
+    bio: "Bio Here",
   },
   {
     avatar: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
     ],
-    name: "John Doe 3",
+    name: "John Doe 3A",
     _id: "11",
     groupChat: false,
     isOnline: true,
@@ -139,12 +149,13 @@ export const sampleChats = [
       count: 3,
     },
     members: ["1", "2"],
+    bio: "Bio Here",
   },
   {
     avatar: [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
     ],
-    name: "Doe 4",
+    name: "Doe 4A",
     _id: "12",
     groupChat: false,
     isOnline: true,
@@ -152,6 +163,7 @@ export const sampleChats = [
       count: 1,
     },
     members: ["1", "2"],
+    bio: "Bio Here",
   },
 ];
 

@@ -1,6 +1,5 @@
 import React, { Suspense, useState, lazy } from "react";
 import logo from "../../assets/logo2.png";
-import { TbMenu2 } from "react-icons/tb";
 import { IoSearch } from "react-icons/io5";
 import { MdGroups2 } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -75,6 +74,10 @@ const Header = () => {
             onClick={logOutHandler}
           />
         </div>
+        <MdGroups2
+            className="text-2xl text-orange-50 cursor-pointer shadow-md mr-2 rounded-[40%]"
+            onClick={navigateToGrp}
+          />
         <BsThreeDotsVertical
           className="md:hidden scale-125 max-md:scale-150 p-[1px] text-zinc-200 cursor-pointer"
           onClick={handleMobile}
