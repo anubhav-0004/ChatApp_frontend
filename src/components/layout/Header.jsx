@@ -50,7 +50,9 @@ const Header = () => {
           alt="Logo"
           className="rounded-[50%] max-w-12 max-lg:max-w-10 max-md:hidden max-md:max-w-9"
         />
-        <span className="text-2xl pt-[0.2rem] font-semibold max-md:pl-[0.1rem] max-md:pt-[0.4rem] bg-gradient-to-r from-[#ff9c3f] via-white to-[#27f527] bg-clip-text text-transparent">Sandesh</span>
+        <span className="text-2xl pt-[0.2rem] font-semibold max-md:pl-[0.1rem] max-md:pt-[0.4rem] bg-gradient-to-r from-[#ff9c3f] via-white to-[#27f527] bg-clip-text text-transparent">
+          Sandesh
+        </span>
         <div className=" flex-grow"></div>
         <div className="flex lg:gap-x-5 lg:pr-2 gap-x-1 max-md:hidden">
           <IoSearch
@@ -75,9 +77,9 @@ const Header = () => {
           />
         </div>
         <MdGroups2
-            className="text-2xl text-orange-50 cursor-pointer shadow-md mr-2 rounded-[40%]"
-            onClick={navigateToGrp}
-          />
+          className="text-2xl text-orange-50 md:hidden cursor-pointer shadow-md mr-2 rounded-[40%]"
+          onClick={navigateToGrp}
+        />
         <BsThreeDotsVertical
           className="md:hidden scale-125 max-md:scale-150 p-[1px] text-zinc-200 cursor-pointer"
           onClick={handleMobile}
@@ -96,13 +98,20 @@ const Header = () => {
           }}
         >
           <div className="bg-[#39395a] border border-[#52529f] rounded-lg shadow-lg mr-2 max-w-md max-md:max-w-[35%] w-full">
-              <div className="flex flex-col gap-y-3 px-4 py-4">
-                  <p className=" text-slate-300" onClick={openSearch}>Search</p>
-                  <p className="text-slate-300" onClick={openNewGroup}>New Group</p>
-                  <p className="text-slate-300" onClick={navigateToGrp}>Groups</p>
-                  <p className="text-slate-300" onClick={openNotification}>Notifications</p>
-                  <p className="text-slate-300" onClick={logOutHandler}>Log Out</p>
-              </div>
+            <div className="flex flex-col gap-y-3 px-4 py-4">
+              <p className=" text-slate-300" onClick={openSearch}>
+                Search
+              </p>
+              <p className="text-slate-300" onClick={openNewGroup}>
+                New Group
+              </p>
+              <p className="text-slate-300" onClick={openNotification}>
+                Notifications
+              </p>
+              <p className="text-slate-300" onClick={logOutHandler}>
+                Log Out
+              </p>
+            </div>
           </div>
         </div>
       )}
