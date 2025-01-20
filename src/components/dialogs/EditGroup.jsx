@@ -32,6 +32,16 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
     setShowDeletePopup(false);
   };
 
+  const [grpName, setGrpName] = useState(groupName?.name);
+  const [grpBio, setGrpBio] = useState(groupName?.bio);
+  const [editName, setEditName] = useState(false);
+  const toggleEditName = () => setEditName((prev) => !prev);
+  const saveHandler = () => {
+    console.log("Group Name:", grpName);
+    console.log("Group Bio:", grpBio);
+    toggleEditName();
+  };
+
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50"
@@ -62,14 +72,58 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
               className="absolute top-3 w-8 h-8 border border-red-400 rounded p-1 right-6 text-red-500 bg-red-100 hover:bg-red-200 cursor-pointer"
               onClick={() => setShowDeletePopup(true)}
             />
-            <h1 className="text-xl font-semibold text-gray-800">
-              {groupName?.name}
-            </h1>
+            <h1 className="text-xl font-semibold text-gray-800">{grpName}</h1>
             <p className="text-sm text-gray-600 flex items-center space-x-1">
               <span>Group</span> •{" "}
               <span>{groupName?.members?.length} Members</span>
             </p>
-            <p className="text-center text-gray-500">{groupName?.bio}</p>
+            <p className="text-center text-gray-500">{grpBio}</p>
+            {!editName ? <button
+              className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-800 transition"
+              onClick={toggleEditName}
+            >
+              Change Group Details
+            </button> : <button
+              className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-800 transition"
+              onClick={saveHandler}
+            >
+              Save Changes
+            </button>
+            }
+            {editName && (
+              <div className="m-4 gap-y-3 flex flex-col relative">
+                <label
+                  htmlFor="grpName"
+                  className="absolute left-4 top-0 transform rounded-lg bg-gradient-to-b from-gray-100 to-white px-1 -translate-y-1/2 text-sm text-gray-500 transition-all duration-200 ease-in-out"
+                >
+                  Group Name
+                </label>
+                <input
+                  type="text"
+                  name="grpName"
+                  id="grpName"
+                  className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg text-base text-gray-700 placeholder-transparent focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-200"
+                  placeholder="Group Name"
+                  value={grpName}
+                  onChange={(e) => setGrpName(e.target.value)}
+                />
+                <label
+                  htmlFor="grpName"
+                  className="absolute left-4 top-[3.5rem] transform rounded-lg bg-gradient-to-b from-gray-100 to-white px-1 -translate-y-1/2 text-sm text-gray-500 transition-all duration-200 ease-in-out"
+                >
+                  Group Bio
+                </label>
+                <input
+                  type="text"
+                  name="grpName"
+                  id="grpName"
+                  value={grpBio}
+                  onChange={(e) => setGrpBio(e.target.value)}
+                  className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg text-base text-gray-700 placeholder-gray-400 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-200"
+                  placeholder="Group Bio"
+                />
+              </div>
+            )}
             {addMember ? (
               <button
                 className="mt-4 px-6 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800 transition"
@@ -106,7 +160,7 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
               {addMember ? "All Users" : "Group Members"}
             </div>
             <div className="overflow-y-auto flex-grow space-y-4 max-md:space-y-2 max-md:mt-0 mt-2">
-              {(addMember ? allUsers : users).map((user) => (
+              {(addMember ? allUsers : users)?.map((user) => (
                 <UserItem
                   user={user}
                   key={user._id}

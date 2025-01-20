@@ -10,7 +10,7 @@ const AvatarCard = ({ avatar = [], max = 4 }) => {
             key={Math.random() * 100}
             src={url}
             alt={index}
-            className="w-[3rem] h-[3rem]"
+            className="w-[3rem] h-[3rem] rounded-[20%] object-cover"
             style={{
               position: "absolute",
               left: `${index + 1}rem`,
