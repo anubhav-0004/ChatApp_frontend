@@ -10,13 +10,13 @@ const AppLayout = (WrappedComponent) => {
   return function LayoutWrapper(props) {
     const params = useParams();
     const navigate = useNavigate();
-    const [chatId, setChatId] = useState(params.chatId || null); // Manage chatId state
+    const [chatId, setChatId] = useState(params.chatId || null); 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 450);
     const [showChatList, setShowChatList] = useState(true);
     const chatId2 = useLocation().pathname.split("/").filter(Boolean).pop();
 
     useEffect(() => {
-      setChatId(params.chatId); // Update chatId when the URL changes
+      setChatId(params.chatId); 
     }, [params.chatId]);
 
     useEffect(() => {
@@ -68,7 +68,7 @@ const AppLayout = (WrappedComponent) => {
         )}
         {isMobile && !showChatList && (
           <div
-            className="absolute flex h-[3.5rem] top-[0rem] left-[2rem] scale-125  border border-[#8282d1] z-40 px-5 gap-x-2 w-[100vw] py-[0.1rem] text-2xl font-medium bg-[#383857] text-slate-300 rounded items-center justify-center"
+            className="absolute flex h-[3.5rem] top-[0rem] left-[2rem] scale-125  border border-[#8282d1] z-40 px-6 gap-x-2 w-[100vw] py-[0.1rem] text-2xl font-medium bg-[#383857] text-slate-300 rounded items-center justify-center"
             style={{
               backgroundImage:
                 "linear-gradient(to right bottom, rgb(82 77 168), rgb(2 9 47 / 69%))",
