@@ -578,168 +578,450 @@ export const sampleDashBoardData = {
       ],
       _id: 1,
       groupChat: false,
-      members: ["1", "2"],
+      members: [
+        {
+          _id: "1",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+        {
+          _id: "2",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+      ],
       totalMembers: 2,
       totalMessages: 51,
       creator: {
         name: "John Sharma",
         avatar: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
         ],
       },
     },
     {
       name: "Bob Kumar",
       avatar: [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQD-7QvWrw4PEb-0FgLMe-IdWp3HZ0fmgERJUk&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
       ],
       _id: 2,
       groupChat: false,
-      members: ["2", "3"],
+      members: [
+        {
+          _id: "1",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+        {
+          _id: "2",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+      ],
       totalMembers: 2,
       totalMessages: 34,
       creator: {
         name: "Sita Sharma",
         avatar: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY5a4qNfbTj1RLCi54Wpa0eP4ZB2zpsYwZcbw&s",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
         ],
       },
     },
     {
       name: "Charlie Yadav",
       avatar: [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP5o1ZrTp5vP1yFcAvIWz-_YOah5goEO5lGQw&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
       ],
       _id: 3,
       groupChat: false,
-      members: ["3", "4"],
+      members: [
+        {
+          _id: "1",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+        {
+          _id: "2",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+      ],
       totalMembers: 2,
       totalMessages: 22,
       creator: {
         name: "Maya Joshi",
         avatar: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzYWdpSo6ppp3nZ-_nkp0tXGsCK7XxxjPyN-Q&s",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
         ],
       },
     },
     {
       name: "David Singh",
       avatar: [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdQgKH7Zh7Rqa9uFAo3g9pfp2jlOaETCmh8w&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
       ],
       _id: 4,
       groupChat: false,
-      members: ["4", "5"],
+      members: [
+        {
+          _id: "1",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+        {
+          _id: "2",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+      ],
       totalMembers: 2,
       totalMessages: 19,
       creator: {
         name: "Aarti Singh",
         avatar: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-sCclmt8UbccTwAqGmSOiLMU9HJdLgrX1Kuc&s",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
         ],
       },
     },
     {
       name: "Emma Roy",
       avatar: [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-sCclmt8UbccTwAqGmSOiLMU9HJdLgrX1Kuc&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
       ],
       _id: 5,
       groupChat: false,
-      members: ["5", "6"],
+      members: [
+        {
+          _id: "1",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+        {
+          _id: "2",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+      ],
       totalMembers: 2,
       totalMessages: 45,
       creator: {
         name: "Sonia Kapoor",
         avatar: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTROw1_-Rf_6KrL0Wh3dZs_MWrVsVgxaNc94U4&s",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
         ],
       },
     },
     {
       name: "Fred Wilson",
       avatar: [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHtWI2lL7lL5klc4XjhoZ7dElFW9eZ5otUtbQ&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
       ],
       _id: 6,
       groupChat: false,
-      members: ["6", "7"],
+      members: [
+        {
+          _id: "1",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+        {
+          _id: "2",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+      ],
       totalMembers: 2,
       totalMessages: 37,
       creator: {
         name: "Alok Soni",
         avatar: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRODfgbNw-BM-VoTh8g8NbmgyUo7Vp13Fy8K7E&s",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
         ],
       },
     },
     {
       name: "Grace Patil",
       avatar: [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1sMnXvDiFslc5jOuqZYN8gvLBEMIcqihJZmA&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
       ],
       _id: 7,
       groupChat: false,
-      members: ["7", "8"],
+      members: [
+        {
+          _id: "1",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+        {
+          _id: "2",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+      ],
       totalMembers: 2,
       totalMessages: 28,
       creator: {
         name: "Rekha Verma",
         avatar: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV59w0-fydglHZfNl2Vt6vlhfl8HKf0GqkO9E&s",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
         ],
       },
     },
     {
       name: "Henry Das",
       avatar: [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBtz-V68pzVxO-wqgsl7rhq0gbmjZZO8q8exQ&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
       ],
       _id: 8,
       groupChat: false,
-      members: ["8", "9"],
+      members: [
+        {
+          _id: "1",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+        {
+          _id: "2",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+      ],
       totalMembers: 2,
       totalMessages: 60,
       creator: {
         name: "Krishna Kumar",
         avatar: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjUEZY0zKN3oFWoDbk8FEWB3hAh7VdkMEnw64&s",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
         ],
       },
     },
     {
       name: "Isla Jha",
       avatar: [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGZzS3yY2zzirvUsXb_Yf_7ntdM6frQj9iDHo&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
       ],
       _id: 9,
       groupChat: false,
-      members: ["9", "10"],
+      members: [
+        {
+          _id: "1",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+        {
+          _id: "2",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+      ],
       totalMembers: 2,
       totalMessages: 10,
       creator: {
         name: "Ravi Mehta",
         avatar: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6kjKK0e8olJE3GkQ6M8IQcuF6f20V5vO2Rxw&s",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
         ],
       },
     },
     {
       name: "Jack Thakur",
       avatar: [
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2g0-cByFls_sT5t6KvCH9ey2AfEB5wTzM3gg&s",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
       ],
       _id: 10,
       groupChat: false,
-      members: ["10", "1"],
+      members: [
+        {
+          _id: "1",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+        {
+          _id: "2",
+          avatar: [
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+          ],
+        },
+      ],
       totalMembers: 2,
       totalMessages: 32,
       creator: {
         name: "Pooja Sood",
         avatar: [
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp2mvCTnk_NogDEO8OSl7Ln9pZ1rqO5UpcP78&s",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
         ],
       },
+    },
+  ],
+  messages: [
+    {
+      content: "Hello, how are you?",
+      _id: "msg1",
+      sender: {
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGN1LBQag8wQQIY-WWwyZ8SMr5c8WZgfF4UQ&s",
+        ],
+        name: "Amit",
+      },
+      chat: "chat1",
+      groupChat: "false",
+      createdAt: "2024-11-15T08:25:30.630Z",
+    },
+    {
+      content: "I'm good, what about you?",
+      _id: "msg2",
+      sender: {
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGN1LBQag8wQQIY-WWwyZ8SMr5c8WZgfF4UQ&s",
+        ],
+        name: "Rahul",
+      },
+      chat: "chat1.O",
+      groupChat: "true",
+      createdAt: "2024-11-15T08:26:10.500Z",
+    },
+    {
+      content: "Let's meet tomorrow!",
+      _id: "msg3",
+      sender: {
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGN1LBQag8wQQIY-WWwyZ8SMr5c8WZgfF4UQ&s",
+        ],
+        name: "Amit",
+      },
+      chat: "chat11",
+      groupChat: "true",
+      createdAt: "2024-11-15T08:27:05.230Z",
+    },
+    {
+      content: "Sure, let me know the time.",
+      _id: "msg4",
+      sender: {
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGN1LBQag8wQQIY-WWwyZ8SMr5c8WZgfF4UQ&s",
+        ],
+        name: "Rahul",
+      },
+      chat: "chat1",
+      groupChat: "false",
+      createdAt: "2024-11-15T08:28:00.890Z",
+    },
+    {
+      content: "Can you review the document I shared?",
+      _id: "msg5",
+      sender: {
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGN1LBQag8wQQIY-WWwyZ8SMr5c8WZgfF4UQ&s",
+        ],
+        name: "Neha",
+      },
+      chat: "chat2",
+      groupChat: "true",
+      createdAt: "2024-11-15T09:10:15.630Z",
+    },
+    {
+      content: "Yes, I’ll do it by evening.",
+      _id: "msg6",
+      sender: {
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGN1LBQag8wQQIY-WWwyZ8SMr5c8WZgfF4UQ&s",
+        ],
+        name: "Sohail",
+      },
+      chat: "chat2",
+      groupChat: "false",
+      createdAt: "2024-11-15T09:12:00.450Z",
+    },
+    {
+      content: "Can we discuss this over a call?",
+      _id: "msg7",
+      sender: {
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGN1LBQag8wQQIY-WWwyZ8SMr5c8WZgfF4UQ&s",
+        ],
+        name: "Neha",
+      },
+      chat: "chat2",
+      groupChat: "true",
+      createdAt: "2024-11-15T09:15:45.120Z",
+    },
+    {
+      content: "Please check the new design I uploaded.",
+      _id: "msg8",
+      sender: {
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGN1LBQag8wQQIY-WWwyZ8SMr5c8WZgfF4UQ&s",
+        ],
+        name: "Priya",
+      },
+      chat: "chat3",
+      groupChat: "false",
+      createdAt: "2024-11-15T10:05:30.630Z",
+    },
+    {
+      content: "Looks great! Just one small change needed.",
+      _id: "msg9",
+      sender: {
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGN1LBQag8wQQIY-WWwyZ8SMr5c8WZgfF4UQ&s",
+        ],
+        name: "Vikram",
+      },
+      chat: "chat3",
+      groupChat: "true",
+      createdAt: "2024-11-15T10:10:50.800Z",
+    },
+    {
+      content: "Noted, I'll fix it right away.",
+      _id: "msg10",
+      sender: {
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGN1LBQag8wQQIY-WWwyZ8SMr5c8WZgfF4UQ&s",
+        ],
+        name: "Priya",
+      },
+      chat: "chat3",
+      groupChat: "false",
+      createdAt: "2024-11-15T10:12:35.650Z",
     },
   ],
 };
