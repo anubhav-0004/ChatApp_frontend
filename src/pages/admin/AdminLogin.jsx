@@ -52,7 +52,7 @@ const AdminLogin = () => {
         <button
           type="button"
           onClick={togglePasswordVisibility}
-          className="px-1 rounded-[50%] py-1 text-sm absolute max-md:top-[21.7rem] max-md:scale-125 max-md:right-[3.5rem] top-[22.5rem] font-semibold right-[37rem] mx-auto bg-opacity-35 text-slate-700 transition duration-300 focus:outline-none focus:ring focus:ring-blue-200"
+          className="px-1 rounded-[50%] py-1 text-sm absolute max-md:top-[29rem] max-md:scale-125 max-md:right-[3.5rem] top-[24rem] font-semibold right-[37rem] mx-auto bg-opacity-35 text-slate-700 transition duration-300 focus:outline-none focus:ring focus:ring-blue-200"
         >
           {showPassword ? <FaRegEye /> : <FaEyeSlash />}
         </button>

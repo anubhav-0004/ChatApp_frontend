@@ -3,7 +3,7 @@ import Header from "./Header";
 import Tittle from "../shared/Tittle";
 import ChatList from "../specific/ChatList";
 import ProfileCard from "../specific/ProfileCard";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { sampleChats } from "../../constants/sampleData";
 
 const AppLayout = (WrappedComponent) => {
@@ -13,6 +13,7 @@ const AppLayout = (WrappedComponent) => {
     const [chatId, setChatId] = useState(params.chatId || null); // Manage chatId state
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 450);
     const [showChatList, setShowChatList] = useState(true);
+    const chatId2 = useLocation().pathname.split("/").filter(Boolean).pop();
 
     useEffect(() => {
       setChatId(params.chatId); // Update chatId when the URL changes
@@ -64,6 +65,25 @@ const AppLayout = (WrappedComponent) => {
           >
             Back
           </button>
+        )}
+        {isMobile && !showChatList && (
+          <div
+            className="absolute flex h-[3.5rem] top-[0rem] left-[2rem] scale-125  border border-[#8282d1] z-40 px-5 gap-x-2 w-[100vw] py-[0.1rem] text-2xl font-medium bg-[#383857] text-slate-300 rounded items-center justify-center"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right bottom, rgb(82 77 168), rgb(2 9 47 / 69%))",
+            }}
+          >
+            <img
+              src={sampleChats.find((chat) => chat._id === chatId2)?.avatar[0]}
+              alt=""
+              className="border border-[#8267a3] rounded-full w-8 h-8"
+            />
+            <p className="bg-gradient-to-r from-[#ff9c3f] via-white to-[#27f527] bg-clip-text max-w-[60%] text-transparent overflow-hidden text-ellipsis whitespace-nowrap">
+              {sampleChats.find((chat) => chat._id === chatId2)?.name}
+            </p>
+            <div className="bg-white min-w-12 flex-grow"></div>
+          </div>
         )}
         <div className="w-auto h-[calc(100vh-4rem)] max-md:h-[calc(100vh-3.5rem)] relative grid grid-cols-1 md:grid-cols-[40%_60%] lg:grid-cols-[30%_40%_30%] overflow-hidden">
           {isMobile ? (
