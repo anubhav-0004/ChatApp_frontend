@@ -71,7 +71,7 @@ const LineChart = ({ value= [] }) => {
     datasets: [
       {
         data: value,
-        label: "Revenue",
+        label: "Chats",
         fill: true,
         backgroundColor: "rgba(75,192,192,0.2)",
         borderColor: "rgba(75,192,192,1)",
@@ -108,10 +108,10 @@ const DoughnutChart = ({ labels, value }) => {
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          position: "top", // Set legend position to the top by default
+          position: "top", 
           labels: {
             font: {
-              size: 12, // Smaller font for mobile
+              size: 12, 
               weight: "500",
             },
             color: "#fff",
@@ -119,7 +119,7 @@ const DoughnutChart = ({ labels, value }) => {
         },
 
       },
-      cutout: "70%", // Adjust cutout size for better visuals
+      cutout: "70%", 
     };
   
     return (

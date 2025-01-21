@@ -55,7 +55,7 @@ const DashBoard = () => {
               labels={["Single Chats", "Group Chats"]}
               value={[33, 77]}
             />
-            <div className="absolute text-2xl top-[52%] max-md:right-[35%] max-md:top-[60%] right-[45%] flex gap-x-3 items-center">
+            <div className="absolute text-2xl top-[52%] max-md:right-[35%] max-md:top-[60%] right-[38%] flex gap-x-3 items-center">
               <FaUserGroup />
               <span>Vs</span>
               <FaUserAlt />

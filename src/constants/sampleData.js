@@ -409,3 +409,337 @@ export const sampleMesssages = [
     createdAt: "2024-12-30T20:10:00.000Z",
   },
 ];
+
+// sampledata.js
+export const sampleDashBoardData = {
+  users: [
+    {
+      _id: 1,
+      name: "Alice Johnson",
+      username: "@alice",
+      email: "alice.johnson@example.com",
+      status: "active",
+      friends: 120,
+      groups: 35,
+      dateJoined: "2024-01-10",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+      ],
+    },
+    {
+      _id: 2,
+      name: "Bob Smith",
+      username: "@bobsmith",
+      email: "bob.smith@example.com",
+      status: "inactive",
+      friends: 90,
+      groups: 20,
+      dateJoined: "2023-12-15",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+      ],
+    },
+    {
+      _id: 3,
+      name: "Carol Lee",
+      username: "@carol",
+      email: "carol.lee@example.com",
+      status: "active",
+      friends: 140,
+      groups: 50,
+      dateJoined: "2024-01-05",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+      ],
+    },
+    {
+      _id: 4,
+      name: "David Brown",
+      username: "@davidb",
+      email: "david.brown@example.com",
+      status: "active",
+      friends: 110,
+      groups: 40,
+      dateJoined: "2024-01-12",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+      ],
+    },
+    {
+      _id: 5,
+      name: "Alice Johnson",
+      username: "@alice",
+      email: "alice.johnson@example.com",
+      status: "active",
+      friends: 120,
+      groups: 35,
+      dateJoined: "2024-01-10",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+      ],
+    },
+    {
+      _id: 6,
+      name: "Bob Smith",
+      username: "@bobsmith",
+      email: "bob.smith@example.com",
+      status: "inactive",
+      friends: 90,
+      groups: 20,
+      dateJoined: "2023-12-15",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+      ],
+    },
+    {
+      _id: 7,
+      name: "Carol Lee",
+      username: "@carol",
+      email: "carol.lee@example.com",
+      status: "active",
+      friends: 140,
+      groups: 50,
+      dateJoined: "2024-01-05",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+      ],
+    },
+    {
+      _id: 8,
+      name: "David Brown",
+      username: "@davidb",
+      email: "david.brown@example.com",
+      status: "active",
+      friends: 110,
+      groups: 40,
+      dateJoined: "2024-01-12",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+      ],
+    },
+    {
+      _id: 9,
+      name: "Alice Johnson",
+      username: "@alice",
+      email: "alice.johnson@example.com",
+      status: "active",
+      friends: 120,
+      groups: 35,
+      dateJoined: "2024-01-10",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+      ],
+    },
+    {
+      _id: 10,
+      name: "Bob Smith",
+      username: "@bobsmith",
+      email: "bob.smith@example.com",
+      status: "inactive",
+      friends: 90,
+      groups: 20,
+      dateJoined: "2023-12-15",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+      ],
+    },
+    {
+      _id: 11,
+      name: "Carol Lee",
+      username: "@carol",
+      email: "carol.lee@example.com",
+      status: "active",
+      friends: 140,
+      groups: 50,
+      dateJoined: "2024-01-05",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+      ],
+    },
+    {
+      _id: 12,
+      name: "David Brown",
+      username: "@davidb",
+      email: "david.brown@example.com",
+      status: "active",
+      friends: 110,
+      groups: 40,
+      dateJoined: "2024-01-12",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+      ],
+    },
+  ],
+  chats: [
+    {
+      name: "Alice Singh",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq09-c6Ra8bSi9sNDAxWCBOzzAaciD48UE-Q&s",
+      ],
+      _id: 1,
+      groupChat: false,
+      members: ["1", "2"],
+      totalMembers: 2,
+      totalMessages: 51,
+      creator: {
+        name: "John Sharma",
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIsvHVStVvUQchvTqCa5UQLGVIQKY6fZ1Pvw&s",
+        ],
+      },
+    },
+    {
+      name: "Bob Kumar",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQD-7QvWrw4PEb-0FgLMe-IdWp3HZ0fmgERJUk&s",
+      ],
+      _id: 2,
+      groupChat: false,
+      members: ["2", "3"],
+      totalMembers: 2,
+      totalMessages: 34,
+      creator: {
+        name: "Sita Sharma",
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY5a4qNfbTj1RLCi54Wpa0eP4ZB2zpsYwZcbw&s",
+        ],
+      },
+    },
+    {
+      name: "Charlie Yadav",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP5o1ZrTp5vP1yFcAvIWz-_YOah5goEO5lGQw&s",
+      ],
+      _id: 3,
+      groupChat: false,
+      members: ["3", "4"],
+      totalMembers: 2,
+      totalMessages: 22,
+      creator: {
+        name: "Maya Joshi",
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzYWdpSo6ppp3nZ-_nkp0tXGsCK7XxxjPyN-Q&s",
+        ],
+      },
+    },
+    {
+      name: "David Singh",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQdQgKH7Zh7Rqa9uFAo3g9pfp2jlOaETCmh8w&s",
+      ],
+      _id: 4,
+      groupChat: false,
+      members: ["4", "5"],
+      totalMembers: 2,
+      totalMessages: 19,
+      creator: {
+        name: "Aarti Singh",
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-sCclmt8UbccTwAqGmSOiLMU9HJdLgrX1Kuc&s",
+        ],
+      },
+    },
+    {
+      name: "Emma Roy",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-sCclmt8UbccTwAqGmSOiLMU9HJdLgrX1Kuc&s",
+      ],
+      _id: 5,
+      groupChat: false,
+      members: ["5", "6"],
+      totalMembers: 2,
+      totalMessages: 45,
+      creator: {
+        name: "Sonia Kapoor",
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTROw1_-Rf_6KrL0Wh3dZs_MWrVsVgxaNc94U4&s",
+        ],
+      },
+    },
+    {
+      name: "Fred Wilson",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHtWI2lL7lL5klc4XjhoZ7dElFW9eZ5otUtbQ&s",
+      ],
+      _id: 6,
+      groupChat: false,
+      members: ["6", "7"],
+      totalMembers: 2,
+      totalMessages: 37,
+      creator: {
+        name: "Alok Soni",
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRODfgbNw-BM-VoTh8g8NbmgyUo7Vp13Fy8K7E&s",
+        ],
+      },
+    },
+    {
+      name: "Grace Patil",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1sMnXvDiFslc5jOuqZYN8gvLBEMIcqihJZmA&s",
+      ],
+      _id: 7,
+      groupChat: false,
+      members: ["7", "8"],
+      totalMembers: 2,
+      totalMessages: 28,
+      creator: {
+        name: "Rekha Verma",
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV59w0-fydglHZfNl2Vt6vlhfl8HKf0GqkO9E&s",
+        ],
+      },
+    },
+    {
+      name: "Henry Das",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBtz-V68pzVxO-wqgsl7rhq0gbmjZZO8q8exQ&s",
+      ],
+      _id: 8,
+      groupChat: false,
+      members: ["8", "9"],
+      totalMembers: 2,
+      totalMessages: 60,
+      creator: {
+        name: "Krishna Kumar",
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjUEZY0zKN3oFWoDbk8FEWB3hAh7VdkMEnw64&s",
+        ],
+      },
+    },
+    {
+      name: "Isla Jha",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGZzS3yY2zzirvUsXb_Yf_7ntdM6frQj9iDHo&s",
+      ],
+      _id: 9,
+      groupChat: false,
+      members: ["9", "10"],
+      totalMembers: 2,
+      totalMessages: 10,
+      creator: {
+        name: "Ravi Mehta",
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6kjKK0e8olJE3GkQ6M8IQcuF6f20V5vO2Rxw&s",
+        ],
+      },
+    },
+    {
+      name: "Jack Thakur",
+      avatar: [
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2g0-cByFls_sT5t6KvCH9ey2AfEB5wTzM3gg&s",
+      ],
+      _id: 10,
+      groupChat: false,
+      members: ["10", "1"],
+      totalMembers: 2,
+      totalMessages: 32,
+      creator: {
+        name: "Pooja Sood",
+        avatar: [
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp2mvCTnk_NogDEO8OSl7Ln9pZ1rqO5UpcP78&s",
+        ],
+      },
+    },
+  ],
+};
