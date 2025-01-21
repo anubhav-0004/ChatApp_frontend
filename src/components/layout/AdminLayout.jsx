@@ -42,7 +42,7 @@ const AdminLayout = ({ children }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  if (!isAdmin) return <Navigate to="/admin" />;
+  if (!isAdmin) return <Navigate to="/login" />;
 
   const logOutHandler = () => {
     console.log("Log Out !!");
@@ -130,7 +130,7 @@ const AdminLayout = ({ children }) => {
         style={{ height: viewportHeight - 64 }}
       >
         <Sidebar />
-        <div className="overflow-auto p-3 max-md:p-1 rounded-md shadow-inner bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460]">
+        <div className="overflow-auto p-5 max-md:p-1 rounded-md shadow-inner bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460]">
           {children}
         </div>
       </div>

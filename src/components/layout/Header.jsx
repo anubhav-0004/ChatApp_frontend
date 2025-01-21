@@ -2,11 +2,13 @@ import React, { Suspense, useState, lazy } from "react";
 import logo from "../../assets/logo2.png";
 import { IoSearch } from "react-icons/io5";
 import { MdGroups2 } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoMdLogOut, IoIosAddCircle } from "react-icons/io";
 import { FaBell } from "react-icons/fa";
 import { Backdrop } from "@mui/material";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
+
 const Search = lazy(() => import("../specific/Search"));
 const NotificationDialogue = lazy(() => import("../specific/Notifications"));
 const NewGroupDialogue = lazy(() => import("../specific/NewGroups"));
@@ -71,6 +73,9 @@ const Header = () => {
             className="text-2xl text-orange-50 cursor-pointer shadow-md rounded-[40%] p-[3px]"
             onClick={openNotification}
           />
+          <Link to={"/admin"}>
+            <MdOutlineAdminPanelSettings className="text-2xl text-orange-200 hover:text-orange-300 cursor-pointer shadow-md rounded-[40%]" />
+          </Link>
           <IoMdLogOut
             className="text-2xl text-orange-50 cursor-pointer shadow-md rounded-[40%]"
             onClick={logOutHandler}
@@ -98,7 +103,7 @@ const Header = () => {
           }}
         >
           <div className="bg-[#39395a] border border-[#52529f] rounded-lg shadow-lg mr-2 max-w-md max-md:max-w-[35%] w-full">
-            <div className="flex flex-col gap-y-3 px-4 py-4">
+            <div className="flex flex-col gap-y-2 px-2 py-2 text-orange-300">
               <p className=" text-slate-300" onClick={openSearch}>
                 Search
               </p>
@@ -111,6 +116,7 @@ const Header = () => {
               <p className="text-slate-300" onClick={logOutHandler}>
                 Log Out
               </p>
+              <Link to={"/admin"}>Admin</Link>
             </div>
           </div>
         </div>

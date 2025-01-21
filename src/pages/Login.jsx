@@ -1,13 +1,23 @@
 import React, { useState } from "react";
 import StyledPic from "../components/styles/StyledPic";
+import { FaRegEye, FaEyeSlash } from "react-icons/fa6";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [showPassword, setShowPassword] = useState(false); // Toggle password visibility
+
   const handleSignUp = (e) => {
     e.preventDefault();
+    // Sign-up logic here
   };
+
   const handleLogin = (e) => {
     e.preventDefault();
+    // Login logic here
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -29,25 +39,30 @@ const Login = () => {
             onSubmit={handleLogin}
           >
             <div>
-              {/* <label htmlFor="username">UserName</label> */}
               <input
                 type="text"
                 name="username"
                 id="username"
                 placeholder="UserName*"
                 required
-                className="px-3 py-2 border border-slate-300 rounded-md mb-5"
+                className="px-3 py-2 border border-slate-300 rounded-md mb-5 w-full"
               />
-              <br />
-              {/* <label htmlFor="password">Password</label> */}
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Password*"
-                required
-                className="px-3 py-2 border border-slate-300 rounded-md"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  placeholder="Password*"
+                  required
+                  className="px-3 py-2 border border-slate-300 rounded-md w-full"
+                />
+                <div
+                  onClick={togglePasswordVisibility}
+                  className="absolute top-3 right-3 cursor-pointer text-gray-500"
+                >
+                  {!showPassword ? <FaEyeSlash /> : <FaRegEye />}
+                </div>
+              </div>
             </div>
             <button
               type="submit"
@@ -60,12 +75,12 @@ const Login = () => {
               onClick={() => setIsLogin(false)}
               className="w-full py-1 rounded-md mx-auto hover:delay-100 hover:bg-slate-200"
             >
-              Sign Up{" "}
+              Sign Up
             </button>
           </form>
         </div>
       ) : (
-        <div className=" w-4/12 max-lg:w-3/4 bg-slate-100 border-2 flex flex-col gap-y-3 max-md:gap-y-1 shadow-sm shadow-black border-slate-300 rounded-lg px-10 max-md:py-5 py-6 max-md:px-5">
+        <div className="w-4/12 max-lg:w-3/4 bg-slate-100 border-2 flex flex-col gap-y-3 max-md:gap-y-1 shadow-sm shadow-black border-slate-300 rounded-lg px-10 max-md:py-5 py-6 max-md:px-5">
           <h5 className="font-bold text-2xl text-slate-700 w-fit mx-auto">
             Register
           </h5>
@@ -112,13 +127,21 @@ const Login = () => {
               <label htmlFor="password">Password</label>
               <span className="text-red-500 font-bold">*</span>
               <br />
-              <input
-                type="password"
-                name="password"
-                id="password"
-                required
-                className="px-2 py-1 border border-slate-300 rounded-md mb-1 w-full"
-              />
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  id="password"
+                  required
+                  className="px-2 py-1 border border-slate-300 rounded-md mb-1 w-full"
+                />
+                <div
+                  onClick={togglePasswordVisibility}
+                  className="absolute top-2 right-3 cursor-pointer text-gray-500"
+                >
+                  {!showPassword ? <FaEyeSlash /> : <FaRegEye />}
+                </div>
+              </div>
               <br />
               <label htmlFor="mobile">Phone</label>
               <span className="text-red-500 font-bold">*</span>

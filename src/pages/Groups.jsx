@@ -1,16 +1,15 @@
-import React, { useState, useEffect, memo, Suspense } from "react";
-import { IoReorderThree } from "react-icons/io5";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { AiOutlineHome } from "react-icons/ai";
-import AvatarCard from "../components/shared/AvatarCard";
-import { sampleChats, sampleMesssages, sampleUser } from "../constants/sampleData";
-import MessageComponent from "../components/shared/MessageComponent";
-import { IoMdAttach } from "react-icons/io";
-import { LuSendHorizontal } from "react-icons/lu";
-import { IoMdArrowRoundBack } from "react-icons/io";
-import { MdEdit } from "react-icons/md";
 import { Backdrop } from "@mui/material";
+import React, { memo, Suspense, useEffect, useState } from "react";
+import { AiOutlineHome } from "react-icons/ai";
+import { IoMdArrowRoundBack, IoMdAttach } from "react-icons/io";
+import { IoReorderThree } from "react-icons/io5";
+import { LuSendHorizontal } from "react-icons/lu";
+import { MdEdit } from "react-icons/md";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import EditGroup from "../components/dialogs/EditGroup";
+import AvatarCard from "../components/shared/AvatarCard";
+import MessageComponent from "../components/shared/MessageComponent";
+import { sampleChats, sampleMesssages, sampleUser } from "../constants/sampleData";
 
 const Groups = () => {
   const chatId = useSearchParams()[0].get("group");

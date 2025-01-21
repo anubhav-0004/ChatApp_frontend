@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { FaRegEye, FaEyeSlash } from "react-icons/fa6";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { IoChevronBack } from "react-icons/io5";
 
 const AdminLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
 
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
@@ -33,6 +35,10 @@ const AdminLogin = () => {
       }}
     >
       <div className="border-2 flex flex-col shadow-lg shadow-[#25707d] gap-y-4 border-slate-300 rounded-lg max-md:px-5 max-md:py-10 max-md:gap-y-2 max-md:mx-4 px-10 py-16 bg-[#25707d]">
+        <IoChevronBack 
+          className="text-slate-100 font-bold text-3xl p-1 bg-[#174b2cc7] border rounded-[50%] cursor-pointer"
+          onClick={() => navigate("/")}
+        />
         <h1 className="text-3xl font-medium mb-3 bg-gradient-to-r from-[#e1a358] via-[#e7e6e6] to-[#45fa1c] bg-clip-text text-transparent">
           Welcome Back ANUBHAV...
         </h1>
@@ -43,11 +49,10 @@ const AdminLogin = () => {
           placeholder="Enter Admin Password"
           className="flex px-4 w-full h-fit py-2 rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 transition duration-300 outline-none shadow-sm"
         />
-        {/* Toggle Button */}
         <button
           type="button"
           onClick={togglePasswordVisibility}
-          className="px-1 rounded-[50%] py-1 text-sm absolute max-md:top-[27.7rem] max-md:scale-125 max-md:right-[3.5rem] top-[22.5rem] font-semibold right-[37rem] mx-auto bg-opacity-35 text-slate-700 transition duration-300 focus:outline-none focus:ring focus:ring-blue-200"
+          className="px-1 rounded-[50%] py-1 text-sm absolute max-md:top-[21.7rem] max-md:scale-125 max-md:right-[3.5rem] top-[22.5rem] font-semibold right-[37rem] mx-auto bg-opacity-35 text-slate-700 transition duration-300 focus:outline-none focus:ring focus:ring-blue-200"
         >
           {showPassword ? <FaRegEye /> : <FaEyeSlash />}
         </button>

@@ -45,12 +45,12 @@ const DashBoard = () => {
             </p>
           </div>
         </div>
-        <div className="w-full h-full grid grid-cols-[60%_39%] max-md:grid-cols-1 gap-x-2">
-          <div className="my-2 p-3 bg-gradient-to-r from-[#34346e] via-[#4646a0] to-[#4b4bb9]  w-full rounded-md text-slate-100">
+        <div className="w-full h-full grid grid-cols-[60%_38%] max-md:grid-cols-1 gap-x-5">
+          <div className="my-5 max-md:my-2 p-3 bg-gradient-to-r from-[#34346e] via-[#4646a0] to-[#4b4bb9]  w-full rounded-md text-slate-100">
             <h3 className="text-xl text-slate-200 mb-2 text-center underline">Last 7 Days Messages</h3>
             <LineChart value={[12, 22, 4, 52, 102, 38, 20]} />
           </div>
-          <div className="my-2 relative bg-gradient-to-r from-[#34346e] via-[#4646a0] to-[#4b4bb9] w-full h-auto rounded-md p-0 text-slate-100 text-center">
+          <div className="my-5 max-md:my-2 relative bg-gradient-to-r from-[#34346e] via-[#4646a0] to-[#4b4bb9] w-full h-auto rounded-md p-0 text-slate-100 text-center">
             <DoughnutChart
               labels={["Single Chats", "Group Chats"]}
               value={[33, 77]}
