@@ -68,7 +68,7 @@ const AppLayout = (WrappedComponent) => {
         )}
         {isMobile && !showChatList && (
           <div
-            className="absolute flex h-[3.5rem] top-[0rem] left-[0rem]  border border-[#8282d1] z-40 px-2 gap-x-2 w-[100vw] py-[0.1rem] text-2xl font-medium bg-[#383857] text-slate-300 rounded items-center justify-center"
+            className="absolute flex h-[3.50rem] max-md:h-[4rem] top-[0rem] left-[0rem]  border border-[#8282d1] z-40 px-2 gap-x-2 w-[100vw] py-[0.1rem] text-2xl font-medium bg-[#383857] text-slate-300 rounded items-center justify-center"
             style={{
               backgroundImage:
                 "linear-gradient(to right bottom, rgb(82 77 168), rgb(2 9 47 / 69%))",
@@ -76,8 +76,8 @@ const AppLayout = (WrappedComponent) => {
           >
             <img
               src={sampleChats.find((chat) => chat._id === chatId2)?.avatar[0]}
-              alt=""
-              className="border border-[#8267a3] rounded-full w-8 h-8"
+              alt="DP"
+              className="border border-[#8267a3] rounded-full w-10 h-10"
             />
             <p className="bg-gradient-to-r from-[#ff9c3f] via-white to-[#27f527] bg-clip-text max-w-[55%] text-transparent overflow-hidden text-ellipsis whitespace-nowrap">
               {sampleChats.find((chat) => chat._id === chatId2)?.name}

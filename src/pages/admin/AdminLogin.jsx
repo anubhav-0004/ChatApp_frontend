@@ -34,7 +34,7 @@ const AdminLogin = () => {
           "linear-gradient(to right bottom, rgb(203 186 243 / 49%), rgb(60 41 240 / 50%))",
       }}
     >
-      <div className="border-2 flex flex-col shadow-lg shadow-[#25707d] gap-y-4 border-slate-300 rounded-lg max-md:px-5 max-md:py-10 max-md:gap-y-2 max-md:mx-4 px-10 py-16 bg-[#25707d]">
+      <div className="border-2 flex flex-col shadow-lg shadow-[#25707d] gap-y-4 border-slate-300 rounded-lg max-md:px-5 max-md:py-10 max-md:gap-y-2 max-md:mx-4 px-10 py-16 relative bg-[#25707d]">
         <IoChevronBack 
           className="text-slate-100 font-bold text-3xl p-1 bg-[#174b2cc7] border rounded-[50%] cursor-pointer"
           onClick={() => navigate("/")}
@@ -52,7 +52,7 @@ const AdminLogin = () => {
         <button
           type="button"
           onClick={togglePasswordVisibility}
-          className="px-1 rounded-[50%] py-1 text-sm absolute max-sm:top-[21rem] max-lg:right-[13rem] max-lg:top-[20rem] max-md:top-[29rem] max-md:scale-125 max-md:right-[3.5rem] top-[23rem] font-semibold right-[37rem] mx-auto bg-opacity-35 text-slate-700 transition duration-300 focus:outline-none focus:ring focus:ring-blue-200"
+          className="px-1 rounded-[50%] py-1 absolute font-semibold scale-110  right-[3.5rem] top-[11.4rem] max-md:top-[11.2rem] max-md:right-[2rem] mx-auto bg-opacity-35 text-slate-700 transition duration-300 focus:outline-none focus:ring focus:ring-blue-200"
         >
           {showPassword ? <FaRegEye /> : <FaEyeSlash />}
         </button>

@@ -25,11 +25,10 @@ const Chat = () => {
 
   return (
     <div
-      className="w-full flex flex-col overflow-hidden"
-      style={{ height: viewportHeight - 56 }}
+      className="w-full flex flex-col overflow-hidden h-[calc(100vh-56px)] md:h-[calc(100vh-68px)]"
     >
       <div
-        className="text-[#dfd3ad] w-full max-md:h-[89%] h-[90%] text-xl opacity-95 p-2 overflow-y-auto flex flex-col"
+        className="text-[#dfd3ad] w-full max-md:h-[91%] h-[90%] text-xl opacity-95 p-2 overflow-y-auto flex flex-col"
         style={{
           backgroundImage: `url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW0GqVqurY1V77t3jqPKUVYKRXa_HzZ4BBkw&s")`,
           backgroundRepeat: "no-repeat",
@@ -42,11 +41,11 @@ const Chat = () => {
           <MessageComponent key={index} message={message} user={user} />
         ))}
       </div>
-      <form className="flex items-center relative rounded-t-sm justify-between border border-[#86869d] gap-x-3 px-2 py-1 bg-[#2d2d56] max-md:h-[11%] h-[10%]">
+      <form className="flex items-center relative rounded-t-sm justify-between border border-[#86869d] gap-x-3 px-2 py-1 bg-[#2d2d56] max-md:h-[9%] h-[10%]">
         <input type="file" name="fileInput" id="fileInput" className="hidden" />
         <label
           htmlFor="fileInput"
-          className="text-[#e9e0f9] text-2xl absolute cursor-pointer bottom-[0.89rem] max-md:bottom-[0.6rem] left-4 bg-[#5c5c8a] rotate-[45deg] border border-slate-400 p-[.4rem] w-10 h-10 rounded-[50%]"
+          className="text-[#e9e0f9] text-2xl absolute cursor-pointer bottom-[0.8rem] max-md:bottom-[0.4rem] left-4 max-md:left-2 bg-[#5c5c8a] rotate-[45deg] border border-slate-400 p-[.4rem] w-10 h-10 rounded-[50%]"
         >
           <IoMdAttach />
         </label>
@@ -57,7 +56,7 @@ const Chat = () => {
         />
         <LuSendHorizontal
           type="submit"
-          className="text-2xl text-[#e9e0f9] cursor-pointer absolute bottom-[0.89rem] max-md:bottom-[0.60rem] right-4 bg-[#5c5c8a] border border-slate-400 p-[.4rem] w-10 h-10 rounded-[50%] -rotate-[35deg]"
+          className="text-2xl text-[#e9e0f9] cursor-pointer absolute bottom-[0.8rem] max-md:bottom-[0.40rem] right-4 max-md:right-2 bg-[#5c5c8a] border border-slate-400 p-[.4rem] w-10 h-10 rounded-[50%] -rotate-[35deg]"
         />
       </form>
       <FileMenu />
