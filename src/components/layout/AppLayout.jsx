@@ -68,7 +68,7 @@ const AppLayout = (WrappedComponent) => {
         )}
         {isMobile && !showChatList && (
           <div
-            className="absolute flex h-[3.5rem] top-[0rem] left-[2rem] scale-125  border border-[#8282d1] z-40 px-6 gap-x-2 w-[100vw] py-[0.1rem] text-2xl font-medium bg-[#383857] text-slate-300 rounded items-center justify-center"
+            className="absolute flex h-[3.5rem] top-[0rem] left-[0rem]  border border-[#8282d1] z-40 px-2 gap-x-2 w-[100vw] py-[0.1rem] text-2xl font-medium bg-[#383857] text-slate-300 rounded items-center justify-center"
             style={{
               backgroundImage:
                 "linear-gradient(to right bottom, rgb(82 77 168), rgb(2 9 47 / 69%))",
@@ -79,10 +79,10 @@ const AppLayout = (WrappedComponent) => {
               alt=""
               className="border border-[#8267a3] rounded-full w-8 h-8"
             />
-            <p className="bg-gradient-to-r from-[#ff9c3f] via-white to-[#27f527] bg-clip-text max-w-[60%] text-transparent overflow-hidden text-ellipsis whitespace-nowrap">
+            <p className="bg-gradient-to-r from-[#ff9c3f] via-white to-[#27f527] bg-clip-text max-w-[55%] text-transparent overflow-hidden text-ellipsis whitespace-nowrap">
               {sampleChats.find((chat) => chat._id === chatId2)?.name}
             </p>
-            <div className="bg-white min-w-12 flex-grow"></div>
+            <div className="bg-white min-w-2 flex-grow"></div>
           </div>
         )}
         <div className="w-auto h-[calc(100vh-4rem)] max-md:h-[calc(100vh-3.5rem)] relative grid grid-cols-1 md:grid-cols-[40%_60%] lg:grid-cols-[30%_40%_30%] overflow-hidden">
