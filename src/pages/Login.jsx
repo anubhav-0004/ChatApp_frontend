@@ -1,19 +1,71 @@
 import React, { useState } from "react";
 import StyledPic from "../components/styles/StyledPic";
 import { FaRegEye, FaEyeSlash } from "react-icons/fa6";
+import axios from "axios";
+import { server } from "../constants/config";
+import { useDispatch } from "react-redux";
+import { userExists } from "../redux/reducers/auth";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false); // Toggle password visibility
+  const dispatch = useDispatch();
+  const [avatar, setAvatar] = useState(null);
 
-  const handleSignUp = (e) => {
+
+  const handleSignUp = async (e) => {
     e.preventDefault();
+    if (!avatar) {
+        toast.error("Please upload an avatar.");
+        return;
+    }
     // Sign-up logic here
+    const formData = new FormData();
+    formData.append("avatar", avatar.file);
+    formData.append("name", name.value);
+    formData.append("bio", bio.value);
+    formData.append("username", username.value);
+    formData.append("password", password.value);
+
+    try {
+      const { data } = await axios.post(`${server}/api/v1/user/new`, formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      dispatch(userExists(true));
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Something went wrong");
+    }
   };
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     // Login logic here
+    const config = {
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const { data } = await axios.post(
+        `${server}/api/v1/user/login`,
+        {
+          username: username.value,
+          password: password.value,
+        },
+        config
+      );
+      dispatch(userExists(true));
+      toast.success(data);
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || "Something went wrong");
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -22,7 +74,7 @@ const Login = () => {
 
   return (
     <div
-      className="m-auto p-1 flex flex-col justify-center items-center h-screen"
+      className="m-auto p-1 flex flex-col justify-center items-center h-auto min-h-screen"
       style={{
         backgroundImage:
           "linear-gradient(to right bottom, rgb(203 186 243 / 49%), rgb(60 41 240 / 50%))",
@@ -90,7 +142,7 @@ const Login = () => {
             onSubmit={handleSignUp}
           >
             <div>
-              <StyledPic />
+              <StyledPic setAvatar={setAvatar}/>
               <label htmlFor="name">Name</label>
               <span className="text-red-500 font-bold">*</span>
               <br />
