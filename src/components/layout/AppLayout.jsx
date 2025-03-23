@@ -6,20 +6,21 @@ import ProfileCard from "../specific/ProfileCard";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { sampleChats } from "../../constants/sampleData";
 import { useMyChatsQuery } from "../../redux/api/reduxAPI";
+import { useErrors } from "../../hooks/hook";
 
 const AppLayout = (WrappedComponent) => {
   return function LayoutWrapper(props) {
     const params = useParams();
     const navigate = useNavigate();
-    const {isLoading, data, isError, error, refetch} = useMyChatsQuery("");
-    const [chatId, setChatId] = useState(params.chatId || null); 
+    const { isLoading, data, isError, error, refetch } = useMyChatsQuery("");
+    useErrors([{isError, error}])
+    const [chatId, setChatId] = useState(params.chatId || null);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 450);
     const [showChatList, setShowChatList] = useState(true);
     const chatId2 = useLocation().pathname.split("/").filter(Boolean).pop();
 
-
     useEffect(() => {
-      setChatId(params.chatId); 
+      setChatId(params.chatId);
     }, [params.chatId]);
 
     useEffect(() => {

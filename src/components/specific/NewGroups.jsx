@@ -91,6 +91,7 @@ const NewGroups = ({ onClose }) => {
               user={user}
               key={user._id}
               handler={selectMemberHandler}
+              handler2={selectMemberHandler}
               isAdded={selectedMembers.includes(user._id)}
             />
           ))}
