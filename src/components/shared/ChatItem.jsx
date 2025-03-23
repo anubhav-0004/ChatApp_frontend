@@ -30,13 +30,13 @@ const ChatItem = ({
         <div className="w-12 h-12 relative">
           <img
             src={avatar[0]}
-            alt={name}
-            className="w-full h-full object-cover rounded-full"
+            alt='DP'
+            className="w-full h-full object-cover rounded-full text-green-400"
           />
-          {groupChat && (
-            <div className="absolute top-4 right-4 w-4 h-4 bg-blue-500 rounded-full">groupChat</div>
-          )}
         </div>
+          {groupChat && (
+            <div className="absolute top-8 right-6 w-4 h-4 bg-yellow-100 rounded-full animate-pulse"></div>
+          )}
         <div>
           <h3 className="font-bold text-lg">{name}</h3>
           {newMessage && <p>{newMessage.count} New Message</p>}

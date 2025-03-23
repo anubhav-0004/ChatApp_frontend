@@ -8,6 +8,19 @@ import { FaBell } from "react-icons/fa";
 import { Backdrop } from "@mui/material";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { MdOutlineAdminPanelSettings } from "react-icons/md";
+import axios from "axios";
+import { server } from "../../constants/config";
+import { useDispatch, useSelector } from "react-redux";
+import { userNotExists } from "../../redux/reducers/auth";
+import {   setIsNewGroup,
+  setIsAddMember,
+  setIsNotification,
+  setIsSearch,
+  setIsFileMenu,
+  setIsDeleteMenu,
+  setUploadingLoader,
+  setSelectedDeleteChat, } from "../../redux/reducers/misc"
+import toast from "react-hot-toast";
 
 const Search = lazy(() => import("../specific/Search"));
 const NotificationDialogue = lazy(() => import("../specific/Notifications"));
@@ -15,10 +28,9 @@ const NewGroupDialogue = lazy(() => import("../specific/NewGroups"));
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {isSearch, isNewGroup, isNotification} = useSelector((state) => state.misc);
   const [isMobile, setIsMobile] = useState(false);
-  const [isSearch, setIsSearch] = useState(false);
-  const [isNewGroup, setIsNewGroup] = useState(false);
-  const [isNotification, setIsNotification] = useState(false);
   const [showOption, setShowOption] = useState(false);
 
   const handleMobile = () => {
@@ -26,17 +38,24 @@ const Header = () => {
     setShowOption((prev) => !prev);
   };
   const openSearch = () => {
-    setIsSearch((prev) => !prev);
+    dispatch(setIsSearch(true));
   };
   const openNewGroup = () => {
-    setIsNewGroup((prev) => !prev);
+    dispatch(setIsNewGroup(true));
   };
   const navigateToGrp = () => navigate("/group");
-  const logOutHandler = () => {
-    console.log("Log Out Clicked");
+  const logOutHandler = async () => {
+    //Logic to logout
+    try {
+      const { data } = await axios.get(`${server}/api/v1/user/logout`, { withCredentials: true });
+      dispatch(userNotExists());
+      toast.success(data.message);
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Could not log out.")
+    }
   };
   const openNotification = () => {
-    setIsNotification((prev) => !prev);
+    dispatch(setIsNotification(true));
   };
   return (
     <>
@@ -123,17 +142,17 @@ const Header = () => {
       )}
       {isSearch && (
         <Suspense fallback={<Backdrop open />}>
-          <Search onClose={() => setIsSearch(false)} />
+          <Search onClose={() => dispatch(setIsSearch(false))} />
         </Suspense>
       )}
       {isNewGroup && (
         <Suspense fallback={<Backdrop open />}>
-          <NewGroupDialogue onClose={() => setIsNewGroup(false)} />
+          <NewGroupDialogue onClose={() => dispatch(setIsNewGroup(false))} />
         </Suspense>
       )}
       {isNotification && (
         <Suspense fallback={<Backdrop open />}>
-          <NotificationDialogue onClose={() => setIsNotification(false)} />
+          <NotificationDialogue onClose={() => dispatch(setIsNotification(false))} />
         </Suspense>
       )}
     </>

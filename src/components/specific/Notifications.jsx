@@ -2,8 +2,6 @@ import { Avatar } from "@mui/material";
 import React, { memo } from "react";
 import { sampleNotifications } from "../../constants/sampleData";
 
-
-
 const Notificaions = ({ onClose }) => {
   const handleClose = () => {
     if (onClose) {
@@ -14,7 +12,6 @@ const Notificaions = ({ onClose }) => {
     console.log("Send Friend Request", id);
   };
 
-  
   return (
     <div
       className="absolute inset-0 h-[100vh] max-md:px-10 flex items-center justify-center bg-black bg-opacity-50 z-50"
@@ -40,24 +37,21 @@ const Notificaions = ({ onClose }) => {
         </div>
 
         <div className="px-4 py-2 overflow-y-auto max-h-[28rem] md:max-h-[20rem]">
-        {sampleNotifications.length > 0 ? (
-          sampleNotifications.map((i) => (
-            <div>
-            <NotificaionItem
-              key={i._id}
-              sender={i.sender}
-              _id={i._id}
-              handler={friendRequestHandler}
-            />
-                    <div className="flex-col flex-grow"></div>
-
-            </div>
-            
-          ))
-          
-        ) : (
-          <div>No Notificatons</div>
-        )}
+          {sampleNotifications.length > 0 ? (
+            sampleNotifications.map((i) => (
+              <div key={i._id}>
+                <NotificaionItem
+                  key={i._id}
+                  sender={i.sender}
+                  _id={i._id}
+                  handler={friendRequestHandler}
+                />
+                {/* <div className="flex-col flex-grow"></div> */}
+              </div>
+            ))
+          ) : (
+            <div>No Notificatons</div>
+          )}
         </div>
       </div>
     </div>

@@ -4,12 +4,12 @@ import { FaRegEye, FaEyeSlash } from "react-icons/fa6";
 import axios from "axios";
 import { server } from "../constants/config";
 import { useDispatch } from "react-redux";
-import { userExists } from "../redux/reducers/auth";
+import { userExists, userNotExists } from "../redux/reducers/auth";
 import toast from "react-hot-toast";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [showPassword, setShowPassword] = useState(false); // Toggle password visibility
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const [avatar, setAvatar] = useState(null);
 
@@ -22,11 +22,12 @@ const Login = () => {
     }
     // Sign-up logic here
     const formData = new FormData();
-    formData.append("avatar", avatar.file);
-    formData.append("name", name.value);
+    formData.append("avatar", avatar);
+    formData.append("name", name1.value);
     formData.append("bio", bio.value);
     formData.append("username", username.value);
     formData.append("password", password.value);
+    formData.append("phone", mobile.value);
 
     try {
       const { data } = await axios.post(`${server}/api/v1/user/new`, formData, {
@@ -60,8 +61,8 @@ const Login = () => {
         },
         config
       );
+      toast.success(data?.message || "Logged In");
       dispatch(userExists(true));
-      toast.success(data);
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message || "Something went wrong");
@@ -140,16 +141,17 @@ const Login = () => {
             action="submit"
             className="flex flex-col gap-y-1 w-full"
             onSubmit={handleSignUp}
+            encType="multipart/form-data"
           >
             <div>
               <StyledPic setAvatar={setAvatar}/>
-              <label htmlFor="name">Name</label>
+              <label htmlFor="name1">Name</label>
               <span className="text-red-500 font-bold">*</span>
               <br />
               <input
                 type="text"
-                name="name"
-                id="name"
+                name="name1"
+                id="name1"
                 required
                 className="px-2 py-1 border border-slate-300 rounded-md mb-1 w-full"
               />

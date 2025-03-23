@@ -5,15 +5,18 @@ import ChatList from "../specific/ChatList";
 import ProfileCard from "../specific/ProfileCard";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { sampleChats } from "../../constants/sampleData";
+import { useMyChatsQuery } from "../../redux/api/reduxAPI";
 
 const AppLayout = (WrappedComponent) => {
   return function LayoutWrapper(props) {
     const params = useParams();
     const navigate = useNavigate();
+    const {isLoading, data, isError, error, refetch} = useMyChatsQuery("");
     const [chatId, setChatId] = useState(params.chatId || null); 
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 450);
     const [showChatList, setShowChatList] = useState(true);
     const chatId2 = useLocation().pathname.split("/").filter(Boolean).pop();
+
 
     useEffect(() => {
       setChatId(params.chatId); 
@@ -75,12 +78,12 @@ const AppLayout = (WrappedComponent) => {
             }}
           >
             <img
-              src={sampleChats.find((chat) => chat._id === chatId2)?.avatar[0]}
+              src={data?.chats?.find((chat) => chat._id === chatId2)?.avatar[0]}
               alt="DP"
               className="border border-[#8267a3] rounded-full w-10 h-10"
             />
-            <p className="bg-gradient-to-r from-[#ff9c3f] via-white to-[#27f527] bg-clip-text max-w-[55%] text-transparent overflow-hidden text-ellipsis whitespace-nowrap">
-              {sampleChats.find((chat) => chat._id === chatId2)?.name}
+            <p className="max-w-[54%] overflow-hidden ml-1 text-ellipsis whitespace-nowrap">
+              {data?.chats?.find((chat) => chat._id === chatId2)?.name}
             </p>
             <div className="bg-white min-w-2 flex-grow"></div>
           </div>
@@ -90,7 +93,7 @@ const AppLayout = (WrappedComponent) => {
             showChatList ? (
               <div className="w-full h-full border-r-2 border-slate-500 overflow-y-auto bg-[#3d3d5c] flex flex-col">
                 <ChatList
-                  chats={sampleChats}
+                  chats={data?.chats}
                   chatId={chatId}
                   newMessageAlert={[{ chatId, count: 4 }]}
                   onlineUsers={["1", "2"]}
@@ -107,7 +110,7 @@ const AppLayout = (WrappedComponent) => {
             <>
               <div className="w-full border-r-2 border-slate-500 overflow-y-auto bg-[#3d3d5c] flex flex-col max-sm:hidden">
                 <ChatList
-                  chats={sampleChats}
+                  chats={data?.chats}
                   chatId={chatId}
                   newMessageAlert={[{ chatId, count: 4 }]}
                   onlineUsers={["1", "2"]}
