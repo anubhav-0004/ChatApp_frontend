@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import UserItem from "../shared/UserItem";
 import { sampleUser } from "../../constants/sampleData";
@@ -8,7 +8,6 @@ import { server } from "../../constants/config";
 import toast from "react-hot-toast";
 
 const Search = ({ onClose }) => {
-
   const [searchUser] = useLazySearchUserQuery();
   const [searchValue, setSearchValue] = useState("");
 
@@ -20,52 +19,54 @@ const Search = ({ onClose }) => {
 
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
-  }
+  };
 
-  const addFriendHandler = async (id)=>{
-    console.log('Send Friend Request', id);
+  const addFriendHandler = async (id) => {
+    console.log("Send Friend Request", id);
     try {
-      const data = axios.put(`${server}/api/v1/user/send-request`,{
-        userId: id,
-      },
-      { withCredentials: true });
-      console.log("data" , data);
+      const data = axios.put(
+        `${server}/api/v1/user/send-request`,
+        {
+          userId: id,
+        },
+        { withCredentials: true }
+      );
       toast.success(data?.message || "Request sent 😊");
     } catch (error) {
       console.log(error);
       toast.error(error?.message || "Request failed");
     }
-  }
+  };
 
   const deleteRequest = async (id) => {
     try {
       console.log(id);
-      const data = axios.delete(`${server}/api/v1/user/delete-request`,
-      { withCredentials: true,
-        data:{
+      const data = axios.delete(`${server}/api/v1/user/delete-request`, {
+        withCredentials: true,
+        data: {
           userId: id,
-        }
-       });
-      console.log("data" , data);
+        },
+      });
+      console.log("data", data);
       toast.success(data?.message || "Request deleted.");
     } catch (error) {
       console.log(error);
-      toast.error(error?.message || "Unable to delete request")
+      toast.error(error?.message || "Unable to delete request");
     }
-  }
+  };
 
   let isLoadingSendFriendRequest = false;
   const [users, setUsers] = useState([]);
-  useEffect(()=>{
+  useEffect(() => {
     const timeGap = setTimeout(() => {
       searchUser(searchValue)
-      .then(({data})=> setUsers(data?.users))
-      .catch((e) => console.log(e));
+        .then(({ data }) => setUsers(data?.users))
+        .catch((e) => console.log(e));
     }, 500);
-    return ()=> {
+    return () => {
       clearTimeout(timeGap);
-    }
-  }, [searchValue])
+    };
+  }, [searchValue]);
   console.log(users);
   return (
     <div

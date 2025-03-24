@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { sampleUser } from "../../constants/sampleData";
 import UserItem from "../shared/UserItem";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { server } from "../../constants/config";
 
 const NewGroups = ({ onClose }) => {
-  const [members, setMembers] = useState(sampleUser);
+  const [members, setMembers] = useState([]);
   const [selectedMembers, setSelectedMembers] = useState([]);
 
   const [groupName, setGroupName] = useState("");
@@ -17,7 +20,7 @@ const NewGroups = ({ onClose }) => {
   };
 
   const selectMemberHandler = (id) => {
-    setSelectedMembers((prev) => 
+    setSelectedMembers((prev) =>
       prev.includes(id)
         ? prev.filter((currenMember) => currenMember !== id)
         : [...prev, id]
@@ -42,12 +45,42 @@ const NewGroups = ({ onClose }) => {
     return true;
   };
 
-  const handleCreateGroup = () => {
-    if (validateGroupName()) {
-      console.log("Group created:", groupName);
-      handleClose();
+  const handleCreateGroup = async () => {
+    try {
+      if (validateGroupName()) {
+        const data = await axios.post(`${server}/api/v1/chats/new`, {
+          name: groupName,
+          members: selectedMembers,
+        },
+      {
+        withCredentials: true,
+      });
+        handleClose();
+        // console.log(data);
+        toast.success(data?.data?.message || "Group created 😊");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.message || "Cann't create group.")
     }
   };
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get(`${server}/api/v1/user/allUsers`, {
+          withCredentials: true,
+        });
+        setMembers(data.filteredData);
+      } catch (error) {
+        console.log(error);
+        toast.error(error?.message || "Error in fetching users");
+      }
+    };
+
+    fetchData(); 
+  }, []);
 
   return (
     <div
@@ -59,7 +92,7 @@ const NewGroups = ({ onClose }) => {
       <div className="bg-white rounded-lg shadow-lg max-w-md w-full max-md:w-[85%] h-[75%] flex flex-col">
         <div className="flex justify-between items-center border-b p-4">
           <h3 id="search-dialog-title" className="text-lg font-semibold">
-            New Group 
+            New Group
           </h3>
           <button
             className="text-gray-500 hover:text-gray-800 bg-red-100 border border-red-200 hover:bg-red-400 delay-100 px-2 py-[2px] rounded-sm"

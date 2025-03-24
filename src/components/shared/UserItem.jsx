@@ -9,7 +9,7 @@ const UserItem = ({ user, handler, handler2, handlerIsLoading, isAdded = false }
       {!avatar ? (
         <Avatar />
       ) : (
-        <img src={avatar} alt={name} className="w-12 h-12 rounded-full" />
+        <img src={avatar} alt={name} className="w-12 h-12 rounded-full object-cover" />
       )}
       <p>{name}</p>
       <p className=" flex-grow"></p>
