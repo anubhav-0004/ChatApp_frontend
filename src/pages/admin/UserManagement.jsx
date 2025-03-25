@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import AdminLayout from "../../components/layout/AdminLayout";
 import Table from "../../components/shared/Table";
-import { sampleDashBoardData } from "../../constants/sampleData";
+import axios from "axios";
+import { server } from "../../constants/config";
 
 const columns = [
   { Header: "ID", accessor: "id", width: 100 },
@@ -17,17 +18,29 @@ const columns = [
 const UserManagement = () => {
   const [rows, setRows] = useState([]);
 
+  const fetchData = (users = []) => {
+    setRows(
+      users.map((i) => ({
+        ...i,
+        id: i._id,
+        avatar: transformImage(i.avatar, 50),
+        dateJoined: new Date(i.createdAt).toLocaleDateString("en-GB"),
+      }))
+    );
+  };
+
+  const getAllUsers = async ()=> {
+    try {
+      const data = await axios.get(`${server}/api/v1/admin/users`,{withCredentials: true})
+      fetchData(data?.data?.transformedData);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
-    const fetchData = () => {
-      setRows(
-        sampleDashBoardData.users.map((i) => ({
-          ...i,
-          id: i._id,
-          avatar: transformImage(i.avatar[0], 50),
-        }))
-      );
-    };
-    fetchData();
+        getAllUsers();
   }, []);
 
   return (

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import AdminLayout from "../../components/layout/AdminLayout";
 import Table from "../../components/shared/Table";
 import { sampleDashBoardData } from "../../constants/sampleData";
+import axios from "axios";
+import { server } from "../../constants/config";
 
 const columns = [
   { Header: "ID", accessor: "id", width: 100 },
@@ -21,7 +23,7 @@ const transformImage = (urls, width) => {
           <img
             key={index}
             src={url}
-            alt={`User ${index}`}
+            alt={`${index}`}
             width={width}
             className="absolute rounded-[50%] aspect-square object-cover border border-black"
             style={{
@@ -38,7 +40,7 @@ const transformImage = (urls, width) => {
     return (
       <img
         src={urls}
-        alt="User Avatar"
+        alt="Avatar"
         width={width}
         className="rounded-[50%] aspect-square object-cover border border-black"
       />
@@ -73,24 +75,30 @@ const transformObjectImage = (urls, width) => {
 const ChatManagement = () => {
   const [rows, setRows] = useState([]);
 
+  const fetchData = (chats) => {
+    setRows(
+      chats.map((i) => ({
+        ...i,
+        id: i._id,
+        avatar: transformImage(i.avatar, 50), 
+        members: transformObjectImage(i.members, 50),
+        creator: (
+          <div className="flex items-center">
+            {transformImage([i.creator.avatar], 40)} {/* Small avatar */}
+            <span className="ml-2">{i.creator.name}</span> {/* Name */}
+          </div>
+        ),
+      }))
+    );
+  };
+
+  const getAllChats = async ()=>{
+    const res = await axios.get(`${server}/api/v1/admin/chats`, {withCredentials: true,});
+    fetchData(res?.data?.chats);
+  }
+
   useEffect(() => {
-    const fetchData = () => {
-      setRows(
-        sampleDashBoardData.chats.map((i) => ({
-          ...i,
-          id: i._id,
-          avatar: transformImage([i.avatar], 50), // Wrap in array for consistency
-          members: transformObjectImage(i.members, 50),
-          creator: (
-            <div className="flex items-center">
-              {transformImage([i.creator.avatar], 40)} {/* Small avatar */}
-              <span className="ml-2">{i.creator.name}</span> {/* Name */}
-            </div>
-          ),
-        }))
-      );
-    };
-    fetchData();
+    getAllChats();
   }, []);
 
   return (

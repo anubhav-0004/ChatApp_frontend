@@ -6,18 +6,31 @@ import { FaUserAlt } from "react-icons/fa";
 import { FaUserGroup } from "react-icons/fa6";
 import { MdMessage } from "react-icons/md";
 import { DoughnutChart, LineChart } from "../../components/specific/Charts";
+import axios from "axios";
+import { server } from "../../constants/config";
 
 const DashBoard = () => {
   const [currentTime, setCurrentTime] = useState(moment());
+  const [allData, setAllData] =useState({});
+
+  const getAllUsers = async ()=>{
+    try {
+      const data = await axios.get(`${server}/api/v1/admin/stats`,{withCredentials: true})
+      setAllData(data.data.stats);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(moment());
     }, 1000);
 
+    getAllUsers();
+
     return () => clearInterval(interval);
   }, []);
-
   return (
     <AdminLayout>
       <div>
@@ -48,12 +61,12 @@ const DashBoard = () => {
         <div className="w-full h-full grid grid-cols-[60%_38%] max-md:grid-cols-1 gap-x-5">
           <div className="my-5 max-md:my-2 p-3 bg-gradient-to-r from-[#34346e] via-[#4646a0] to-[#4b4bb9]  w-full rounded-md text-slate-100">
             <h3 className="text-xl text-slate-200 mb-2 text-center underline">Last 7 Days Messages</h3>
-            <LineChart value={[12, 22, 4, 52, 102, 38, 20]} />
+            <LineChart value={allData?.last7DaysMessage} />
           </div>
           <div className="my-5 max-md:my-2 relative bg-gradient-to-r from-[#34346e] via-[#4646a0] to-[#4b4bb9] w-full h-auto rounded-md p-0 text-slate-100 text-center">
             <DoughnutChart
               labels={["Single Chats", "Group Chats"]}
-              value={[33, 77]}
+              value={[(allData.usersCount - allData.groupsCount), allData.groupsCount]}
             />
             <div className="absolute text-2xl top-[52%] max-md:right-[35%] max-md:top-[60%] right-[38%] flex gap-x-3 items-center">
               <FaUserGroup />
@@ -63,9 +76,9 @@ const DashBoard = () => {
           </div>
         </div>
         <div className="grid grid-cols-3 mb-3 max-md:grid-cols-1 gap-8 mt-5 max-md:max-w-[95%] mx-auto">
-          <Widgets tittle={"Users"} Icon={<FaUserAlt />} value={30} />
-          <Widgets tittle={"Chats"} Icon={<FaUserGroup />} value={10} />
-          <Widgets tittle={"Message"} Icon={<MdMessage />} value={100} />
+          <Widgets tittle={"Users"} Icon={<FaUserAlt />} value={allData.usersCount || 0} />
+          <Widgets tittle={"Chats"} Icon={<FaUserGroup />} value={allData.totalChatsCount || 0} />
+          <Widgets tittle={"Message"} Icon={<MdMessage />} value={allData.messageCount || 0} />
         </div>
       </div>
     </AdminLayout>

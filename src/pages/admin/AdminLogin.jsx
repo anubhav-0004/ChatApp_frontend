@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { FaRegEye, FaEyeSlash } from "react-icons/fa6";
 import { Navigate, useNavigate } from "react-router-dom";
 import { IoChevronBack } from "react-icons/io5";
+import axios from "axios";
+import { server } from "../../constants/config";
+import toast from "react-hot-toast";
 
 const AdminLogin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,14 +19,20 @@ const AdminLogin = () => {
     return <Navigate to="/admin/dashboard" />;
   }
 
-  const submitHander = (e) => {
+  const submitHander = async (e) => {
     e.preventDefault();
-    const adminPass = document.getElementById("adminPass").value;
-    if (adminPass === "Anubhav-0004") {
-      console.log("Admin Logged In");
+    try {
+      const adminPass = document.getElementById("adminPass").value;
+      const data = await axios.post(`${server}/api/v1/admin/verify`,{
+        secretKey: adminPass,
+      },{
+        withCredentials: true,
+      });
+      toast.success(data?.data?.message || "Admin LoggedIn.");
       setIsAdmin(true);
-    } else {
-      console.log("Wrong Password");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || "You are not a admin.")
     }
   };
   return (

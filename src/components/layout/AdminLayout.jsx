@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { AiOutlineLogout } from "react-icons/ai";
 import { FaUsersGear } from "react-icons/fa6";
@@ -7,6 +8,8 @@ import { MdSpaceDashboard } from "react-icons/md";
 import { RiUserSettingsFill } from "react-icons/ri";
 import { TiMessages } from "react-icons/ti";
 import { Link, useLocation, Navigate } from "react-router-dom";
+import { server } from "../../constants/config";
+import toast from "react-hot-toast";
 
 const AdminLayout = ({ children }) => {
   const adminTabs = [
@@ -44,9 +47,14 @@ const AdminLayout = ({ children }) => {
 
   if (!isAdmin) return <Navigate to="/login" />;
 
-  const logOutHandler = () => {
-    console.log("Log Out !!");
-    setIsAdmin(false);
+  const logOutHandler = async () => {
+    try {
+      const data = await axios.get(`${server}/api/v1/admin/logout`,{withCredentials: true})
+      toast.success(data?.data?.message);
+      setIsAdmin(false);
+    } catch (error) {
+      console.log(error)
+    }
   };
 
   const toggleDrawer = () => {
