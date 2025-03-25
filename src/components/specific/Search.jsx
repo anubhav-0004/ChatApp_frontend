@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import UserItem from "../shared/UserItem";
-import { sampleUser } from "../../constants/sampleData";
 import { useLazySearchUserQuery } from "../../redux/api/reduxAPI";
 import axios from "axios";
 import { server } from "../../constants/config";
@@ -22,7 +21,6 @@ const Search = ({ onClose }) => {
   };
 
   const addFriendHandler = async (id) => {
-    console.log("Send Friend Request", id);
     try {
       const data = axios.put(
         `${server}/api/v1/user/send-request`,
@@ -47,7 +45,6 @@ const Search = ({ onClose }) => {
           userId: id,
         },
       });
-      console.log("data", data);
       toast.success(data?.message || "Request deleted.");
     } catch (error) {
       console.log(error);
@@ -56,6 +53,7 @@ const Search = ({ onClose }) => {
   };
 
   let isLoadingSendFriendRequest = false;
+
   const [users, setUsers] = useState([]);
   useEffect(() => {
     const timeGap = setTimeout(() => {
@@ -67,7 +65,7 @@ const Search = ({ onClose }) => {
       clearTimeout(timeGap);
     };
   }, [searchValue]);
-  console.log(users);
+  // console.log(users);
   return (
     <div
       className="absolute inset-0 h-[100vh] flex items-center justify-center bg-black bg-opacity-50 z-50"

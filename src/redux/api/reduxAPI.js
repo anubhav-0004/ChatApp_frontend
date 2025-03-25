@@ -20,9 +20,17 @@ const api = createApi({
         credentials: "include",
       }),
       providesTags: ["User"],
+    }),
+
+    allUsers:builder.query({
+      query: () => ({
+        url: `user/search`,
+        credentials: "include",
+      }),
+      providesTags: ["User"],
     })
   }),
 });
 
 export default api;
-export const { useMyChatsQuery, useLazySearchUserQuery } = api;
+export const { useMyChatsQuery, useLazySearchUserQuery, useLazyAllUsersQuery } = api;

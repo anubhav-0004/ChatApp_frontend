@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from "react";
 import UserItem from "../shared/UserItem";
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import { server } from "../../constants/config";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useLocation, useParams } from "react-router-dom";
 
 const EditGroup = ({ onClose, group, chatId, allUsers }) => {
   const handleClose = () => onClose && onClose();
-
   const groupName = group?.find((chat) => chat._id === chatId);
-  const [users, setUsers] = useState(group);
+  const [users, setUsers] = useState([]);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
   const [addMember, setAddMember] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const location = useLocation();
+
+  const grpMembers = async (id) => {
+    const data = await axios.get(`${server}/api/v1/chats/${id}?populate=true`, {
+      withCredentials: true,
+    });
+    setUsers(data.data.chat.members);
+  };
 
   useEffect(() => {
     const handleResize = () => setViewportHeight(window.innerHeight);
     window.addEventListener("resize", handleResize);
+    grpMembers(chatId);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -23,12 +35,37 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
     console.log("Add Member", user);
   };
 
-  const removeMemberFromGroup = (user) => {
-    console.log("Remove Member", user);
+  const removeMemberFromGroup = async (user) => {
+    const queryParams = new URLSearchParams(location.search);
+    const chatId = queryParams.get("group");
+    console.log("Remove Member", user, chatId);
+    try {
+      const data = await axios.put(
+        `${server}/api/v1/chats/removemembers`,
+        {
+          chatId: chatId,
+          userId: user,
+        },
+        {withCredentials: true}
+      );
+      toast.success(data?.message || "User removed");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.message || "User not removed");
+    }
   };
 
-  const deleteGroup = () => {
-    console.log("Delete Group", groupName);
+  const deleteGroup = async () => {
+    console.log("Delete Group", groupName._id);
+    try {
+      await axios.delete(`${server}/api/v1/chats/${groupName._id}`, {
+        withCredentials: true,
+      });
+      toast.success("Group Deleted Successfully.");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.message || "Can not delete");
+    }
     setShowDeletePopup(false);
   };
 
@@ -36,10 +73,24 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
   const [grpBio, setGrpBio] = useState(groupName?.bio);
   const [editName, setEditName] = useState(false);
   const toggleEditName = () => setEditName((prev) => !prev);
-  const saveHandler = () => {
+  const saveHandler = async () => {
     console.log("Group Name:", grpName);
     console.log("Group Bio:", grpBio);
-    toggleEditName();
+    try {
+      await axios.put(
+        `${server}/api/v1/chats/${chatId}?name=${encodeURIComponent(
+          grpName
+        )}&bio=${encodeURIComponent(grpBio)}`,
+        {}, // Empty object for PUT body
+        { withCredentials: true }
+      );
+
+      toggleEditName();
+      toast.success("Group details updated.");
+    } catch (error) {
+      console.error("Error updating group:", error);
+      toast.error("Cann't update details.");
+    }
   };
 
   return (
@@ -66,7 +117,7 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
             <img
               src={groupName?.avatar?.[0]}
               alt="Group Avatar"
-              className="w-32 h-32 rounded-full object-cover"
+              className="w-32 h-32 rounded-full object-cover border border-[#274878]"
             />
             <MdOutlineDeleteOutline
               className="absolute top-3 w-8 h-8 border border-red-400 rounded p-1 right-6 text-red-500 bg-red-100 hover:bg-red-200 cursor-pointer"
@@ -74,22 +125,25 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
             />
             <h1 className="text-xl font-semibold text-gray-800">{grpName}</h1>
             <p className="text-sm text-gray-600 flex items-center space-x-1">
-              <span>Group</span> •{" "}
-              <span>{groupName?.members?.length} Members</span>
+              <span>Group &nbsp;</span>•{" "}
+              <span>{groupName?.members?.length || 0} Members</span>
             </p>
             <p className="text-center text-gray-500">{grpBio}</p>
-            {!editName ? <button
-              className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-800 transition"
-              onClick={toggleEditName}
-            >
-              Change Group Details
-            </button> : <button
-              className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-800 transition"
-              onClick={saveHandler}
-            >
-              Save Changes
-            </button>
-            }
+            {!editName ? (
+              <button
+                className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-800 transition"
+                onClick={toggleEditName}
+              >
+                Change Group Details
+              </button>
+            ) : (
+              <button
+                className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-800 transition"
+                onClick={saveHandler}
+              >
+                Save Changes
+              </button>
+            )}
             {editName && (
               <div className="m-4 gap-y-3 flex flex-col relative">
                 <label
@@ -144,7 +198,7 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
             </p>
           </div>
 
-          {/* Right Section */}
+          {/* Right Section: list of users */}
           <div
             className={`bg-gray-100 p-6 max-md:p-3 rounded-lg shadow flex flex-col overflow-hidden border-2 ${
               !addMember ? "border-green-500" : "border-blue-500"
@@ -164,7 +218,8 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
                 <UserItem
                   user={user}
                   key={user._id}
-                  handler={addMember ? addMemberToGroup : removeMemberFromGroup}
+                  handler={addMemberToGroup}
+                  handler2={removeMemberFromGroup}
                   handlerIsLoading={false}
                   isAdded={!addMember}
                 />

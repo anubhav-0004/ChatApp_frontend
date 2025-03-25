@@ -9,7 +9,14 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import EditGroup from "../components/dialogs/EditGroup";
 import AvatarCard from "../components/shared/AvatarCard";
 import MessageComponent from "../components/shared/MessageComponent";
-import { sampleChats, sampleMesssages, sampleUser } from "../constants/sampleData";
+import {
+  sampleChats,
+  sampleMesssages,
+  sampleUser,
+} from "../constants/sampleData";
+import axios from "axios";
+import { server } from "../constants/config";
+import { useLazyAllUsersQuery, useLazySearchUserQuery } from "../redux/api/reduxAPI";
 
 const Groups = () => {
   const chatId = useSearchParams()[0].get("group");
@@ -18,10 +25,33 @@ const Groups = () => {
   const handleMobile = () => setIsMobileMenuOpen((prev) => !prev);
   const navigateBack = () => navigate(-1);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+  const [myGrp, setMyGrp] = useState([]);
+  const [allUsers] = useLazyAllUsersQuery();
+  const [users, setUsers] = useState([]);
+  const [grpAllMembers, setGrpAllMembers] = useState([]);
+
+  const getGrp = async () => {
+    const data = await axios.get(`${server}/api/v1/chats/my/groups`, {
+      withCredentials: true,
+    });
+    setMyGrp(data.data.groups);
+    return data;
+  };
+
+  const getAllUsers = async ()=>{
+    await allUsers()
+        .then(({ data }) => setUsers(data?.users))
+        .catch((e) => console.log(e));
+  }
+
 
   useEffect(() => {
     const handleResize = () => setViewportHeight(window.innerHeight);
     window.addEventListener("resize", handleResize);
+    // we can either use .then or directly set grps inside the function
+    // getGrp().then((data1) => console.log(data1));
+    getGrp();
+    getAllUsers();
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -35,7 +65,7 @@ const Groups = () => {
       style={{ height: viewportHeight }}
     >
       <div className="bg-gradient-to-r from-[#6158c2] to-[#483b9a] overflow-y-auto relative w-full h-full max-md:hidden shadow-md">
-        <GroupList myGroups={sampleChats} chatId={chatId} />
+        <GroupList myGroups={myGrp} chatId={chatId} />
       </div>
       <div className="overflow-y-hidden bg-gradient-to-br from-[#7772aa] to-[#5d5ba3] w-full h-full">
         {chatId ? (
@@ -50,12 +80,14 @@ const Groups = () => {
                 onClick={editHandler}
               >
                 <img
-                  src={sampleChats.find((chat) => chat._id === chatId)?.avatar[0]}
-                  alt=""
-                  className="border border-[#8267a3] rounded-full w-8 h-8"
+                  src={
+                    myGrp.find((chat) => chat._id === chatId)?.avatar[0]
+                  }
+                  alt="DP"
+                  className="border border-[#8267a3] rounded-full w-8 h-8 object-cover"
                 />
                 <p className="font-medium max-w-full overflow-hidden text-ellipsis whitespace-nowrap text-white">
-                  {sampleChats.find((chat) => chat._id === chatId)?.name}
+                  {myGrp.find((chat) => chat._id === chatId)?.name}
                 </p>
                 <MdEdit className="ml-5 max-md:ml-0 text-[#f2f2f2] w-7 h-7 cursor-pointer hover:text-[#b5b5b5]" />
               </div>
@@ -70,7 +102,12 @@ const Groups = () => {
               ))}
             </div>
             <form className="flex relative items-center justify-between border-t border-[#6d6d75] gap-x-3 px-2 py-1 bg-[#40409a] h-[7.5%]">
-              <input type="file" name="fileInput" id="fileInput" className="hidden" />
+              <input
+                type="file"
+                name="fileInput"
+                id="fileInput"
+                className="hidden"
+              />
               <label
                 htmlFor="fileInput"
                 className="text-[#e9e0f9] text-2xl cursor-pointer bg-[#5c5c8a] rotate-[45deg] border border-slate-400 p-2 w-10 h-10 rounded-full"
@@ -89,14 +126,19 @@ const Groups = () => {
             </form>
             {isEditGroup && (
               <Suspense fallback={<Backdrop open />}>
-                <EditGroup group={sampleChats} chatId={chatId} onClose={() => setIsEditGroup(false)} allUsers={sampleUser} />
+                <EditGroup
+                  group={myGrp}
+                  chatId={chatId}
+                  onClose={() => setIsEditGroup(false)}
+                  allUsers={users}
+                />
               </Suspense>
             )}
           </>
         ) : (
           <div className="flex items-center justify-center h-full">
             <div className="border bg-gradient-to-r from-[#6158c2] to-[#483b9a] overflow-y-auto relative w-full h-full md:hidden">
-              <GroupList myGroups={sampleChats} chatId={chatId} />
+              <GroupList myGroups={myGrp} chatId={chatId} />
             </div>
             <p className="w-fit mx-auto text-3xl py-1 px-4 rounded-lg border border-[#4e4d4d] text-[#7d3415] bg-[#ece3e341] max-md:hidden">
               Click on a Group
@@ -109,7 +151,11 @@ const Groups = () => {
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <GroupList myGroups={sampleChats} chatId={chatId} handleMobile={handleMobile} />
+        <GroupList
+          myGroups={sampleChats}
+          chatId={chatId}
+          handleMobile={handleMobile}
+        />
       </div>
       {isMobileMenuOpen && (
         <div
@@ -126,7 +172,7 @@ const GroupList = ({ myGroups = [], chatId, handleMobile }) => {
   const navigateBack = () => navigate("/");
   return (
     <div className="w-[96%] mx-auto py-1 relative">
-      <div className="sticky top-0 z-10 border border-[#716bbc] shadow-[#655fad] bg-gradient-to-r from-[#544e90] to-[#512ca1] p-4 flex justify-between items-center rounded-lg shadow-md">
+      <div className="sticky top-0 z-10 border border-[#716bbc] shadow-[#655fad] bg-[#363453] bg-gradient-to-r from-[#363453] to-[#2a0e66] p-4 flex justify-between items-center rounded-lg shadow-md mb-1">
         <span className="text-2xl font-semibold text-white">Groups</span>
         <AiOutlineHome
           className="text-white text-3xl cursor-pointer bg-[#483b9a] p-1 rounded-full"
@@ -160,14 +206,15 @@ const GroupListItem = memo(({ group, chatId, handleMobile }) => {
       }}
     >
       <div
-  className={`flex items-center p-2 border-b mb-2 rounded-lg shadow-md shadow-[#a39cf4b1] transition-transform ${
-    chatId === String(_id) ? "bg-[#664e44] text-[#e9f7a0]" : "bg-[#5851a4] text-[#e9d9fe]"
-  }`}
->
-  <AvatarCard avatar={avatar} />
-  <p className="text-lg font-medium">{name}</p>
-</div>
-
+        className={`flex items-center p-2 border-b mb-2 rounded-lg shadow-md shadow-[#a39cf4b1] transition-transform ${
+          chatId === String(_id)
+            ? "bg-[#5c3f32] text-[#e9f7a0]"
+            : "bg-[#363453] text-[#e9d9fe]"
+        }`}
+      >
+        <AvatarCard avatar={avatar} />
+        <p className="text-lg font-medium">{name}</p>
+      </div>
     </Link>
   );
 });
