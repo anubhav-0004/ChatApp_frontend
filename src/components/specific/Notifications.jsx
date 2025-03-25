@@ -1,16 +1,57 @@
 import { Avatar } from "@mui/material";
-import React, { memo } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { sampleNotifications } from "../../constants/sampleData";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { server } from "../../constants/config";
 
 const Notificaions = ({ onClose }) => {
+  const [notifications, setNotifications] = useState([]);
+
   const handleClose = () => {
     if (onClose) {
       onClose();
     }
   };
-  const friendRequestHandler = ({ id, accept }) => {
-    console.log("Send Friend Request", id);
+  const friendRequestHandler = async ({ id, accept }) => {
+    try {       
+        const res = await axios.put(
+          `${server}/api/v1/user/accept-request`,
+          {
+            requestId: id,
+            accept: accept,
+          },
+          { withCredentials: true }
+        );
+
+        toast.success(res?.data?.message || "You are now friends.");
+      
+    } catch (error) {
+      console.log(error);
+      toast.error(
+        error?.response?.data?.message || "Failed to react on request"
+      );
+    }
   };
+
+  useEffect(() => {
+    try {
+      const getNotifications = async () => {
+        const notificaions = await axios.get(
+          `${server}/api/v1/user/notification`,
+          {
+            withCredentials: true,
+          }
+        );
+        setNotifications(notificaions?.data?.allRequest);
+      };
+
+      getNotifications();
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || "Can get Notifications.");
+    }
+  }, []);
 
   return (
     <div
@@ -37,8 +78,8 @@ const Notificaions = ({ onClose }) => {
         </div>
 
         <div className="px-4 py-2 overflow-y-auto max-h-[28rem] md:max-h-[20rem]">
-          {sampleNotifications.length > 0 ? (
-            sampleNotifications.map((i) => (
+          {notifications.length > 0 ? (
+            notifications.map((i) => (
               <div key={i._id}>
                 <NotificaionItem
                   key={i._id}
@@ -79,13 +120,13 @@ const NotificaionItem = memo(({ sender, _id, handler }) => {
         <span className="font-normal md:hidden">as friend ??</span>
       </p>
       <button
-        onClick={() => handler({ _id, accept: true })}
+        onClick={() => handler({ id: _id, accept: true })}
         className="text-green-700 opacity-90 bg-green-200 border px-1 rounded max-md:text-sm"
       >
         Accept
       </button>
       <button
-        onClick={() => handler({ _id, accept: false })}
+        onClick={() => handler({ id: _id, accept: false })}
         className="text-red-500 opacity-90 bg-red-200 border px-1 rounded max-md:text-sm"
       >
         Remove

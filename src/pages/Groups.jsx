@@ -1,4 +1,5 @@
 import { Backdrop } from "@mui/material";
+import axios from "axios";
 import React, { memo, Suspense, useEffect, useState } from "react";
 import { AiOutlineHome } from "react-icons/ai";
 import { IoMdArrowRoundBack, IoMdAttach } from "react-icons/io";
@@ -9,14 +10,12 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import EditGroup from "../components/dialogs/EditGroup";
 import AvatarCard from "../components/shared/AvatarCard";
 import MessageComponent from "../components/shared/MessageComponent";
+import { server } from "../constants/config";
 import {
   sampleChats,
-  sampleMesssages,
-  sampleUser,
+  sampleMesssages
 } from "../constants/sampleData";
-import axios from "axios";
-import { server } from "../constants/config";
-import { useLazyAllUsersQuery, useLazySearchUserQuery } from "../redux/api/reduxAPI";
+import { useLazyAllUsersQuery } from "../redux/api/reduxAPI";
 
 const Groups = () => {
   const chatId = useSearchParams()[0].get("group");
@@ -28,7 +27,6 @@ const Groups = () => {
   const [myGrp, setMyGrp] = useState([]);
   const [allUsers] = useLazyAllUsersQuery();
   const [users, setUsers] = useState([]);
-  const [grpAllMembers, setGrpAllMembers] = useState([]);
 
   const getGrp = async () => {
     const data = await axios.get(`${server}/api/v1/chats/my/groups`, {

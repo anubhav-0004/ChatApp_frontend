@@ -13,12 +13,15 @@ const ChatItem = ({
   handleDeleteChat,
   onClick,
 }) => {
-  const sameSender = chatId === String(_id)
+  const sameSender = chatId === String(_id);
   return (
     <Link
       to={`/chat/${_id}`}
-      onContextMenu={(e) => handleDeleteChat(e, _id, groupChat)}
-      onClick={onClick} 
+      onContextMenu={(e) => {
+        e.preventDefault();
+        handleDeleteChat(e, _id, groupChat);
+      }}
+      onClick={onClick}
     >
       <div
         className="flex items-center gap-4 p-4 relative border-b border-zinc-400 rounded-r-sm"
@@ -30,13 +33,13 @@ const ChatItem = ({
         <div className="w-12 h-12 relative">
           <img
             src={avatar[0]}
-            alt='DP'
+            alt="DP"
             className="w-full h-full object-cover rounded-full text-green-400"
           />
         </div>
-          {groupChat && (
-            <div className="absolute top-8 right-6 w-4 h-4 bg-yellow-100 rounded-full animate-pulse"></div>
-          )}
+        {groupChat && (
+          <div className="absolute top-8 right-6 w-4 h-4 bg-yellow-100 rounded-full animate-pulse"></div>
+        )}
         <div>
           <h3 className="font-bold text-lg">{name}</h3>
           {newMessage && <p>{newMessage.count} New Message</p>}

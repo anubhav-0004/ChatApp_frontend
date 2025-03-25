@@ -34,7 +34,7 @@ const NewGroups = ({ onClose }) => {
   };
 
   const validateGroupName = () => {
-    if (groupName.length < 5) {
+    if (groupName.length < 3) {
       setErrorMessage("Group name must be at least 5 characters long.");
       return false;
     }
@@ -61,7 +61,7 @@ const NewGroups = ({ onClose }) => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error?.message || "Cann't create group.")
+      toast.error(error?.response?.data?.message || "Cann't create group.")
     }
   };
 

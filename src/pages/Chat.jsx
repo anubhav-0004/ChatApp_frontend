@@ -25,7 +25,7 @@ const Chat = () => {
 
   return (
     <div
-      className="w-full flex flex-col overflow-hidden"
+      className="w-full flex flex-col overflow-hidden z-40"
       style={{
         height: `calc(${viewportHeight}px - ${
           window.innerWidth >= 768 ? 56 : 68

@@ -5,7 +5,7 @@ import { IoIosAddCircle, IoIosRemoveCircle  } from "react-icons/io";
 const UserItem = ({ user, handler, handler2, handlerIsLoading, isAdded = false }) => {
   const { name, _id, avatar } = user;
   return (
-    <div className="flex items-center gap-x-3 w-[93%] rounded py-2 bg-[#e0dcdc] mx-auto my-2 px-3 border border-gray-300">
+    <div className="flex items-center gap-x-3 w-[93%] rounded py-2 bg-[#d6d0d0] mx-auto my-2 px-3 border border-[#958f8f]">
       {!avatar ? (
         <Avatar />
       ) : (

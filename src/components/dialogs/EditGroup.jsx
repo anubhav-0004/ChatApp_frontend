@@ -31,14 +31,28 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
 
   const toggleAddMember = () => setAddMember((prev) => !prev);
 
-  const addMemberToGroup = (user) => {
-    console.log("Add Member", user);
+  const addMemberToGroup = async (user) => {
+    const queryParams = new URLSearchParams(location.search);
+    const chatId = queryParams.get("group");
+    try {
+      const data = await axios.put(
+        `${server}/api/v1/chats/addmembers`,
+        {
+          chatId: chatId,
+          members: [user],
+        },
+        {withCredentials: true}
+      );
+      toast.success(`${data?.data?.allUsersName} added to grp` || "User added");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.message || "User can not added");
+    }
   };
 
   const removeMemberFromGroup = async (user) => {
     const queryParams = new URLSearchParams(location.search);
     const chatId = queryParams.get("group");
-    console.log("Remove Member", user, chatId);
     try {
       const data = await axios.put(
         `${server}/api/v1/chats/removemembers`,
@@ -56,7 +70,6 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
   };
 
   const deleteGroup = async () => {
-    console.log("Delete Group", groupName._id);
     try {
       await axios.delete(`${server}/api/v1/chats/${groupName._id}`, {
         withCredentials: true,
@@ -69,13 +82,12 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
     setShowDeletePopup(false);
   };
 
-  const [grpName, setGrpName] = useState(groupName?.name);
+  const [grpName, setGrpName] = useState(groupName?.name.toString());
+  // console.log(groupName);
   const [grpBio, setGrpBio] = useState(groupName?.bio);
   const [editName, setEditName] = useState(false);
   const toggleEditName = () => setEditName((prev) => !prev);
   const saveHandler = async () => {
-    console.log("Group Name:", grpName);
-    console.log("Group Bio:", grpBio);
     try {
       await axios.put(
         `${server}/api/v1/chats/${chatId}?name=${encodeURIComponent(
@@ -93,6 +105,10 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
     }
   };
 
+  const notInGrpUsers = allUsers.filter((user) =>
+    users.every((currUser) => user._id !== currUser._id)
+  );
+  
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50"
@@ -113,7 +129,7 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
         {/* Main Content */}
         <div className="grid grid-cols-2 gap-6 max-md:gap-3 px-6 py-4 max-md:py-3 max-md:grid-cols-1 overflow-hidden flex-grow">
           {/* Left Section */}
-          <div className="bg-gray-100 p-6 max-md:p-3 relative rounded-lg shadow flex flex-col items-center space-y-4 max-md:space-y-2">
+          <div className="bg-gray-200 p-6 max-md:p-3 relative rounded-lg shadow flex flex-col items-center space-y-4 max-md:space-y-2">
             <img
               src={groupName?.avatar?.[0]}
               alt="Group Avatar"
@@ -200,7 +216,7 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
 
           {/* Right Section: list of users */}
           <div
-            className={`bg-gray-100 p-6 max-md:p-3 rounded-lg shadow flex flex-col overflow-hidden border-2 ${
+            className={`bg-gray-200 p-6 max-md:p-3 rounded-lg shadow flex flex-col overflow-hidden border-2 ${
               !addMember ? "border-green-500" : "border-blue-500"
             }`}
           >
@@ -214,7 +230,7 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
               {addMember ? "All Users" : "Group Members"}
             </div>
             <div className="overflow-y-auto flex-grow space-y-4 max-md:space-y-2 max-md:mt-0 mt-2">
-              {(addMember ? allUsers : users)?.map((user) => (
+              {(addMember ? notInGrpUsers : users)?.map((user) => (
                 <UserItem
                   user={user}
                   key={user._id}

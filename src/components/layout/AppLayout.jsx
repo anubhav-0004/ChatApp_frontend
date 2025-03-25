@@ -7,17 +7,21 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { sampleChats } from "../../constants/sampleData";
 import { useMyChatsQuery } from "../../redux/api/reduxAPI";
 import { useErrors } from "../../hooks/hook";
+import axios from "axios";
+import { server } from "../../constants/config";
+import toast from "react-hot-toast";
 
 const AppLayout = (WrappedComponent) => {
   return function LayoutWrapper(props) {
     const params = useParams();
     const navigate = useNavigate();
     const { isLoading, data, isError, error, refetch } = useMyChatsQuery("");
-    useErrors([{isError, error}])
+    useErrors([{ isError, error }]);
     const [chatId, setChatId] = useState(params.chatId || null);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 450);
     const [showChatList, setShowChatList] = useState(true);
     const chatId2 = useLocation().pathname.split("/").filter(Boolean).pop();
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
       setChatId(params.chatId);
@@ -49,9 +53,27 @@ const AppLayout = (WrappedComponent) => {
       }
     };
 
+    const [id, setId] = useState("");
+    const [grpChat, setGrpChat] = useState(false);
     const handleDeleteChat = (e, _id, groupChat) => {
+      setId(_id);
+      setGrpChat(groupChat);
       e.preventDefault();
-      console.log("Delete", _id, groupChat);
+      setShowModal(true);
+    };
+
+    const handleDeleteChatFun = async (e) => {
+      e.preventDefault();
+      try {
+        await axios.delete(`${server}/api/v1/chats/${id}`,{
+          withCredentials: true,
+        });
+        toast.success("Chat deleted.");
+      } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message || "Can not delete chat.")
+      }
+      setShowModal(false);
     };
 
     return (
@@ -118,6 +140,29 @@ const AppLayout = (WrappedComponent) => {
                   handleDeleteChat={handleDeleteChat}
                   onChatSelect={handleChatSelect}
                 />
+                {showModal && (
+                  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                    <div className="bg-white rounded-lg p-6 shadow-lg w-96 max-md:w-80 text-center">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                        Do you want to delete this chat?
+                      </h3>
+                      <div className="flex justify-around mt-4">
+                        <button
+                          className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                          onClick={handleDeleteChatFun}
+                        >
+                          Yes
+                        </button>
+                        <button
+                          className="px-6 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition"
+                          onClick={() => setShowModal(false)}
+                        >
+                          No
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="w-full bg-slate-200">
                 <WrappedComponent chatId={chatId} {...props} />

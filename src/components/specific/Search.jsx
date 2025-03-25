@@ -22,14 +22,14 @@ const Search = ({ onClose }) => {
 
   const addFriendHandler = async (id) => {
     try {
-      const data = axios.put(
+      const data = await axios.put(
         `${server}/api/v1/user/send-request`,
         {
           userId: id,
         },
         { withCredentials: true }
       );
-      toast.success(data?.message || "Request sent 😊");
+      toast.success(data?.data?.message || "Request sent 😊");
     } catch (error) {
       console.log(error);
       toast.error(error?.message || "Request failed");
@@ -38,14 +38,17 @@ const Search = ({ onClose }) => {
 
   const deleteRequest = async (id) => {
     try {
-      console.log(id);
-      const data = axios.delete(`${server}/api/v1/user/delete-request`, {
-        withCredentials: true,
-        data: {
-          userId: id,
+      const data = await axios.put(
+        `${server}/api/v1/user/accept-request`,
+        {
+          id: id,
+          accept: false,
+          requestId: "123"
         },
-      });
-      toast.success(data?.message || "Request deleted.");
+        { withCredentials: true }
+      );
+      console.log(data);
+      toast.success(data?.response?.data?.message || "Request deleted.");
     } catch (error) {
       console.log(error);
       toast.error(error?.message || "Unable to delete request");
