@@ -24,7 +24,7 @@ const api = createApi({
 
     allUsers:builder.query({
       query: () => ({
-        url: `user/search`,
+        url: `user/allUsers`,
         credentials: "include",
       }),
       providesTags: ["User"],

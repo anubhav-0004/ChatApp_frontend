@@ -14,18 +14,17 @@ const Notificaions = ({ onClose }) => {
     }
   };
   const friendRequestHandler = async ({ id, accept }) => {
-    try {       
-        const res = await axios.put(
-          `${server}/api/v1/user/accept-request`,
-          {
-            requestId: id,
-            accept: accept,
-          },
-          { withCredentials: true }
-        );
+    try {
+      const res = await axios.put(
+        `${server}/api/v1/user/accept-request`,
+        {
+          requestId: id,
+          accept: accept,
+        },
+        { withCredentials: true }
+      );
 
-        toast.success(res?.data?.message || "You are now friends.");
-      
+      toast.success(res?.data?.message || "You are now friends.");
     } catch (error) {
       console.log(error);
       toast.error(
@@ -102,7 +101,7 @@ const Notificaions = ({ onClose }) => {
 const NotificaionItem = memo(({ sender, _id, handler }) => {
   const { name, avatar } = sender;
   return (
-    <div className="flex items-center bg-[#e3e1e1] gap-2 my-2 px-4 py-2 border rounded w-[95%] mx-auto border-zinc-400">
+    <div className="flex items-center bg-[#e3e1e1] gap-2 my-2 px-4 py-2 border rounded w-[95%] max-sm:w-[98%] mx-auto border-zinc-400">
       {avatar ? (
         <img
           className="w-12 h-12 max-md:w-9 max-md:h-9 max-md:scale-125 rounded-full"
@@ -119,18 +118,20 @@ const NotificaionItem = memo(({ sender, _id, handler }) => {
         </span>
         <span className="font-normal md:hidden">as friend ??</span>
       </p>
-      <button
-        onClick={() => handler({ id: _id, accept: true })}
-        className="text-green-700 opacity-90 bg-green-200 border px-1 rounded max-md:text-sm"
-      >
-        Accept
-      </button>
-      <button
-        onClick={() => handler({ id: _id, accept: false })}
-        className="text-red-500 opacity-90 bg-red-200 border px-1 rounded max-md:text-sm"
-      >
-        Remove
-      </button>
+      <div className="flex gap-x-3 max-sm:flex-col max-sm:gap-y-2">
+        <button
+          onClick={() => handler({ id: _id, accept: true })}
+          className="text-green-700 opacity-90 bg-green-200 border px-1 rounded max-md:text-sm"
+        >
+          Accept
+        </button>
+        <button
+          onClick={() => handler({ id: _id, accept: false })}
+          className="text-red-500 opacity-90 bg-red-200 border px-1 rounded max-md:text-sm"
+        >
+          Remove
+        </button>
+      </div>
     </div>
   );
 });

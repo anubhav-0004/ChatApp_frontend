@@ -1,11 +1,12 @@
 import { Avatar, Icon as IconButton } from "@mui/material";
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { IoIosAddCircle, IoIosRemoveCircle  } from "react-icons/io";
 
-const UserItem = ({ user, handler, handler2, handlerIsLoading, isAdded = false }) => {
+const UserItem = ({ user, handler, handler2, handlerIsLoading, isAdded = false, admin }) => {
   const { name, _id, avatar } = user;
   return (
-    <div className="flex items-center gap-x-3 w-[93%] rounded py-2 bg-[#d6d0d0] mx-auto my-2 px-3 border border-[#958f8f]">
+    <div className={`flex items-center gap-x-3 w-[93%] rounded py-2 bg-[#d6d0d0] mx-auto my-2 px-3 border border-[#958f8f] ${admin ? "bg-[#f6bdbd]" : "bg-[#d6d0d0]"}`}
+    >
       {!avatar ? (
         <Avatar />
       ) : (
@@ -15,11 +16,11 @@ const UserItem = ({ user, handler, handler2, handlerIsLoading, isAdded = false }
       <p className=" flex-grow"></p>
       {
         isAdded ? (<IoIosRemoveCircle
-        className="text-[#cf2f32c4] border cursor-pointer border-[#f75e34ea] rounded-[50%] w-[8%] h-[8%]"
+        className={`text-[#cf2f32c4] border cursor-pointer border-[#f75e34ea] rounded-[50%] w-[8%] h-[8%] ${admin ? "hidden" : ""}`}
         onClick={() => handler2(_id)}
         disabled={handlerIsLoading}
       />) : (<IoIosAddCircle
-        className="text-[#5252ec] border cursor-pointer border-[#5252ec] rounded-[50%] w-[8%] h-[8%]"
+        className={`text-[#5252ec] border cursor-pointer border-[#5252ec] rounded-[50%] w-[8%] h-[8%] ${admin ? "hidden" : ""}`}
         onClick={() => handler(_id)}
         disabled={handlerIsLoading}
       />)

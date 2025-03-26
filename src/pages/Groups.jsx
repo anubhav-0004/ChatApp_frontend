@@ -38,7 +38,7 @@ const Groups = () => {
 
   const getAllUsers = async ()=>{
     await allUsers()
-        .then(({ data }) => setUsers(data?.users))
+        .then(({ data }) => setUsers(data?.filteredData))
         .catch((e) => console.log(e));
   }
 
@@ -62,7 +62,7 @@ const Groups = () => {
       className="grid place-items-center grid-flow-col max-md:grid-cols-1 grid-cols-[35%_65%]"
       style={{ height: viewportHeight }}
     >
-      <div className="bg-gradient-to-r from-[#6158c2] to-[#483b9a] overflow-y-auto relative w-full h-full max-md:hidden shadow-md">
+      <div className="bg-gradient-to-r from-[#6158c2] to-[#483b9a] max-md:hidden overflow-y-auto relative w-full h-full  shadow-md">
         <GroupList myGroups={myGrp} chatId={chatId} />
       </div>
       <div className="overflow-y-hidden bg-gradient-to-br from-[#7772aa] to-[#5d5ba3] w-full h-full">
@@ -145,19 +145,19 @@ const Groups = () => {
         )}
       </div>
       <div
-        className={`fixed max-md:block hidden overflow-y-auto top-1 left-0 max-h-[98%] bg-[#6158c2] shadow-lg border-r w-64 transform transition-transform duration-500 rounded-lg ease-in-out ${
+        className={`fixed max-md:block hidden overflow-y-auto top-1 left-0 max-h-[98%] bg-[#6158c2] shadow-lg border-r w-64 transform transition-transform z-30 duration-500 rounded-lg ease-in-out ${
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <GroupList
-          myGroups={sampleChats}
+          myGroups={myGrp}
           chatId={chatId}
           handleMobile={handleMobile}
         />
       </div>
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-20 z-30 md:hidden"
+          className="fixed inset-0 bg-black bg-opacity-40 z-20 md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
         ></div>
       )}
@@ -169,7 +169,7 @@ const GroupList = ({ myGroups = [], chatId, handleMobile }) => {
   const navigate = useNavigate();
   const navigateBack = () => navigate("/");
   return (
-    <div className="w-[96%] mx-auto py-1 relative">
+    <div className="w-[96%] mx-auto py-1 relative min-h-[99vh]">
       <div className="sticky top-0 z-10 border border-[#716bbc] shadow-[#655fad] bg-[#363453] bg-gradient-to-r from-[#363453] to-[#2a0e66] p-4 flex justify-between items-center rounded-lg shadow-md mb-1">
         <span className="text-2xl font-semibold text-white">Groups</span>
         <AiOutlineHome
@@ -187,7 +187,7 @@ const GroupList = ({ myGroups = [], chatId, handleMobile }) => {
           />
         ))
       ) : (
-        <div className="text-center text-white">No Groups</div>
+        <div className="text-center mt-3 font-bold text-white">No Groups</div>
       )}
     </div>
   );

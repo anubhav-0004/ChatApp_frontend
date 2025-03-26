@@ -1,8 +1,6 @@
 import React, { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProtectRoute from "./components/auth/ProtectRoute";
-import Loaders from "./components/layout/Loaders";
-import { isMobile } from "react-device-detect";
 import axios from "axios";
 import { server } from "./constants/config";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,7 +32,7 @@ const App = () => {
 
   return loader ? <Loader1/> : (
     <BrowserRouter>
-      <Suspense fallback={<Loaders />}>
+      <Suspense fallback={<Loader1 />}>
         <Routes>
           <Route element={<ProtectRoute user={user} />}>
             <Route path="/" element={<Home />} />

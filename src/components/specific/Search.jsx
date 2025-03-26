@@ -103,7 +103,7 @@ const Search = ({ onClose }) => {
           />
         </div>
         <div className="px-4 h-[20rem] overflow-y-auto">
-          {users.map((user) => (
+          {users.length > 0 ? users.map((user) => (
             <UserItem
               user={user}
               key={user._id}
@@ -112,7 +112,7 @@ const Search = ({ onClose }) => {
               handlerIsLoading={isLoadingSendFriendRequest}
               isAdded={user.isfriend}
             />
-          ))}
+          )) : <div className={`flex items-center gap-x-3 w-[93%] rounded py-2 bg-[#d6d0d0] mx-auto my-2 px-3  border border-[#958f8f]`}>No more Friends to add</div>}
         </div>
         <div className="flex-col flex-grow"></div>
       </div>

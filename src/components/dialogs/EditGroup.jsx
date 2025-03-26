@@ -9,6 +9,7 @@ import { useLocation, useParams } from "react-router-dom";
 const EditGroup = ({ onClose, group, chatId, allUsers }) => {
   const handleClose = () => onClose && onClose();
   const groupName = group?.find((chat) => chat._id === chatId);
+  const admin = (groupName?.creator);
   const [users, setUsers] = useState([]);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
   const [addMember, setAddMember] = useState(false);
@@ -65,7 +66,7 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
       toast.success(data?.message || "User removed");
     } catch (error) {
       console.log(error);
-      toast.error(error?.message || "User not removed");
+      toast.error(error?.response?.data?.message || "User not removed");
     }
   };
 
@@ -77,7 +78,7 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
       toast.success("Group Deleted Successfully.");
     } catch (error) {
       console.log(error);
-      toast.error(error?.message || "Can not delete");
+      toast.error(error?.response?.data?.message || "Can not delete");
     }
     setShowDeletePopup(false);
   };
@@ -105,7 +106,7 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
     }
   };
 
-  const notInGrpUsers = allUsers.filter((user) =>
+  const notInGrpUsers = allUsers?.filter((user) =>
     users.every((currUser) => user._id !== currUser._id)
   );
   
@@ -238,6 +239,7 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
                   handler2={removeMemberFromGroup}
                   handlerIsLoading={false}
                   isAdded={!addMember}
+                  admin={user?._id === admin}
                 />
               ))}
             </div>
