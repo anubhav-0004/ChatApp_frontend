@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { IoMdAttach } from "react-icons/io";
 import { LuSendHorizontal } from "react-icons/lu";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import FileMenu from "../components/dialogs/FileMenu";
 import AppLayout from "../components/layout/AppLayout";
 import MessageComponent from "../components/shared/MessageComponent";
-import { sampleChats, sampleMesssages } from "../constants/sampleData";
+import { sampleMesssages } from "../constants/sampleData";
+import toast from "react-hot-toast";
+import axios from "axios";
+import { server } from "../constants/config";
 
-const Chat = () => {
+const Chat = ({ chatId1 }) => {
   const user = {
     _id: "20072003",
     name: "Anubhav Mishra",
@@ -15,13 +18,31 @@ const Chat = () => {
 
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
   const chatId = useLocation().pathname.split("/").filter(Boolean).pop();
+  const navigate = useNavigate();
+  const [chatDetails, setChatDetails] = useState({});
+
+  const getChatDetails = async (id) => {
+    try {
+      const res = await axios.get(`${server}/api/v1/chats/${id}`, {
+        withCredentials: true,
+      });
+      setChatDetails(res?.data?.chat);
+    } catch (error) {
+      console.log(error);
+      toast.error("Can not open chat.");
+      navigate(`/`);
+    }
+  };
 
   useEffect(() => {
     const handleResize = () => setViewportHeight(window.innerHeight);
-
     window.addEventListener("resize", handleResize);
+
+    getChatDetails(chatId);
+
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [window.innerHeight, chatId]);
+
 
   return (
     <div
@@ -32,6 +53,14 @@ const Chat = () => {
         }px)`,
       }}
     >
+      <div
+        className="min-h-[3rem] px-4 py-2 text-white text-2xl font-semibold 
+             bg-[#4b4b7a] text-center hover:bg-[#5a5a8e] 
+             transition-colors duration-200"
+      >
+        {chatDetails?.name}
+      </div>
+
       <div
         className="text-[#dfd3ad] w-full max-md:h-[91%] h-[90%] text-xl opacity-95 p-2 overflow-y-auto flex flex-col"
         style={{

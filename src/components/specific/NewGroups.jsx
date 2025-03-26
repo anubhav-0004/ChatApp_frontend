@@ -8,7 +8,7 @@ import { server } from "../../constants/config";
 const NewGroups = ({ onClose }) => {
   const [members, setMembers] = useState([]);
   const [selectedMembers, setSelectedMembers] = useState([]);
-
+  const [isGroupCreating, setIsGroupCreating] = useState(false);
   const [groupName, setGroupName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -47,24 +47,28 @@ const NewGroups = ({ onClose }) => {
 
   const handleCreateGroup = async () => {
     try {
+      setIsGroupCreating(true);
       if (validateGroupName()) {
-        const data = await axios.post(`${server}/api/v1/chats/new`, {
-          name: groupName,
-          members: selectedMembers,
-        },
-      {
-        withCredentials: true,
-      });
+        const data = await axios.post(
+          `${server}/api/v1/chats/new`,
+          {
+            name: groupName,
+            members: selectedMembers,
+          },
+          {
+            withCredentials: true,
+          }
+        );
         handleClose();
         // console.log(data);
         toast.success(data?.data?.message || "Group created 😊");
       }
     } catch (error) {
       console.log(error);
-      toast.error(error?.response?.data?.message || "Cann't create group.")
+      toast.error(error?.response?.data?.message || "Cann't create group.");
     }
+    setIsGroupCreating(false);
   };
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,7 +83,7 @@ const NewGroups = ({ onClose }) => {
       }
     };
 
-    fetchData(); 
+    fetchData();
   }, []);
 
   return (
@@ -139,7 +143,8 @@ const NewGroups = ({ onClose }) => {
             Cancel
           </button>
           <button
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className={`px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700
+             ${!isGroupCreating ? "cursor-pointer" : "cursor-not-allowed opacity-20"}`}
             onClick={handleCreateGroup}
           >
             Create

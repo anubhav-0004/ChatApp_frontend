@@ -6,12 +6,15 @@ import { server } from "../constants/config";
 import { useDispatch } from "react-redux";
 import { userExists, userNotExists } from "../redux/reducers/auth";
 import toast from "react-hot-toast";
+import { useMyChatsQuery } from "../redux/api/reduxAPI";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const [avatar, setAvatar] = useState(null);
+
+  const { isLoading, data, isError, error, refetch } = useMyChatsQuery("");
 
 
   const handleSignUp = async (e) => {
@@ -28,16 +31,18 @@ const Login = () => {
     formData.append("username", username.value);
     formData.append("password", password.value);
     formData.append("phone", mobile.value);
+    formData.append("email", mail.value);
 
     try {
-      const { data } = await axios.post(`${server}/api/v1/user/new`, formData, {
+      const { res } = await axios.post(`${server}/api/v1/user/new`, formData, {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       dispatch(userExists(true));
-      toast.success(data.message);
+      refetch();
+      toast.success(res.message);
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something went wrong");
     }
@@ -61,8 +66,9 @@ const Login = () => {
         },
         config
       );
-      toast.success(data?.message || "Logged In");
       dispatch(userExists(true));
+      refetch();
+      toast.success(data?.message || "Logged In");
     } catch (error) {
       console.log(error);
       toast.error(error?.response?.data?.message || "Something went wrong");

@@ -5,14 +5,33 @@ import { useLazySearchUserQuery } from "../../redux/api/reduxAPI";
 import axios from "axios";
 import { server } from "../../constants/config";
 import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const Search = ({ onClose }) => {
   const [searchUser] = useLazySearchUserQuery();
   const [searchValue, setSearchValue] = useState("");
+  const [users, setUsers] = useState([]);
+  const [isUsersLoading, setIsUsersLoading] = useState(false);
+  const currUser = useSelector((state) => state.auth.user);
 
   const handleClose = () => {
     if (onClose) {
       onClose();
+    }
+  };
+
+  const fetchUsers = async () => {
+    setIsUsersLoading(true);
+    try {
+      const { data } = await searchUser(searchValue);
+      const filteredUsers = data?.users?.filter(
+        (user) => user._id !== currUser._id
+      );
+      setUsers(filteredUsers);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsUsersLoading(false);
     }
   };
 
@@ -29,7 +48,8 @@ const Search = ({ onClose }) => {
         },
         { withCredentials: true }
       );
-      toast.success(data?.data?.message || "Request sent 😊");
+      await fetchUsers();
+      toast.success("Request sent 😊");
     } catch (error) {
       console.log(error);
       toast.error(error?.message || "Request failed");
@@ -43,11 +63,11 @@ const Search = ({ onClose }) => {
         {
           id: id,
           accept: false,
-          requestId: "123"
+          requestId: "123", //you can send request id also but not mendatory as id is passed,
         },
         { withCredentials: true }
       );
-      console.log(data);
+      await fetchUsers();
       toast.success(data?.response?.data?.message || "Request deleted.");
     } catch (error) {
       console.log(error);
@@ -57,12 +77,13 @@ const Search = ({ onClose }) => {
 
   let isLoadingSendFriendRequest = false;
 
-  const [users, setUsers] = useState([]);
   useEffect(() => {
     const timeGap = setTimeout(() => {
-      searchUser(searchValue)
-        .then(({ data }) => setUsers(data?.users))
-        .catch((e) => console.log(e));
+      try {
+        fetchUsers();
+      } catch (error) {
+        console.log(error);
+      }
     }, 500);
     return () => {
       clearTimeout(timeGap);
@@ -103,17 +124,30 @@ const Search = ({ onClose }) => {
           />
         </div>
         <div className="px-4 h-[20rem] overflow-y-auto">
-          {users.length > 0 ? users.map((user) => (
-            <UserItem
-              user={user}
-              key={user._id}
-              handler={addFriendHandler}
-              handler2={deleteRequest}
-              handlerIsLoading={isLoadingSendFriendRequest}
-              isAdded={user.isfriend}
-            />
-          )) : <div className={`flex items-center gap-x-3 w-[93%] rounded py-2 bg-[#d6d0d0] mx-auto my-2 px-3  border border-[#958f8f]`}>No more Friends to add</div>}
+          {isUsersLoading ? (
+            <div className="text-center py-4 text-gray-600">
+              Users are loading...
+            </div>
+          ) : users.length > 0 ? (
+            users.map((user) => (
+              <UserItem
+                key={user._id}
+                user={user}
+                handler={addFriendHandler}
+                handler2={deleteRequest}
+                handlerIsLoading={isLoadingSendFriendRequest}
+                isAdded={user.isfriend}
+              />
+            ))
+          ) : (
+            <div className="flex justify-center items-center h-full">
+              <div className="flex items-center gap-x-3 w-[93%] rounded py-2 bg-gray-100 mx-auto px-3 border border-gray-400 text-gray-600">
+                No more Friends to add
+              </div>
+            </div>
+          )}
         </div>
+
         <div className="flex-col flex-grow"></div>
       </div>
     </div>

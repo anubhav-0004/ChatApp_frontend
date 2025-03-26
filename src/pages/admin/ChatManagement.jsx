@@ -4,6 +4,7 @@ import Table from "../../components/shared/Table";
 import { sampleDashBoardData } from "../../constants/sampleData";
 import axios from "axios";
 import { server } from "../../constants/config";
+import toast from "react-hot-toast";
 
 const columns = [
   { Header: "ID", accessor: "id", width: 100 },
@@ -80,7 +81,7 @@ const ChatManagement = () => {
       chats.map((i) => ({
         ...i,
         id: i._id,
-        avatar: transformImage(i.avatar, 50), 
+        avatar: transformImage(i.avatar, 50),
         members: transformObjectImage(i.members, 50),
         creator: (
           <div className="flex items-center">
@@ -92,10 +93,19 @@ const ChatManagement = () => {
     );
   };
 
-  const getAllChats = async ()=>{
-    const res = await axios.get(`${server}/api/v1/admin/chats`, {withCredentials: true,});
-    fetchData(res?.data?.chats);
-  }
+  const getAllChats = async () => {
+    try {
+      const res = await axios.get(`${server}/api/v1/admin/chats`, {
+        withCredentials: true,
+      });
+      fetchData(res?.data?.chats);
+    } catch (error) {
+      console.log(error);
+      if (error?.response?.data?.message == "Please Login as admin") {
+        toast.error("You have been logged out.");
+      }
+    }
+  };
 
   useEffect(() => {
     getAllChats();

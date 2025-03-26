@@ -7,12 +7,31 @@ import { server } from "../../constants/config";
 
 const Notificaions = ({ onClose }) => {
   const [notifications, setNotifications] = useState([]);
+  const [isNotificationLoading, setIsNotificationLoading] = useState(false);
 
   const handleClose = () => {
     if (onClose) {
       onClose();
     }
   };
+
+  const getNotifications = async () => {
+    try {
+      setIsNotificationLoading(true);
+      const notificaions = await axios.get(
+        `${server}/api/v1/user/notification`,
+        {
+          withCredentials: true,
+        }
+      );
+      setNotifications(notificaions?.data?.allRequest);
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.message || "Can get Notifications.");
+    }
+    setIsNotificationLoading(false);
+  };
+
   const friendRequestHandler = async ({ id, accept }) => {
     try {
       const res = await axios.put(
@@ -23,7 +42,7 @@ const Notificaions = ({ onClose }) => {
         },
         { withCredentials: true }
       );
-
+      getNotifications();
       toast.success(res?.data?.message || "You are now friends.");
     } catch (error) {
       console.log(error);
@@ -34,22 +53,7 @@ const Notificaions = ({ onClose }) => {
   };
 
   useEffect(() => {
-    try {
-      const getNotifications = async () => {
-        const notificaions = await axios.get(
-          `${server}/api/v1/user/notification`,
-          {
-            withCredentials: true,
-          }
-        );
-        setNotifications(notificaions?.data?.allRequest);
-      };
-
-      getNotifications();
-    } catch (error) {
-      console.log(error);
-      toast.error(error?.response?.data?.message || "Can get Notifications.");
-    }
+    getNotifications();
   }, []);
 
   return (
@@ -77,20 +81,20 @@ const Notificaions = ({ onClose }) => {
         </div>
 
         <div className="px-4 py-2 overflow-y-auto max-h-[28rem] md:max-h-[20rem]">
-          {notifications.length > 0 ? (
+          {isNotificationLoading ? (
+            <div>Notifications are loading...</div>
+          ) : notifications.length > 0 ? (
             notifications.map((i) => (
               <div key={i._id}>
                 <NotificaionItem
-                  key={i._id}
                   sender={i.sender}
                   _id={i._id}
                   handler={friendRequestHandler}
                 />
-                {/* <div className="flex-col flex-grow"></div> */}
               </div>
             ))
           ) : (
-            <div>No Notificatons</div>
+            <div>No Notifications</div>
           )}
         </div>
       </div>

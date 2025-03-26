@@ -3,6 +3,7 @@ import AdminLayout from "../../components/layout/AdminLayout";
 import Table from "../../components/shared/Table";
 import axios from "axios";
 import { server } from "../../constants/config";
+import toast from "react-hot-toast";
 
 const columns = [
   { Header: "ID", accessor: "id", width: 100 },
@@ -36,6 +37,9 @@ const UserManagement = () => {
       
     } catch (error) {
       console.log(error);
+      if(error?.response?.data?.message == "Please Login as admin"){
+        toast.error("You have been logged out.");
+      }
     }
   }
 

@@ -1,46 +1,66 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { RxAvatar } from "react-icons/rx";
-import { MdEmail } from "react-icons/md";
-import { FaInstagram, FaFacebook, FaCalendar, FaUser } from "react-icons/fa";
+import { MdEmail, MdInfoOutline } from "react-icons/md";
+import { FaCalendar, FaUserCircle } from "react-icons/fa";
+import { HiIdentification } from "react-icons/hi2";
 import moment from "moment";
 import { useSelector } from "react-redux";
 
 const ProfileCard = () => {
-  const myState = useSelector((state) => state.auth.user);
+  const [user, setUser] = useState(null);
+  const userData = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setUser(userData);
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, [userData]);
+
+
   return (
     <div className="flex items-center justify-center flex-col p-5 w-full">
-      {myState?.avatar?.url ? <img src={myState?.avatar?.url} className="rounded-[50%] border-2 border-yellow-600 w-52 h-52 text-zinc-200 bg-zinc-500 mb-2 object-cover" /> : <RxAvatar className="rounded-[50%] border-2 border-yellow-600 w-52 h-52 text-zinc-200 bg-zinc-500 mb-2" />}
-      <Profile heading={"Sultanpur"} text={myState?.name} />
+      {user?.avatar?.url ? (
+        <img
+          src={user?.avatar?.url}
+          className="rounded-[50%] border-2 border-yellow-600 w-52 h-52 text-zinc-200 bg-zinc-500 mb-2 object-cover"
+        />
+      ) : (
+        <RxAvatar className="rounded-[50%] border-2 border-yellow-600 w-52 h-52 text-zinc-200 bg-zinc-500 mb-2" />
+      )}
+      <Profile
+        heading={"Name"}
+        text={user?.name || "-"}
+        Icon={
+          <FaUserCircle className="bg-[#eba488] text-[white] rounded-lg p-[5px] w-8 h-8" />
+        }
+      />
+      <Profile
+        heading={"Bio"}
+        text={user?.bio || "-"}
+        Icon={
+          <MdInfoOutline className="bg-[#3242f5] text-[white] rounded-md p-[3px] w-8 h-8" />
+        }
+      />
+      <Profile
+        heading={"User_name"}
+        text={user?.username}
+        Icon={
+          <HiIdentification className="text-[#4d5362] rounded-md p-[1px] w-8 h-7 bg-[#ddcbfb]" />
+        }
+      />
       <Profile
         heading={"Email"}
-        text={"xyz@gmail.com"}
+        text={user?.email || "No mail id"}
         Icon={
           <MdEmail className="bg-[#b45d3b] text-[white] rounded-md p-[1px] w-8 h-7" />
         }
       />
-      <Profile
-        heading={"InstaGram"}
-        text={"@anubhav_0004"}
-        Icon={
-          <FaInstagram
-            className="text-[white] rounded-md p-[2px] w-8 h-8"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, #f9ce34,#ee2a5b , #ee2a7b, #6228d7)",
-            }}
-          />
-        }
-      />
-      <Profile
-        heading={"Facebook"}
-        text={"anubhav_0004"}
-        Icon={
-          <FaFacebook className="bg-[#3242f5] text-[white] rounded-md p-[3px] w-8 h-8" />
-        }
-      />
+
       <Profile
         heading={"Joined"}
-        text={moment("2022-11-15T20:24:00.000Z").fromNow()}
+        text={moment(user?.createdAt).fromNow()}
         Icon={
           <FaCalendar className="bg-[#fe9690] text-[white] rounded-md p-[5px] w-8 h-8" />
         }
@@ -50,13 +70,17 @@ const ProfileCard = () => {
 };
 
 const Profile = ({ text, Icon, heading }) => (
-  <div className="flex w-3/4 justify-center text-center items-center gap-x-3 my-2 px-3 py-1 bg-[#525284] rounded-md shadow-md shadow-[#7070b3]">
-    {Icon && Icon}
-    <div className="flex flex-col ">
-      <p className="text-lg">{text}</p>
-      <h6 className="text-sm">{heading}</h6>
+  <div className="flex w-3/4 items-center gap-x-4 my-2 px-4 py-[0.5rem] bg-[#525284] rounded-md shadow-md shadow-[#7070b3]">
+    
+    {Icon && <div className="flex-shrink-0">{Icon}</div>}
+
+    <div className="flex flex-col">
+      <h6 className="text-sm font-semibold text-gray-300">{heading}</h6>
+      <p className="text-lg text-white">{text}</p>
     </div>
+
   </div>
 );
+
 
 export default ProfileCard;
