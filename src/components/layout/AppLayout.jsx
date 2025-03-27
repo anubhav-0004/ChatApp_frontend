@@ -3,13 +3,19 @@ import Header from "./Header";
 import Tittle from "../shared/Tittle";
 import ChatList from "../specific/ChatList";
 import ProfileCard from "../specific/ProfileCard";
+import { BsThreeDotsVertical, BsX } from "react-icons/bs";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
-import { useMyChatsQuery } from "../../redux/api/reduxAPI";
+import {
+  useLazyAllUsersQuery,
+  useMyChatsQuery,
+} from "../../redux/api/reduxAPI";
 import { useErrors } from "../../hooks/hook";
 import axios from "axios";
 import { server } from "../../constants/config";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
+import EditGroup from "../dialogs/EditGroup";
+import ChatDetailModal from "../shared/ChatDetailModal";
+import DeleteChatModal from "../shared/DeleteChatModal";
 
 const AppLayout = (WrappedComponent) => {
   return function LayoutWrapper(props) {
@@ -18,6 +24,8 @@ const AppLayout = (WrappedComponent) => {
     const location = useLocation();
 
     const { isLoading, data, isError, error, refetch } = useMyChatsQuery("");
+    const [allUsers] = useLazyAllUsersQuery();
+
     useErrors([{ isError, error }]);
 
     const [chatId, setChatId] = useState(params.chatId || null);
@@ -26,10 +34,82 @@ const AppLayout = (WrappedComponent) => {
     const [showModal, setShowModal] = useState(false);
     const [id, setId] = useState("");
     const [grpChat, setGrpChat] = useState(false);
+    const [isShowChatDetails, setIsShowChatDetails] = useState(false);
+    const [selectedChatDetails, setSelectedChatDetails] = useState([]);
+    const [isGroupDetails, setIsGroupDetails] = useState(false);
+    const [selectedGrp, setSelectedGrp] = useState();
+    const [grpForModal, setGrpForModal] = useState([]);
+    const [users, setUsers] = useState([]);
+    const [currAvatar, setCurrAvatar] = useState("");
 
     const chatId2 = location.pathname.split("/").filter(Boolean).pop();
+    const selectedChat = data?.chats?.find((chat) => chat._id === chatId2);
 
-    // ✅ Combined useEffect for resizing, params, and chatId updates
+    const getCurrUser = async (userId) => {
+      try {
+        const res = await axios(`${server}/api/v1/user/getuser?id=${userId}`, {
+          withCredentials: true,
+        });
+        setSelectedChatDetails(res?.data?.user);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const closeGrpDetailsModal = (e) => {
+      e?.preventDefault();
+      setIsGroupDetails(false);
+    };
+
+    const getCurrGroup = async (id) => {
+      try {
+        const res = await axios.get(
+          `${server}/api/v1/chats/${id}?populate=true`,
+          {
+            withCredentials: true,
+          }
+        );
+        setGrpForModal([res?.data?.chat]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    const getAllUsers = async () => {
+      await allUsers()
+        .then(({ data }) => setUsers(data?.filteredData))
+        .catch((e) => console.log(e));
+    };
+
+    const clickHandler = (e) => {
+      e.preventDefault();
+      if (selectedChat?.groupChat) {
+        setIsGroupDetails(true);
+      } else {
+        setIsShowChatDetails(true);
+      }
+    };
+
+    const closeModal = () => {
+      setIsShowChatDetails(false);
+      setSelectedChatDetails({});
+    };
+
+    const deleteChatHandler = async () => {
+      // e?.preventDefault();
+      console.log("object");
+      const id = params.chatId;
+      try {
+        const res = await axios.delete(`${server}/api/v1/chats/${id}`, {
+          withCredentials: true,
+        });
+        navigate(`/`);
+        toast.success(res?.data?.message || "abc");
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     useEffect(() => {
       const handleResize = () => {
         const mobileView = window.innerWidth <= 450;
@@ -39,14 +119,25 @@ const AppLayout = (WrappedComponent) => {
         }
       };
 
-      // Initial setup
+      if (selectedChat?.groupChat) {
+        setSelectedGrp(selectedChat?._id);
+        getCurrGroup(selectedGrp);
+      } else {
+        if (isShowChatDetails) {
+          getCurrUser(selectedChat?.members[0]);
+        }
+      }
+      setCurrAvatar(selectedChat?.avatar);
+
+      getAllUsers();
+
       handleResize();
       setChatId(params.chatId);
       if (chatId) setShowChatList(false);
 
       window.addEventListener("resize", handleResize);
       return () => window.removeEventListener("resize", handleResize);
-    }, [params.chatId, chatId, showChatList]);
+    }, [params.chatId, chatId, showChatList, isShowChatDetails]);
 
     const handleChatSelect = (selectedChatId) => {
       navigate(`/chat/${selectedChatId}`);
@@ -58,24 +149,22 @@ const AppLayout = (WrappedComponent) => {
       e.preventDefault();
       setId(_id);
       setGrpChat(groupChat);
-      setShowModal(true);
+      // setShowModal(true);
     };
 
-    const handleDeleteChatFun = async (e) => {
-      e.preventDefault();
-      try {
-        await axios.delete(`${server}/api/v1/chats/${id}`, {
-          withCredentials: true,
-        });
-        toast.success("Chat deleted.");
-      } catch (error) {
-        console.error(error);
-        toast.error(error?.response?.data?.message || "Cannot delete chat.");
-      }
-      setShowModal(false);
-    };
-
-    const selectedChat = data?.chats?.find((chat) => chat._id === chatId2);
+    // const handleDeleteChatFun = async (e) => {
+    //   e.preventDefault();
+    //   try {
+    //     await axios.delete(`${server}/api/v1/chats/${id}`, {
+    //       withCredentials: true,
+    //     });
+    //     toast.success("Chat deleted.");
+    //   } catch (error) {
+    //     console.error(error);
+    //     toast.error(error?.response?.data?.message || "Cannot delete chat.");
+    //   }
+    //   setShowModal(false);
+    // };
 
     return (
       <>
@@ -96,7 +185,27 @@ const AppLayout = (WrappedComponent) => {
           </button>
         )}
 
-        {/* Mobile Chat Header */}
+        {isShowChatDetails && (
+          <ChatDetailModal
+            deleteChatHandler={deleteChatHandler}
+            closeModal={closeModal}
+            selectedChatDetails={selectedChatDetails}
+            setShowModal={setShowModal}
+            showModal={showModal}
+          />
+        )}
+
+        {isGroupDetails && (
+          <EditGroup
+            onClose={closeGrpDetailsModal}
+            group={grpForModal}
+            chatId={selectedGrp}
+            allUsers={users}
+            avatarUrl={currAvatar}
+          />
+        )}
+
+        {/* Mobile Chat Header: shows name and dp on mobile */}
         {isMobile && !showChatList && (
           <div
             className="absolute flex h-[3.5rem] max-md:h-[4rem] top-0 left-0 border border-[#8282d1] z-40 w-full px-2 gap-x-2 py-[0.1rem] text-2xl font-medium bg-[#383857] text-slate-300 rounded items-center justify-center"
@@ -104,13 +213,14 @@ const AppLayout = (WrappedComponent) => {
               backgroundImage:
                 "linear-gradient(to right bottom, rgb(82 77 168), rgb(2 9 47 / 69%))",
             }}
+            onClick={clickHandler}
           >
             <img
               src={selectedChat?.avatar?.[0]}
               alt="DP"
-              className="border border-[#8267a3] rounded-full w-10 h-10"
+              className="border-2 border-[#152a59] rounded-full w-10 h-10 object-cover"
             />
-            <p className="max-w-[54%] overflow-hidden ml-1 text-ellipsis whitespace-nowrap">
+            <p className="max-w-[54%] overflow-hidden text-2xl font-semibold ml-1 text-ellipsis whitespace-nowrap">
               {selectedChat?.name}
             </p>
             <div className="bg-white min-w-2 flex-grow"></div>
@@ -147,29 +257,12 @@ const AppLayout = (WrappedComponent) => {
                   handleDeleteChat={handleDeleteChat}
                   onChatSelect={handleChatSelect}
                 />
-                {showModal && (
-                  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                    <div className="bg-white rounded-lg p-6 shadow-lg w-96 max-md:w-80 text-center">
-                      <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                        Do you want to delete this chat?
-                      </h3>
-                      <div className="flex justify-around mt-4">
-                        <button
-                          className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-                          onClick={handleDeleteChatFun}
-                        >
-                          Yes
-                        </button>
-                        <button
-                          className="px-6 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition"
-                          onClick={() => setShowModal(false)}
-                        >
-                          No
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                {/* {showModal && (
+                  <DeleteChatModal
+                    handleDeleteChatFun={handleDeleteChatFun}
+                    setShowModal={setShowModal(false)}
+                  />
+                )} */}
               </div>
 
               <div className="w-full bg-slate-200">

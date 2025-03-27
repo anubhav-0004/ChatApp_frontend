@@ -6,7 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useLocation, useParams } from "react-router-dom";
 
-const EditGroup = ({ onClose, group, chatId, allUsers }) => {
+const EditGroup = ({ onClose, group, chatId, allUsers, avatarUrl }) => {
   const handleClose = () => onClose && onClose();
   const groupName = group?.find((chat) => chat._id === chatId);
   const admin = (groupName?.creator);
@@ -90,6 +90,7 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
   const toggleEditName = () => setEditName((prev) => !prev);
   const saveHandler = async () => {
     try {
+      toggleEditName();
       await axios.put(
         `${server}/api/v1/chats/${chatId}?name=${encodeURIComponent(
           grpName
@@ -98,7 +99,6 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
         { withCredentials: true }
       );
 
-      toggleEditName();
       toast.success("Group details updated.");
     } catch (error) {
       console.error("Error updating group:", error);
@@ -130,11 +130,11 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
         {/* Main Content */}
         <div className="grid grid-cols-2 gap-6 max-md:gap-3 px-6 py-4 max-md:py-3 max-md:grid-cols-1 overflow-hidden flex-grow">
           {/* Left Section */}
-          <div className="bg-gray-200 p-6 max-md:p-3 relative rounded-lg shadow flex flex-col items-center space-y-4 max-md:space-y-2">
+          <div className="bg-gray-200 p-6 max-md:p-3 relative rounded-lg shadow flex flex-col items-center space-y-4 max-md:space-y-2 max-sm:space-y-1">
             <img
-              src={groupName?.avatar?.[0]}
+              src={groupName?.avatar?.[0] || avatarUrl?.[0]}
               alt="Group Avatar"
-              className="w-32 h-32 rounded-full object-cover border border-[#274878]"
+              className="w-32 h-32 max-sm:h-24 max-sm:w-24 rounded-full object-cover border border-[#274878]"
             />
             <MdOutlineDeleteOutline
               className="absolute top-3 w-8 h-8 border border-red-400 rounded p-1 right-6 text-red-500 bg-red-100 hover:bg-red-200 cursor-pointer"
@@ -250,7 +250,7 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
       {/* Delete Confirmation Popup */}
       {showDeletePopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-60">
-          <div className="bg-white rounded-lg p-6 shadow-lg w-96 max-md:w-80 text-center">
+          <div className="bg-white rounded-lg p-6 shadow-lg w-96 max-md:w-[90%] text-center">
             <h3 className="text-lg font-semibold text-gray-800 mb-4">
               Do you want to delete this group?
             </h3>
@@ -276,3 +276,7 @@ const EditGroup = ({ onClose, group, chatId, allUsers }) => {
 };
 
 export default EditGroup;
+
+
+//setShowDeletePopup(false)
+//deleteGroup

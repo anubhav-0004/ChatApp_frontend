@@ -33,28 +33,28 @@ const ProfileCard = () => {
         heading={"Name"}
         text={user?.name || "-"}
         Icon={
-          <FaUserCircle className="bg-[#eba488] text-[white] rounded-lg p-[5px] w-8 h-8" />
+          <FaUserCircle className="bg-[#eba488] text-[white] rounded-lg p-[5px] w-8 h-8 border" />
         }
       />
       <Profile
         heading={"Bio"}
         text={user?.bio || "-"}
         Icon={
-          <MdInfoOutline className="bg-[#3242f5] text-[white] rounded-md p-[3px] w-8 h-8" />
+          <MdInfoOutline className="bg-[#465846] text-[white] rounded-md p-[3px] w-8 h-8 border" />
         }
       />
       <Profile
         heading={"User_name"}
         text={user?.username}
         Icon={
-          <HiIdentification className="text-[#4d5362] rounded-md p-[1px] w-8 h-7 bg-[#ddcbfb]" />
+          <HiIdentification className="text-[#4d5362] rounded-md p-[1px] w-8 h-7 bg-[#ddcbfb] border" />
         }
       />
       <Profile
         heading={"Email"}
         text={user?.email || "No mail id"}
         Icon={
-          <MdEmail className="bg-[#b45d3b] text-[white] rounded-md p-[1px] w-8 h-7" />
+          <MdEmail className="bg-[#b45d3b] text-[white] rounded-md p-[1px] w-8 h-7 border" />
         }
       />
 
@@ -62,7 +62,7 @@ const ProfileCard = () => {
         heading={"Joined"}
         text={moment(user?.createdAt).fromNow()}
         Icon={
-          <FaCalendar className="bg-[#fe9690] text-[white] rounded-md p-[5px] w-8 h-8" />
+          <FaCalendar className="bg-[#fe9690] text-[white] rounded-md p-[5px] w-8 h-8 border" />
         }
       />
     </div>
@@ -72,7 +72,7 @@ const ProfileCard = () => {
 const Profile = ({ text, Icon, heading }) => (
   <div className="flex w-3/4 items-center gap-x-4 my-2 px-4 py-[0.5rem] bg-[#525284] rounded-md shadow-md shadow-[#7070b3]">
     
-    {Icon && <div className="flex-shrink-0">{Icon}</div>}
+    {Icon && <div className="flex-shrink-0 ml-4">{Icon}</div>}
 
     <div className="flex flex-col">
       <h6 className="text-sm font-semibold text-gray-300">{heading}</h6>

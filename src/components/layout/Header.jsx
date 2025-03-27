@@ -37,12 +37,22 @@ const Header = () => {
     setIsMobile((prev) => !prev);
     setShowOption((prev) => !prev);
   };
+
   const openSearch = () => {
     dispatch(setIsSearch(true));
+    setShowOption(false);
   };
+
   const openNewGroup = () => {
     dispatch(setIsNewGroup(true));
+    setShowOption(false);
   };
+
+  const openNotification = () => {
+    dispatch(setIsNotification(true));
+    setShowOption(false);
+  };
+  
   const navigateToGrp = () => navigate("/group");
   const logOutHandler = async () => {
     //Logic to logout
@@ -54,13 +64,10 @@ const Header = () => {
       toast.error(error?.response?.data?.message || "Could not log out.")
     }
   };
-  const openNotification = () => {
-    dispatch(setIsNotification(true));
-  };
   return (
     <>
       <div
-        className="w-full brightness-110 sticky max-md:h-[3.5rem] h-[4rem] bg-[rgb(190,172,129)] py-2 max-md:py-1 px-4 flex justify-start items-center gap-x-2 border-b-2 border-[#322b70]"
+        className="w-full brightness-110 sticky max-md:h-[3.5rem] h-[4rem] bg-[rgb(190,172,129)] py-2 max-md:py-1 px-4 flex justify-start items-center gap-x-2 border-b-2 border-[#3f3879]"
         style={{
           backgroundImage:
             "linear-gradient(to right bottom, rgb(82 77 168), rgb(2 9 47 / 69%))",

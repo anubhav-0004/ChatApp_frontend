@@ -43,20 +43,19 @@ const Chat = ({ chatId1 }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, [window.innerHeight, chatId]);
 
-
   return (
     <div
-      className="w-full flex flex-col overflow-hidden z-40"
+      className="w-full flex flex-col overflow-hidden z-40 relative "
       style={{
         height: `calc(${viewportHeight}px - ${
-          window.innerWidth >= 768 ? 56 : 68
+          window.innerWidth >= 768 ? 60 : 55
         }px)`,
       }}
     >
       <div
-        className="min-h-[3rem] px-4 py-2 text-white text-2xl font-semibold 
+        className="min-h-[3rem] px-4 py-2 text-[#aea3f5] text-2xl font-semibold 
              bg-[#4b4b7a] text-center hover:bg-[#5a5a8e] 
-             transition-colors duration-200"
+             transition-colors duration-200 max-[450px]:hidden"
       >
         {chatDetails?.name}
       </div>
@@ -64,7 +63,7 @@ const Chat = ({ chatId1 }) => {
       <div
         className="text-[#dfd3ad] w-full max-md:h-[91%] h-[90%] text-xl opacity-95 p-2 overflow-y-auto flex flex-col"
         style={{
-          backgroundImage: `url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW0GqVqurY1V77t3jqPKUVYKRXa_HzZ4BBkw&s")`,
+          backgroundImage: `url("https://static.vecteezy.com/system/resources/previews/030/663/503/non_2x/brown-background-high-quality-free-photo.jpg")`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "bottom",
@@ -75,7 +74,7 @@ const Chat = ({ chatId1 }) => {
           <MessageComponent key={index} message={message} user={user} />
         ))}
       </div>
-      <form className="flex items-center relative rounded-t-sm justify-between border border-[#86869d] gap-x-3 px-2 py-1 bg-[#2d2d56] max-md:h-[9%] h-[10%]">
+      <form className="flex items-center relative rounded-t-sm justify-between border border-[#86869d] gap-x-3 px-2 pt-1 bg-[#2d2d56] max-md:h-[9%] h-[10%]">
         <input type="file" name="fileInput" id="fileInput" className="hidden" />
         <label
           htmlFor="fileInput"
