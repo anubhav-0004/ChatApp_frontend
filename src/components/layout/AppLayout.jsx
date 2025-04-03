@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react";
-import Header from "./Header";
-import Tittle from "../shared/Tittle";
-import ChatList from "../specific/ChatList";
-import ProfileCard from "../specific/ProfileCard";
-import { BsThreeDotsVertical, BsX } from "react-icons/bs";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { server } from "../../constants/config";
+import { useErrors } from "../../hooks/hook";
 import {
   useLazyAllUsersQuery,
   useMyChatsQuery,
 } from "../../redux/api/reduxAPI";
-import { useErrors } from "../../hooks/hook";
-import axios from "axios";
-import { server } from "../../constants/config";
-import toast from "react-hot-toast";
+import { getSocket } from "../../Socket";
 import EditGroup from "../dialogs/EditGroup";
 import ChatDetailModal from "../shared/ChatDetailModal";
-import DeleteChatModal from "../shared/DeleteChatModal";
+import Tittle from "../shared/Tittle";
+import ChatList from "../specific/ChatList";
+import ProfileCard from "../specific/ProfileCard";
+import Header from "./Header";
 
 const AppLayout = (WrappedComponent) => {
   return function LayoutWrapper(props) {
     const params = useParams();
     const navigate = useNavigate();
     const location = useLocation();
+    const socket = getSocket();
 
     const { isLoading, data, isError, error, refetch } = useMyChatsQuery("");
     const [allUsers] = useLazyAllUsersQuery();
@@ -63,13 +63,13 @@ const AppLayout = (WrappedComponent) => {
 
     const getCurrGroup = async (id) => {
       try {
-        const res = await axios.get(
+        if(id) {const res = await axios.get(
           `${server}/api/v1/chats/${id}?populate=true`,
           {
             withCredentials: true,
           }
         );
-        setGrpForModal([res?.data?.chat]);
+        setGrpForModal([res?.data?.chat]);}
       } catch (error) {
         console.log(error);
       }
@@ -243,7 +243,7 @@ const AppLayout = (WrappedComponent) => {
               </div>
             ) : (
               <div className="w-full relative h-full bg-slate-200 flex overflow-x-hidden overflow-y-auto">
-                <WrappedComponent chatId1={chatId} {...props} />
+                <WrappedComponent {...props} socket={socket}/>
               </div>
             )
           ) : (
@@ -266,7 +266,7 @@ const AppLayout = (WrappedComponent) => {
               </div>
 
               <div className="w-full bg-slate-200">
-                <WrappedComponent chatId1={chatId} {...props} />
+                <WrappedComponent {...props} socket={socket}/>
               </div>
 
               <div className="w-full max-lg:hidden border-l-2 border-slate-500 bg-[#3d3d5c] text-[#dfd3ad] p-2">

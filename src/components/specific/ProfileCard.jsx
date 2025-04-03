@@ -60,7 +60,7 @@ const ProfileCard = () => {
 
       <Profile
         heading={"Joined"}
-        text={moment(user?.createdAt).fromNow()}
+        text={user ? moment(user?.createdAt).fromNow() : "NA"}
         Icon={
           <FaCalendar className="bg-[#fe9690] text-[white] rounded-md p-[5px] w-8 h-8 border" />
         }
