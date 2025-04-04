@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { IoMdAttach } from "react-icons/io";
 import { LuSendHorizontal } from "react-icons/lu";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -13,18 +13,21 @@ import {
   useChatDetailsQuery,
   useGetMessagesQuery,
 } from "../redux/api/reduxAPI";
-import { useErrors, useSocketEvents } from "../hooks/hook";
+import { useErrors, useInfiniteScroll, useSocketEvents } from "../hooks/hook";
 import { useSelector } from "react-redux";
 
 const Chat = ({ socket }) => {
   const chatId = useLocation().pathname.split("/").filter(Boolean).pop();
 
   const { user } = useSelector((state) => state.auth);
+  const containerRef = useRef(null);
 
   const chatInfo = useChatDetailsQuery({ id: chatId, skip: !chatId });
   const members = chatInfo?.data?.chat?.members;
 
-  const oldMessagesChunk = useGetMessagesQuery({ chatId, page: 1 });
+  const [page, setPage] = useState(1);
+
+  const oldMessagesChunk = useGetMessagesQuery({ chatId, page });
 
   const errors = [
     { isError: chatInfo.isError, error: chatInfo.error },
@@ -33,11 +36,24 @@ const Chat = ({ socket }) => {
 
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
   const navigate = useNavigate();
+  const messagesEndRef = useRef(null);
   const [chatDetails, setChatDetails] = useState({});
   const [visibleFileMenu, setVisibleFileMenu] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const allMessages = [...(oldMessagesChunk?.data?.message || []), ...messages];
+  
+  const { data, setData } = useInfiniteScroll(
+    containerRef,
+    oldMessagesChunk?.data?.totalPages,
+    page,
+    setPage,
+    oldMessagesChunk?.data?.message,
+  );
+
+  const allMessages = [...data, ...messages];
+
+  console.log(data);
+
 
   const getChatDetails = async (id) => {
     try {
@@ -62,27 +78,28 @@ const Chat = ({ socket }) => {
   useEffect(() => {
     const handleResize = () => setViewportHeight(window.innerHeight);
     window.addEventListener("resize", handleResize);
+    if (messagesEndRef.current && data.length < 30) {
+    messagesEndRef.current.scrollIntoView({ behavior: "auto" });
+  }
 
     getChatDetails(chatId);
 
     return () => window.removeEventListener("resize", handleResize);
-  }, [window.innerHeight, chatId]);
+  }, [window.innerHeight, chatId, messages, data]);
 
   const newMessageHandler = useCallback((data) => {
-    console.log("12354");
-    console.log("data", data);
     setMessages((prev) => [...prev, data.message]);
   }, []);
 
   const eventArr = { [NEW_MESSAGE]: newMessageHandler };
-
-  const fileMenuVisibleHandler = (e) => {
-    e.preventDefault();
-    setVisibleFileMenu(true);
-  };
-
+  
   useSocketEvents(socket, eventArr);
   useErrors(errors);
+  
+    const fileMenuVisibleHandler = (e) => {
+      e.preventDefault();
+      setVisibleFileMenu(true);
+    };
 
   return (
     <div
@@ -102,6 +119,7 @@ const Chat = ({ socket }) => {
       </div>
 
       <div
+        ref={containerRef}
         className="text-[#dfd3ad] w-full max-md:h-[91%] h-[90%] text-xl opacity-95 p-2 overflow-y-auto flex flex-col"
         style={{
           backgroundImage: `url("https://static.vecteezy.com/system/resources/previews/030/663/503/non_2x/brown-background-high-quality-free-photo.jpg")`,
@@ -114,6 +132,7 @@ const Chat = ({ socket }) => {
         {allMessages.map((message, index) => (
           <MessageComponent key={index} message={message} user={user} />
         ))}
+        <div ref={messagesEndRef} />
       </div>
       <form
         className="flex items-center relative rounded-t-sm justify-between border border-[#86869d] gap-x-3 px-2 pt-1 bg-[#2d2d56] max-md:h-[9%] h-[10%]"
