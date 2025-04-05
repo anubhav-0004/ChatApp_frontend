@@ -14,7 +14,8 @@ import {
   useGetMessagesQuery,
 } from "../redux/api/reduxAPI";
 import { useErrors, useInfiniteScroll, useSocketEvents } from "../hooks/hook";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsFileMenu } from "../redux/reducers/misc";
 
 const Chat = ({ socket }) => {
   const chatId = useLocation().pathname.split("/").filter(Boolean).pop();
@@ -26,7 +27,7 @@ const Chat = ({ socket }) => {
   const members = chatInfo?.data?.chat?.members;
 
   const [page, setPage] = useState(1);
-
+  const dispatch = useDispatch();
   const oldMessagesChunk = useGetMessagesQuery({ chatId, page });
 
   const errors = [
@@ -38,22 +39,23 @@ const Chat = ({ socket }) => {
   const navigate = useNavigate();
   const messagesEndRef = useRef(null);
   const [chatDetails, setChatDetails] = useState({});
-  const [visibleFileMenu, setVisibleFileMenu] = useState(false);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  
+
   const { data, setData } = useInfiniteScroll(
     containerRef,
     oldMessagesChunk?.data?.totalPages,
     page,
     setPage,
-    oldMessagesChunk?.data?.message,
+    oldMessagesChunk?.data?.message
   );
 
   const allMessages = [...data, ...messages];
 
-  console.log(data);
-
+  const { isFileMenu } = useSelector((state) => state.misc);
+  const handleFileOpen = (e) => {
+    dispatch(setIsFileMenu(!isFileMenu));
+  };
 
   const getChatDetails = async (id) => {
     try {
@@ -79,8 +81,8 @@ const Chat = ({ socket }) => {
     const handleResize = () => setViewportHeight(window.innerHeight);
     window.addEventListener("resize", handleResize);
     if (messagesEndRef.current && data.length < 30) {
-    messagesEndRef.current.scrollIntoView({ behavior: "auto" });
-  }
+      messagesEndRef.current.scrollIntoView({ behavior: "auto" });
+    }
 
     getChatDetails(chatId);
 
@@ -92,14 +94,9 @@ const Chat = ({ socket }) => {
   }, []);
 
   const eventArr = { [NEW_MESSAGE]: newMessageHandler };
-  
+
   useSocketEvents(socket, eventArr);
   useErrors(errors);
-  
-    const fileMenuVisibleHandler = (e) => {
-      e.preventDefault();
-      setVisibleFileMenu(true);
-    };
 
   return (
     <div
@@ -111,7 +108,7 @@ const Chat = ({ socket }) => {
       }}
     >
       <div
-        className="min-h-[3rem] px-4 py-2 text-[#aea3f5] text-2xl font-semibold 
+        className="min-h-[3rem] px-4 py-3 text-[#aea3f5] text-2xl font-semibold 
              bg-[#4b4b7a] text-center hover:bg-[#5a5a8e] 
              transition-colors duration-200 max-[450px]:hidden"
       >
@@ -138,10 +135,11 @@ const Chat = ({ socket }) => {
         className="flex items-center relative rounded-t-sm justify-between border border-[#86869d] gap-x-3 px-2 pt-1 bg-[#2d2d56] max-md:h-[9%] h-[10%]"
         onSubmit={submitHandler}
       >
-        <div className="text-[#e9e0f9] text-2xl absolute cursor-pointer bottom-[0.8rem] max-md:bottom-[0.4rem] left-4 max-md:left-2 bg-[#5c5c8a] rotate-[45deg] border border-slate-400 p-[.4rem] w-10 h-10 rounded-[50%]"
-        onClick={fileMenuVisibleHandler}
+        <div
+          className="text-[#e9e0f9] text-2xl absolute cursor-pointer bottom-[0.8rem] max-md:bottom-[0.4rem] left-4 max-md:left-2 bg-[#5c5c8a] rotate-[45deg] border border-slate-400 p-[.4rem] w-10 h-10 rounded-[50%]"
+          onClick={handleFileOpen}
         >
-          <IoMdAttach  />
+          <IoMdAttach />
         </div>
         <input
           type="text"
@@ -154,7 +152,7 @@ const Chat = ({ socket }) => {
           <LuSendHorizontal className="text-2xl text-[#e9e0f9] cursor-pointer absolute bottom-[0.8rem] max-md:bottom-[0.40rem] right-4 max-md:right-2 bg-[#5c5c8a] border border-slate-400 p-[.4rem] w-10 h-10 rounded-[50%] -rotate-[35deg]" />
         </button>
       </form>
-      {visibleFileMenu && <FileMenu />}
+      <FileMenu chatId={chatId}/>
     </div>
   );
 };

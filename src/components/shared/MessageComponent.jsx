@@ -1,6 +1,6 @@
 import moment from "moment";
 import React, { memo } from "react";
-import { fileFormat } from "../../lib/features";
+import { fileFormat, tranformImage } from "../../lib/features";
 import RanderAttachments from "./RanderAttachments";
 
 const MessageComponent = ({ message, user }) => {

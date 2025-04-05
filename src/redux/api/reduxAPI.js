@@ -42,12 +42,22 @@ const api = createApi({
       },
       providesTags: ["Chat"],
     }),
+
     getMessages: builder.query({
       query: ({ chatId, page = 1 }) => ({
         url: `chats/message/${chatId}?page=${page}`,
         credentials: "include"
       }),
       providesTags: ["Message"],
+    }),
+
+    sendAttachments: builder.mutation({
+      query: (data) => ({
+        url: "chats/message",
+        method: "POST",
+        credentials: "include",
+        body: data,
+      }),
     }),
   }),
 });
@@ -58,5 +68,6 @@ export const {
   useLazySearchUserQuery,
   useLazyAllUsersQuery,
   useChatDetailsQuery,
-  useGetMessagesQuery
+  useGetMessagesQuery,
+  useSendAttachmentsMutation,
 } = api;

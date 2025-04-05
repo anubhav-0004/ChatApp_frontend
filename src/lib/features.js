@@ -31,3 +31,9 @@ export const getLast7Days = () => {
    }
    return last7Days;
 }
+
+export const tranformImage = (url ="", width = 100) => {
+
+  const new_url = url.replace("upload/", `upload/dpr_auto/w_${width}/`)
+  return new_url;
+}

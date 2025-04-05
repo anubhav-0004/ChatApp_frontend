@@ -13,7 +13,7 @@ const ProfileCard = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setUser(userData);
-    }, 2500);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, [userData]);
