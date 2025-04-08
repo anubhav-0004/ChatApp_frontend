@@ -40,7 +40,7 @@ const ChatItem = ({
           />
         </div>
         {groupChat && (
-          <MdGroups3 className="absolute top-8 right-6 w-5 h-5 text-blue-500 bg-[#76bfec] rounded-full animate-pulse"></MdGroups3>
+          <MdGroups3 className="absolute top-8 right-6 w-5 h-5 text-blue-700 bg-[#abd7f2] rounded-full animate-pulse"></MdGroups3>
         )}
         <div>
           <h3 className="font-bold text-lg">{name}</h3>

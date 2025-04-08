@@ -1,6 +1,13 @@
 import { Backdrop } from "@mui/material";
 import axios from "axios";
-import React, { memo, Suspense, useEffect, useRef, useState } from "react";
+import React, {
+  memo,
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { AiOutlineHome } from "react-icons/ai";
 import { IoMdArrowRoundBack, IoMdAttach } from "react-icons/io";
 import { IoReorderThree } from "react-icons/io5";
@@ -13,13 +20,17 @@ import MessageComponent from "../components/shared/MessageComponent";
 import { server } from "../constants/config";
 import { sampleChats, sampleMesssages } from "../constants/sampleData";
 import {
+  useChatDetailsQuery,
   useGetMessagesQuery,
   useLazyAllUsersQuery,
 } from "../redux/api/reduxAPI";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsFileMenu } from "../redux/reducers/misc";
 import FileMenu from "../components/dialogs/FileMenu";
-import { useInfiniteScroll } from "../hooks/hook";
+import { useInfiniteScroll, useSocketEvents } from "../hooks/hook";
+import { NEW_MESSAGE } from "../constants/event";
+import { removeNewMessagesAlert } from "../redux/reducers/chat";
+import { getSocket } from "../Socket";
 
 const Groups = () => {
   const chatId = useSearchParams()[0].get("group");
@@ -35,7 +46,9 @@ const Groups = () => {
   const [page, setPage] = useState(1);
   const [messages, setMessages] = useState([]);
   const containerRef = useRef(null);
+  const messagesEndRef = useRef(null);
   const dispatch = useDispatch();
+  const socket = getSocket();
 
   const oldMessagesChunk = useGetMessagesQuery({ chatId, page });
 
@@ -48,6 +61,8 @@ const Groups = () => {
   );
 
   const allMessages = [...data, ...messages];
+  const chatInfo = useChatDetailsQuery({ id: chatId, skip: !chatId });
+  const members = chatInfo?.data?.chat?.members;
 
   const getGrp = async () => {
     const data = await axios.get(`${server}/api/v1/chats/my/groups`, {
@@ -68,15 +83,50 @@ const Groups = () => {
     dispatch(setIsFileMenu(!isFileMenu));
   };
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (!message.trim()) return;
+    socket.emit(NEW_MESSAGE, { chatId, members, message });
+    setMessage("");
+  };
+
+  useEffect(() => {
+    dispatch(removeNewMessagesAlert(chatId));
+    return () => {
+      setMessage("");
+      setMessages([]);
+      setData([]);
+      setPage(1);
+    };
+  }, [chatId]);
+
+  const newMessageHandler = useCallback(
+    (data) => {
+      if (data?.chatId !== chatId) return;
+      setMessages((prev) => [...prev, data.message]);
+    },
+    [chatId]
+  );
+
+  const eventArr = { [NEW_MESSAGE]: newMessageHandler };
+
+  useSocketEvents(socket, eventArr);
+
   useEffect(() => {
     const handleResize = () => setViewportHeight(window.innerHeight);
     window.addEventListener("resize", handleResize);
+
+
+    if (messagesEndRef.current && data.length < 30) {
+      messagesEndRef.current.scrollIntoView({ behavior: "auto" });
+    }
+
     // we can either use .then or directly set grps inside the function
     // getGrp().then((data1) => console.log(data1));
     getGrp();
     getAllUsers();
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [window.innerHeight, chatId, messages, data]);
 
   const { user } = useSelector((state) => state.auth);
   const [isEditGroup, setIsEditGroup] = useState(false);
@@ -93,10 +143,7 @@ const Groups = () => {
       <div className="overflow-y-hidden bg-gradient-to-br from-[#7772aa] to-[#5d5ba3] w-full h-full">
         {chatId ? (
           <>
-            <div
-              className="flex h-[7.5%] md:h-[8.5%] items-center px-4 justify-between py-2 bg-[#2e1f7bcd] shadow-lg"
-              ref={containerRef}
-            >
+            <div className="flex h-[7.5%] md:h-[8.5%] items-center px-4 justify-between py-2 bg-[#2e1f7bcd] shadow-lg">
               <IoMdArrowRoundBack
                 className="bg-[#333] rounded-[50%] text-white max-md:p-[0.23rem] max-md:w-12 p-2 w-10 h-10 cursor-pointer transition-transform hover:scale-110"
                 onClick={navigateBack}
@@ -120,12 +167,19 @@ const Groups = () => {
                 onClick={handleMobile}
               />
             </div>
-            <div className="px-2 py-1 w-full h-[85%] md:h-[84%] overflow-y-auto flex flex-col relative">
+            <div
+              className="px-2 py-1 w-full h-[85%] md:h-[84%] overflow-y-auto flex flex-col relative"
+              ref={containerRef}
+            >
               {allMessages.map((message, index) => (
                 <MessageComponent key={index} message={message} user={user} />
               ))}
+              <div ref={messagesEndRef} />
             </div>
-            <form className="flex relative items-center justify-between border-t border-[#6d6d75] gap-x-3 px-2 py-1 bg-[#2e1f7bcd] h-[7.5%]">
+            <form
+              className="flex relative items-center justify-between border-t border-[#6d6d75] gap-x-3 px-2 py-1 bg-[#2e1f7bcd] h-[7.5%]"
+              onSubmit={submitHandler}
+            >
               <div
                 className="text-[#e9e0f9] text-2xl cursor-pointer bg-[#5c5c8a] rotate-[45deg] border border-slate-400 p-2 w-10 h-10 rounded-full"
                 onClick={handleFileOpen}
@@ -135,12 +189,13 @@ const Groups = () => {
               <input
                 type="text"
                 placeholder="Type a message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 className="flex-grow caret-white border-none placeholder-gray-200 outline-none max-md:px-0 px-3 text-white bg-transparent rounded-md h-[80%]"
               />
-              <LuSendHorizontal
-                type="submit"
-                className="text-2xl absolute bottom-[0.45rem] right-4 text-[#e9e0f9] cursor-pointer bg-[#5c5c8a] border border-slate-400 p-2 w-10 h-10 rounded-full -rotate-[35deg]"
-              />
+              <button type="submit">
+                <LuSendHorizontal className="text-2xl absolute bottom-[0.45rem] right-4 text-[#e9e0f9] cursor-pointer bg-[#5c5c8a] border border-slate-400 p-2 w-10 h-10 rounded-full -rotate-[35deg]" />
+              </button>
             </form>
             <FileMenu chatId={chatId} />
             {isEditGroup && (

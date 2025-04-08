@@ -9,14 +9,14 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { server } from "../constants/config";
 import { NEW_MESSAGE } from "../constants/event";
-import {
-  useChatDetailsQuery,
-  useGetMessagesQuery,
-} from "../redux/api/reduxAPI";
 import { useErrors, useInfiniteScroll, useSocketEvents } from "../hooks/hook";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsFileMenu } from "../redux/reducers/misc";
 import { removeNewMessagesAlert } from "../redux/reducers/chat";
+import {
+  useChatDetailsQuery,
+  useGetMessagesQuery,
+} from "../redux/api/reduxAPI";
 
 const Chat = ({ socket }) => {
   const chatId = useLocation().pathname.split("/").filter(Boolean).pop();
