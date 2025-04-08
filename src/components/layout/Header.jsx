@@ -12,15 +12,18 @@ import axios from "axios";
 import { server } from "../../constants/config";
 import { useDispatch, useSelector } from "react-redux";
 import { userNotExists } from "../../redux/reducers/auth";
-import {   setIsNewGroup,
+import {
+  setIsNewGroup,
   setIsAddMember,
   setIsNotification,
   setIsSearch,
   setIsFileMenu,
   setIsDeleteMenu,
   setUploadingLoader,
-  setSelectedDeleteChat, } from "../../redux/reducers/misc"
+  setSelectedDeleteChat,
+} from "../../redux/reducers/misc";
 import toast from "react-hot-toast";
+import { resetNotificationCount } from "../../redux/reducers/chat";
 
 const Search = lazy(() => import("../specific/Search"));
 const NotificationDialogue = lazy(() => import("../specific/Notifications"));
@@ -29,7 +32,10 @@ const NewGroupDialogue = lazy(() => import("../specific/NewGroups"));
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {isSearch, isNewGroup, isNotification} = useSelector((state) => state.misc);
+  const { isSearch, isNewGroup, isNotification } = useSelector(
+    (state) => state.misc
+  );
+  const { notificationCount } = useSelector((state) => state.chat);
   const [isMobile, setIsMobile] = useState(false);
   const [showOption, setShowOption] = useState(false);
 
@@ -50,18 +56,21 @@ const Header = () => {
 
   const openNotification = () => {
     dispatch(setIsNotification(true));
+    dispatch(resetNotificationCount());
     setShowOption(false);
   };
-  
+
   const navigateToGrp = () => navigate("/group");
   const logOutHandler = async () => {
     //Logic to logout
     try {
-      const { data } = await axios.get(`${server}/api/v1/user/logout`, { withCredentials: true });
+      const { data } = await axios.get(`${server}/api/v1/user/logout`, {
+        withCredentials: true,
+      });
       dispatch(userNotExists());
       toast.success(data.message);
     } catch (error) {
-      toast.error(error?.response?.data?.message || "Could not log out.")
+      toast.error(error?.response?.data?.message || "Could not log out.");
     }
   };
   return (
@@ -95,10 +104,18 @@ const Header = () => {
             className="text-2xl text-orange-50 cursor-pointer shadow-md rounded-[40%]"
             onClick={navigateToGrp}
           />
-          <FaBell
-            className="text-2xl text-orange-50 cursor-pointer shadow-md rounded-[40%] p-[3px]"
-            onClick={openNotification}
-          />
+          <div className="relative inline-block">
+            <button className="rounded-lg">
+              <FaBell
+                className="text-2xl text-orange-50 cursor-pointer shadow-md rounded-[40%] p-[3px]"
+                onClick={openNotification}
+              />
+            </button>
+            <span className={`absolute top-0 right-0 inline-flex items-center justify-center p-[0.2rem] text-xs font-semibold leading-none text-white bg-[#f45252c1] rounded-full border transform translate-x-1/2 -translate-y-1/2 ${notificationCount ? "block" : "hidden"}`}>
+              {notificationCount}
+            </span>
+          </div>
+
           <Link to={"/admin"}>
             <MdOutlineAdminPanelSettings className="text-2xl text-orange-200 hover:text-orange-300 cursor-pointer shadow-md rounded-[40%]" />
           </Link>
@@ -159,7 +176,9 @@ const Header = () => {
       )}
       {isNotification && (
         <Suspense fallback={<Backdrop open />}>
-          <NotificationDialogue onClose={() => dispatch(setIsNotification(false))} />
+          <NotificationDialogue
+            onClose={() => dispatch(setIsNotification(false))}
+          />
         </Suspense>
       )}
     </>

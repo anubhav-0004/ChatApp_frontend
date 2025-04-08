@@ -1,9 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { server } from "../../constants/config";
-import { useErrors } from "../../hooks/hook";
+import { useErrors, useSocketEvents } from "../../hooks/hook";
 import {
   useLazyAllUsersQuery,
   useMyChatsQuery,
@@ -15,6 +15,9 @@ import Tittle from "../shared/Tittle";
 import ChatList from "../specific/ChatList";
 import ProfileCard from "../specific/ProfileCard";
 import Header from "./Header";
+import { NEW_MESSAGE_ALERT, NEW_REQUEST } from "../../constants/event";
+import { incrementNotification, setNewMessagesAlert } from "../../redux/reducers/chat";
+import { useDispatch, useSelector } from "react-redux";
 
 const AppLayout = (WrappedComponent) => {
   return function LayoutWrapper(props) {
@@ -22,6 +25,7 @@ const AppLayout = (WrappedComponent) => {
     const navigate = useNavigate();
     const location = useLocation();
     const socket = getSocket();
+    const dispatch = useDispatch();
 
     const { isLoading, data, isError, error, refetch } = useMyChatsQuery("");
     const [allUsers] = useLazyAllUsersQuery();
@@ -41,6 +45,7 @@ const AppLayout = (WrappedComponent) => {
     const [grpForModal, setGrpForModal] = useState([]);
     const [users, setUsers] = useState([]);
     const [currAvatar, setCurrAvatar] = useState("");
+    const { newMessagesAlert } = useSelector((state) => state.chat);
 
     const chatId2 = location.pathname.split("/").filter(Boolean).pop();
     const selectedChat = data?.chats?.find((chat) => chat._id === chatId2);
@@ -63,13 +68,15 @@ const AppLayout = (WrappedComponent) => {
 
     const getCurrGroup = async (id) => {
       try {
-        if(id) {const res = await axios.get(
-          `${server}/api/v1/chats/${id}?populate=true`,
-          {
-            withCredentials: true,
-          }
-        );
-        setGrpForModal([res?.data?.chat]);}
+        if (id) {
+          const res = await axios.get(
+            `${server}/api/v1/chats/${id}?populate=true`,
+            {
+              withCredentials: true,
+            }
+          );
+          setGrpForModal([res?.data?.chat]);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -97,7 +104,6 @@ const AppLayout = (WrappedComponent) => {
 
     const deleteChatHandler = async () => {
       // e?.preventDefault();
-      console.log("object");
       const id = params.chatId;
       try {
         const res = await axios.delete(`${server}/api/v1/chats/${id}`, {
@@ -151,6 +157,20 @@ const AppLayout = (WrappedComponent) => {
       setGrpChat(groupChat);
       // setShowModal(true);
     };
+
+    const newMessageAlertHandler = useCallback((data) => {
+      if(data.chatId === chatId) return;
+      dispatch(setNewMessagesAlert(data));
+    }, [chatId]);
+    const newRequestHandler = useCallback(() => {
+      dispatch(incrementNotification());
+    }, [dispatch]);
+
+    const eventHandlers = {
+      [NEW_MESSAGE_ALERT]: newMessageAlertHandler,
+      [NEW_REQUEST]: newRequestHandler,
+    };
+    useSocketEvents(socket, eventHandlers);
 
     // const handleDeleteChatFun = async (e) => {
     //   e.preventDefault();
@@ -235,7 +255,7 @@ const AppLayout = (WrappedComponent) => {
                 <ChatList
                   chats={data?.chats}
                   chatId={chatId}
-                  newMessageAlert={[{ chatId, count: 4 }]}
+                  newMessageAlert={newMessagesAlert}
                   onlineUsers={["1", "2"]}
                   handleDeleteChat={handleDeleteChat}
                   onChatSelect={handleChatSelect}
@@ -243,7 +263,7 @@ const AppLayout = (WrappedComponent) => {
               </div>
             ) : (
               <div className="w-full relative h-full bg-slate-200 flex overflow-x-hidden overflow-y-auto">
-                <WrappedComponent {...props} socket={socket}/>
+                <WrappedComponent {...props} socket={socket} />
               </div>
             )
           ) : (
@@ -252,10 +272,10 @@ const AppLayout = (WrappedComponent) => {
                 <ChatList
                   chats={data?.chats}
                   chatId={chatId}
-                  newMessageAlert={[{ chatId, count: 4 }]}
                   onlineUsers={["1", "2"]}
                   handleDeleteChat={handleDeleteChat}
                   onChatSelect={handleChatSelect}
+                  newMessageAlert={newMessagesAlert}
                 />
                 {/* {showModal && (
                   <DeleteChatModal
@@ -266,7 +286,7 @@ const AppLayout = (WrappedComponent) => {
               </div>
 
               <div className="w-full bg-slate-200">
-                <WrappedComponent {...props} socket={socket}/>
+                <WrappedComponent {...props} socket={socket} />
               </div>
 
               <div className="w-full max-lg:hidden border-l-2 border-slate-500 bg-[#3d3d5c] text-[#dfd3ad] p-2">

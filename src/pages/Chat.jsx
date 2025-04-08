@@ -16,6 +16,7 @@ import {
 import { useErrors, useInfiniteScroll, useSocketEvents } from "../hooks/hook";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsFileMenu } from "../redux/reducers/misc";
+import { removeNewMessagesAlert } from "../redux/reducers/chat";
 
 const Chat = ({ socket }) => {
   const chatId = useLocation().pathname.split("/").filter(Boolean).pop();
@@ -89,9 +90,21 @@ const Chat = ({ socket }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, [window.innerHeight, chatId, messages, data]);
 
+  useEffect(()=>{
+
+    dispatch(removeNewMessagesAlert(chatId));
+    return ()=> {
+      setMessage('');
+      setMessages([]);
+      setData([]);
+      setPage(1);
+    };
+  }, [chatId]);
+
   const newMessageHandler = useCallback((data) => {
+    if(data?.chatId !== chatId) return;
     setMessages((prev) => [...prev, data.message]);
-  }, []);
+  }, [chatId]);
 
   const eventArr = { [NEW_MESSAGE]: newMessageHandler };
 

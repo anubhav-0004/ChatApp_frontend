@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import { MdGroups3 } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const ChatItem = ({
@@ -12,6 +13,7 @@ const ChatItem = ({
   index = 0,
   handleDeleteChat,
   onClick,
+  newMessageAlertCount,
 }) => {
   const sameSender = chatId === String(_id);
   return (
@@ -38,11 +40,11 @@ const ChatItem = ({
           />
         </div>
         {groupChat && (
-          <div className="absolute top-8 right-6 w-4 h-4 bg-yellow-100 rounded-full animate-pulse"></div>
+          <MdGroups3 className="absolute top-8 right-6 w-5 h-5 text-blue-500 bg-[#76bfec] rounded-full animate-pulse"></MdGroups3>
         )}
         <div>
           <h3 className="font-bold text-lg">{name}</h3>
-          {newMessage && <p>{newMessage.count} New Message</p>}
+          {newMessageAlertCount !== 0 && <p className="text-xs">{newMessageAlertCount} New Message</p>}
         </div>
         {isOnline && (
           <div className="absolute right-6 w-3 h-3 bg-green-500 rounded-full"></div>

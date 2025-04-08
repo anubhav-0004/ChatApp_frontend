@@ -1,6 +1,6 @@
 import { Backdrop } from "@mui/material";
 import axios from "axios";
-import React, { memo, Suspense, useEffect, useState } from "react";
+import React, { memo, Suspense, useEffect, useRef, useState } from "react";
 import { AiOutlineHome } from "react-icons/ai";
 import { IoMdArrowRoundBack, IoMdAttach } from "react-icons/io";
 import { IoReorderThree } from "react-icons/io5";
@@ -11,11 +11,15 @@ import EditGroup from "../components/dialogs/EditGroup";
 import AvatarCard from "../components/shared/AvatarCard";
 import MessageComponent from "../components/shared/MessageComponent";
 import { server } from "../constants/config";
+import { sampleChats, sampleMesssages } from "../constants/sampleData";
 import {
-  sampleChats,
-  sampleMesssages
-} from "../constants/sampleData";
-import { useLazyAllUsersQuery } from "../redux/api/reduxAPI";
+  useGetMessagesQuery,
+  useLazyAllUsersQuery,
+} from "../redux/api/reduxAPI";
+import { useSelector } from "react-redux";
+import { setIsFileMenu } from "../redux/reducers/misc";
+import FileMenu from "../components/dialogs/FileMenu";
+import { useInfiniteScroll } from "../hooks/hook";
 
 const Groups = () => {
   const chatId = useSearchParams()[0].get("group");
@@ -27,6 +31,22 @@ const Groups = () => {
   const [myGrp, setMyGrp] = useState([]);
   const [allUsers] = useLazyAllUsersQuery();
   const [users, setUsers] = useState([]);
+  const [message, setMessage] = useState("");
+  const [page, setPage] = useState(1);
+  const [messages, setMessages] = useState([]);
+  const containerRef = useRef(null);
+
+  const oldMessagesChunk = useGetMessagesQuery({ chatId, page });
+
+  const { data, setData } = useInfiniteScroll(
+    containerRef,
+    oldMessagesChunk?.data?.totalPages,
+    page,
+    setPage,
+    oldMessagesChunk?.data?.message
+  );
+
+  const allMessages = [...data, ...messages];
 
   const getGrp = async () => {
     const data = await axios.get(`${server}/api/v1/chats/my/groups`, {
@@ -36,12 +56,16 @@ const Groups = () => {
     return data;
   };
 
-  const getAllUsers = async ()=>{
+  const getAllUsers = async () => {
     await allUsers()
-        .then(({ data }) => setUsers(data?.filteredData))
-        .catch((e) => console.log(e));
-  }
+      .then(({ data }) => setUsers(data?.filteredData))
+      .catch((e) => console.log(e));
+  };
 
+  const { isFileMenu } = useSelector((state) => state.misc);
+  const handleFileOpen = (e) => {
+    dispatch(setIsFileMenu(!isFileMenu));
+  };
 
   useEffect(() => {
     const handleResize = () => setViewportHeight(window.innerHeight);
@@ -68,7 +92,10 @@ const Groups = () => {
       <div className="overflow-y-hidden bg-gradient-to-br from-[#7772aa] to-[#5d5ba3] w-full h-full">
         {chatId ? (
           <>
-            <div className="flex h-[7.5%] md:h-[8.5%] items-center px-4 justify-between py-2 bg-[#2e1f7bcd] shadow-lg">
+            <div
+              className="flex h-[7.5%] md:h-[8.5%] items-center px-4 justify-between py-2 bg-[#2e1f7bcd] shadow-lg"
+              ref={containerRef}
+            >
               <IoMdArrowRoundBack
                 className="bg-[#333] rounded-[50%] text-white max-md:p-[0.23rem] max-md:w-12 p-2 w-10 h-10 cursor-pointer transition-transform hover:scale-110"
                 onClick={navigateBack}
@@ -78,9 +105,7 @@ const Groups = () => {
                 onClick={editHandler}
               >
                 <img
-                  src={
-                    myGrp.find((chat) => chat._id === chatId)?.avatar[0]
-                  }
+                  src={myGrp.find((chat) => chat._id === chatId)?.avatar[0]}
                   alt="DP"
                   className="border border-[#8267a3] rounded-full w-8 h-8 object-cover"
                 />
@@ -94,24 +119,18 @@ const Groups = () => {
                 onClick={handleMobile}
               />
             </div>
-            <div className="px-2 py-1 w-full h-[85%] md:h-[84%] overflow-y-auto flex flex-col">
-              {sampleMesssages.map((message, index) => (
+            <div className="px-2 py-1 w-full h-[85%] md:h-[84%] overflow-y-auto flex flex-col relative">
+              {allMessages.map((message, index) => (
                 <MessageComponent key={index} message={message} user={user} />
               ))}
             </div>
-            <form className="flex relative items-center justify-between border-t border-[#6d6d75] gap-x-3 px-2 py-1 bg-[#40409a] h-[7.5%]">
-              <input
-                type="file"
-                name="fileInput"
-                id="fileInput"
-                className="hidden"
-              />
-              <label
-                htmlFor="fileInput"
+            <form className="flex relative items-center justify-between border-t border-[#6d6d75] gap-x-3 px-2 py-1 bg-[#2e1f7bcd] h-[7.5%]">
+              <div
                 className="text-[#e9e0f9] text-2xl cursor-pointer bg-[#5c5c8a] rotate-[45deg] border border-slate-400 p-2 w-10 h-10 rounded-full"
+                onClick={handleFileOpen}
               >
                 <IoMdAttach />
-              </label>
+              </div>
               <input
                 type="text"
                 placeholder="Type a message"
@@ -122,6 +141,7 @@ const Groups = () => {
                 className="text-2xl absolute bottom-[0.45rem] right-4 text-[#e9e0f9] cursor-pointer bg-[#5c5c8a] border border-slate-400 p-2 w-10 h-10 rounded-full -rotate-[35deg]"
               />
             </form>
+            <FileMenu chatId={chatId} />
             {isEditGroup && (
               <Suspense fallback={<Backdrop open />}>
                 <EditGroup

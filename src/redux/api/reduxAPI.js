@@ -48,6 +48,7 @@ const api = createApi({
         url: `chats/message/${chatId}?page=${page}`,
         credentials: "include"
       }),
+      keepUnusedDataFor: 0,
       providesTags: ["Message"],
     }),
 
