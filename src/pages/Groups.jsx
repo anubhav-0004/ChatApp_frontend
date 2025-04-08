@@ -16,7 +16,7 @@ import {
   useGetMessagesQuery,
   useLazyAllUsersQuery,
 } from "../redux/api/reduxAPI";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setIsFileMenu } from "../redux/reducers/misc";
 import FileMenu from "../components/dialogs/FileMenu";
 import { useInfiniteScroll } from "../hooks/hook";
@@ -35,6 +35,7 @@ const Groups = () => {
   const [page, setPage] = useState(1);
   const [messages, setMessages] = useState([]);
   const containerRef = useRef(null);
+  const dispatch = useDispatch();
 
   const oldMessagesChunk = useGetMessagesQuery({ chatId, page });
 
@@ -77,7 +78,7 @@ const Groups = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const user = { _id: "20072003", name: "Anubhav Mishra" };
+  const { user } = useSelector((state) => state.auth);
   const [isEditGroup, setIsEditGroup] = useState(false);
   const editHandler = () => setIsEditGroup((prev) => !prev);
 
