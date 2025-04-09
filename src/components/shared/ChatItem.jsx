@@ -44,7 +44,7 @@ const ChatItem = ({
         )}
         <div>
           <h3 className="font-bold text-lg">{name}</h3>
-          {newMessageAlertCount !== 0 && <p className="text-xs text-[#d08484] font-bold font-thin">{newMessageAlertCount} New Message</p>}
+          {newMessageAlertCount !== 0 && <p className="text-xs text-[#d08484] font-thin">{newMessageAlertCount} New Message</p>}
         </div>
         {isOnline && (
           <div className="absolute right-6 w-3 h-3 bg-green-500 rounded-full"></div>
