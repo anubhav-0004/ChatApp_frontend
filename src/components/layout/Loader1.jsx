@@ -23,12 +23,12 @@ const Loader1 = () => {
       </style>
 
       <div className="relative flex justify-center items-center smooth-zoom">
-        <div className="w-24 h-24 border-[8px] border-transparent border-t-gray-300 border-b-gray-500 rounded-full animate-spin"></div>
+        <div className="w-28 h-28 border-[8px] border-transparent border-t-gray-300 border-b-gray-500 rounded-full animate-spin"></div>
         <div
-          className="absolute w-16 h-16 border-[8px] border-transparent border-t-gray-500 border-b-gray-300 rounded-full"
+          className="absolute w-20 h-20 border-[8px] border-transparent border-t-gray-500 border-b-gray-300 rounded-full"
           style={{ animation: "spin-reverse 1.5s linear infinite" }}
         ></div>
-        <div className="absolute w-8 h-8 bg-white rounded-full animate-pulse"></div>
+        <div className="absolute w-10 h-10 bg-gradient-to-b from-orange-500 via-white to-green-600 rounded-full animate-pulse"></div>
       </div>
     </div>
   );

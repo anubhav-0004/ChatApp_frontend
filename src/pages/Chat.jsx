@@ -13,6 +13,7 @@ import { useErrors, useInfiniteScroll, useSocketEvents } from "../hooks/hook";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsFileMenu } from "../redux/reducers/misc";
 import { removeNewMessagesAlert } from "../redux/reducers/chat";
+import bgImage from '../chat-background.jpg'
 import {
   useChatDetailsQuery,
   useGetMessagesQuery,
@@ -111,6 +112,14 @@ const Chat = ({ socket }) => {
   useSocketEvents(socket, eventArr);
   useErrors(errors);
 
+
+  const userFirstName = user.name.split(" ")[0];
+  const cleanChatName = chatDetails?.name
+  ?.split("-")
+  ?.filter((name) => name.trim() !== userFirstName)
+  ?.join(" - ");
+
+
   return (
     <div
       className="w-full flex flex-col overflow-hidden z-40 relative"
@@ -120,19 +129,20 @@ const Chat = ({ socket }) => {
         }px)`,
       }}
     >
+    
       <div
         className="min-h-[3rem] px-4 py-3 text-[#aea3f5] text-2xl font-semibold 
              bg-[#4b4b7a] text-center hover:bg-[#5a5a8e] 
              transition-colors duration-200 max-[450px]:hidden"
       >
-        {chatDetails?.name}
+        {chatDetails.groupChat ? chatDetails?.name : cleanChatName}
       </div>
 
       <div
         ref={containerRef}
         className="text-[#dfd3ad] w-full max-md:h-[91%] h-[90%] text-xl opacity-95 p-2 overflow-y-auto flex flex-col"
         style={{
-          backgroundImage: `url("https://static.vecteezy.com/system/resources/previews/030/663/503/non_2x/brown-background-high-quality-free-photo.jpg")`,
+          backgroundImage: `url(${bgImage})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "bottom",
@@ -145,7 +155,7 @@ const Chat = ({ socket }) => {
         <div ref={messagesEndRef} />
       </div>
       <form
-        className="flex items-center relative rounded-t-sm justify-between border border-[#86869d] gap-x-3 px-2 pt-1 bg-[#2d2d56] max-md:h-[9%] h-[10%]"
+        className="flex items-center relative rounded-t-sm m-0 justify-between border border-[#86869d] gap-x-3 px-2 pt-1 bg-[#2d2d56] max-md:h-[9%] h-[10%]"
         onSubmit={submitHandler}
       >
         <div
@@ -156,13 +166,13 @@ const Chat = ({ socket }) => {
         </div>
         <input
           type="text"
-          placeholder="Type a message"
+          placeholder="Type a message..."
           className="flex flex-grow caret-white border-none placeholder-gray-200 outline-none px-16 text-white bg-transparent rounded-md h-[80%]"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
         <button type="submit">
-          <LuSendHorizontal className="text-2xl text-[#e9e0f9] cursor-pointer absolute bottom-[0.8rem] max-md:bottom-[0.40rem] right-4 max-md:right-2 bg-[#5c5c8a] border border-slate-400 p-[.4rem] w-10 h-10 rounded-[50%] -rotate-[35deg]" />
+          <LuSendHorizontal className="text-2xl text-[#e9e0f9] cursor-pointer absolute bottom-[0.7rem] max-md:bottom-[0.40rem] right-4 max-md:right-2 bg-[#5c5c8a] border border-slate-400 p-[.4rem] w-10 h-10 rounded-[50%] -rotate-[35deg]" />
         </button>
       </form>
       <FileMenu chatId={chatId}/>
@@ -170,4 +180,4 @@ const Chat = ({ socket }) => {
   );
 };
 
-export default AppLayout(Chat);
+export default AppLayout(Chat); 

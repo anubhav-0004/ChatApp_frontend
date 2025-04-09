@@ -13,6 +13,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const [avatar, setAvatar] = useState(null);
+  const [isLogging, setIsLogging] = useState(false);
 
   const { isLoading, data, isError, error, refetch } = useMyChatsQuery("");
 
@@ -34,6 +35,7 @@ const Login = () => {
     formData.append("email", mail.value);
 
     try {
+      setIsLogging(true);
       const { res } = await axios.post(`${server}/api/v1/user/new`, formData, {
         withCredentials: true,
         headers: {
@@ -46,6 +48,7 @@ const Login = () => {
     } catch (error) {
       toast.error(error?.response?.data?.message || "Something went wrong");
     }
+    setIsLogging(false);
   };
 
   const handleLogin = async (e) => {
@@ -58,6 +61,7 @@ const Login = () => {
       },
     };
     try {
+      setIsLogging(true);
       const { data } = await axios.post(
         `${server}/api/v1/user/login`,
         {
@@ -73,6 +77,7 @@ const Login = () => {
       console.log(error);
       toast.error(error?.response?.data?.message || "Something went wrong");
     }
+    setIsLogging(false);
   };
 
   const togglePasswordVisibility = () => {
@@ -88,10 +93,11 @@ const Login = () => {
       }}
     >
       {isLogin ? (
-        <div className="w-fit bg-slate-100 border-2 flex flex-col gap-y-5 border-slate-300 rounded-lg px-10 py-10">
+        <div className="w-fit bg-slate-100 border-2 flex flex-col gap-y-5 items-center border-slate-300 rounded-lg px-10 py-10">
           <h5 className="font-bold text-2xl text-slate-700 w-fit mx-auto">
             Login
           </h5>
+          <span className="text-xs -mt-5 text-red-400">(if already registered)</span>
           <form
             action="submit"
             className="flex flex-col gap-y-3"
@@ -125,14 +131,15 @@ const Login = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-500 mx-auto mt-4 hover:bg-blue-400 hover:delay-150 py-1 rounded-md text-white"
+              disabled={isLogging}
+              className={`w-full bg-blue-500 mx-auto mt-4 hover:bg-blue-400 hover:delay-150 py-1 rounded-md text-white ${isLogging ? "cursor-not-allowed opacity-80" : "cursor-pointer"}`}
             >
               Login
             </button>
             <p className="text-xs mx-auto">OR</p>
             <button
               onClick={() => setIsLogin(false)}
-              className="w-full py-1 rounded-md mx-auto hover:delay-100 hover:bg-slate-200"
+              className="w-full py-1 rounded-md mx-auto hover:delay-100 hover:bg-slate-200 border border-blue-500"
             >
               Sign Up
             </button>
@@ -226,14 +233,15 @@ const Login = () => {
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-500 mx-auto mt-4 hover:bg-blue-400 hover:delay-150 py-1 rounded-md text-white"
+              disabled={isLogging}
+              className={`w-full bg-blue-500 mx-auto mt-4 hover:bg-blue-400 hover:delay-150 py-1 rounded-md text-white ${isLogging ? "cursor-not-allowed opacity-80" : "cursor-pointer"}`}
             >
               Sign Up
             </button>
             <p className="text-xs mx-auto">OR</p>
             <button
               onClick={() => setIsLogin(true)}
-              className="w-full py-1 rounded-md mx-auto max-md:mb-1 hover:delay-100 hover:bg-slate-200"
+              className="w-full py-1 rounded-md mx-auto max-md:mb-1 hover:delay-100 hover:bg-slate-200 border border-blue-400"
             >
               Login Now
             </button>

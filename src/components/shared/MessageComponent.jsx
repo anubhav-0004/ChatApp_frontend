@@ -9,7 +9,7 @@ const MessageComponent = ({ message, user }) => {
   const timeAgo = moment(createdAt).fromNow();
   return (
     <div
-      className="max-md:bg-[#514f4f] max-w-[90%] bg-[#7b7a7a] border border-zinc-400 rounded-md px-1 py-[0.1rem] my-1 w-fit"
+      className="max-md:bg-[#4f4949] max-w-[90%] bg-[#4d4949] border border-zinc-400 rounded-md px-1 py-[0.1rem] my-[0.1rem] w-fit"
       style={{ alignSelf: sameSender ? "flex-end" : "flex-start" }}
     >
       {sameSender ? (<p className="text-[#fdb6b6] text-sm font-semibold">You</p>) : (
