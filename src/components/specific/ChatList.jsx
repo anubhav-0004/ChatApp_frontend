@@ -22,7 +22,8 @@ const ChatList = ({
   };
   return (
     <div>
-      {chats?.map((data, index) => {
+      {chats.length > 0 ? 
+      (chats?.map((data, index) => {
         const { _id, name, avatar, groupChat, members, newMessage, isOnline } =
           data;
         const newMessageAlertCount =
@@ -45,7 +46,10 @@ const ChatList = ({
             />
           </div>
         );
-      })}
+      })) : <div className="px-4 py-2 w-[98%] mt-5 md:mt-2 mx-auto bg-gradient-to-r from-[#58588e] to-[#4949c3] text-[#d3d1d1] border-b border-indigo-300 rounded-lg shadow-lg text-md md:text-lg text-center hover:brightness-105 transition-all duration-200">
+  Search & add friends to start a chat
+</div>
+}
     </div>
   );
 };

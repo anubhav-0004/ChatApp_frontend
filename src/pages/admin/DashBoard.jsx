@@ -19,7 +19,7 @@ const DashBoard = () => {
       const data = await axios.get(`${server}/api/v1/admin/stats`, {
         withCredentials: true,
       });
-      setAllData(data.data.stats);
+      setAllData(data?.data?.stats);
     } catch (error) {
       console.log(error);
       if (error?.response?.data?.message == "Please Login as admin") {
@@ -69,7 +69,7 @@ const DashBoard = () => {
             <h3 className="text-xl text-slate-200 mb-2 text-center underline">
               Last 7 Days Messages
             </h3>
-            <LineChart value={allData?.last7DaysMessage} />
+            <LineChart value={allData?.messages} />
           </div>
           <div className="my-5 max-md:my-2 relative bg-gradient-to-r from-[#34346e] via-[#4646a0] to-[#4b4bb9] w-full h-auto rounded-md p-0 text-slate-100 text-center">
             <DoughnutChart

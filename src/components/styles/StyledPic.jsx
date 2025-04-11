@@ -16,7 +16,7 @@ const StyledPic = ({setAvatar}) => {
         <img className='rounded-[50%] aspect-square max-w-28 max-md:max-w-20 object-cover border border-black -mr-3' src={profileImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKaiKiPcLJj7ufrj6M2KaPwyCT4lDSFA5oog&s"} alt="" />
         <input type="file" name="avatar" id="avatar" accept='image/*' className='hidden' onChange={handleImageChange}/>
         <label htmlFor="avatar" className='bg-transparent mx-auto cursor-pointer'>
-        <span className='w-3 h-3 text-red-400 absolute bottom-24 text-2xl font-bold'>*</span>
+        <span className='w-3 h-3 text-red-400 absolute max-md:bottom-[4.5rem] bottom-24 text-2xl font-bold'>*</span>
         <IoCamera className='min-w-8 min-h-8 max-md:min-w-6 max-md:min-h-6 mx-auto text-zinc-700 bg-gray-300 p-1 border rounded-[50%]'/>
         </label>
     </div>

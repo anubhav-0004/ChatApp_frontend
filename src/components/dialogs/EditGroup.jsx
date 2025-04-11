@@ -7,19 +7,26 @@ import toast from "react-hot-toast";
 import { useLocation, useParams } from "react-router-dom";
 
 const EditGroup = ({ onClose, group, chatId, allUsers, avatarUrl }) => {
+  if (!chatId) {
+    const segments = location.pathname.split("/");
+    chatId = segments[segments.length - 1];
+  }
   const handleClose = () => onClose && onClose();
   const groupName = group?.find((chat) => chat._id === chatId);
-  const admin = (groupName?.creator);
+  const admin = groupName?.creator;
   const [users, setUsers] = useState([]);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
   const [addMember, setAddMember] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const location = useLocation();
 
-  const grpMembers = async (id) => {
-    const data = await axios.get(`${server}/api/v1/chats/${id}?populate=true`, {
-      withCredentials: true,
-    });
+  const grpMembers = async (chatId) => {
+    const data = await axios.get(
+      `${server}/api/v1/chats/${chatId}?populate=true`,
+      {
+        withCredentials: true,
+      }
+    );
     setUsers(data.data.chat.members);
   };
 
@@ -28,13 +35,17 @@ const EditGroup = ({ onClose, group, chatId, allUsers, avatarUrl }) => {
     window.addEventListener("resize", handleResize);
     grpMembers(chatId);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [chatId]);
 
   const toggleAddMember = () => setAddMember((prev) => !prev);
 
   const addMemberToGroup = async (user) => {
     const queryParams = new URLSearchParams(location.search);
-    const chatId = queryParams.get("group");
+    let chatId = queryParams.get("group");
+    if(!chatId){
+      const segments = location.pathname.split("/");
+    chatId = segments[segments.length - 1];
+    }
     try {
       const data = await axios.put(
         `${server}/api/v1/chats/addmembers`,
@@ -42,7 +53,7 @@ const EditGroup = ({ onClose, group, chatId, allUsers, avatarUrl }) => {
           chatId: chatId,
           members: [user],
         },
-        {withCredentials: true}
+        { withCredentials: true }
       );
       toast.success(`${data?.data?.allUsersName} added to grp` || "User added");
     } catch (error) {
@@ -53,7 +64,11 @@ const EditGroup = ({ onClose, group, chatId, allUsers, avatarUrl }) => {
 
   const removeMemberFromGroup = async (user) => {
     const queryParams = new URLSearchParams(location.search);
-    const chatId = queryParams.get("group");
+    let chatId = queryParams.get("group");
+    if(!chatId){
+      const segments = location.pathname.split("/");
+    chatId = segments[segments.length - 1];
+    }
     try {
       const data = await axios.put(
         `${server}/api/v1/chats/removemembers`,
@@ -61,7 +76,7 @@ const EditGroup = ({ onClose, group, chatId, allUsers, avatarUrl }) => {
           chatId: chatId,
           userId: user,
         },
-        {withCredentials: true}
+        { withCredentials: true }
       );
       toast.success(data?.message || "User removed");
     } catch (error) {
@@ -109,7 +124,7 @@ const EditGroup = ({ onClose, group, chatId, allUsers, avatarUrl }) => {
   const notInGrpUsers = allUsers?.filter((user) =>
     users.every((currUser) => user._id !== currUser._id)
   );
-  
+
   return (
     <div
       className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50"
@@ -276,7 +291,6 @@ const EditGroup = ({ onClose, group, chatId, allUsers, avatarUrl }) => {
 };
 
 export default EditGroup;
-
 
 //setShowDeletePopup(false)
 //deleteGroup

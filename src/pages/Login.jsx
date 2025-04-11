@@ -21,7 +21,7 @@ const Login = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     if (!avatar) {
-        toast.error("Please upload an avatar.");
+        toast.error("Please upload an profile pic.");
         return;
     }
     // Sign-up logic here
@@ -211,14 +211,13 @@ const Login = () => {
               </div>
               <br />
               <label htmlFor="mobile">Phone</label>
-              <span className="text-red-500 font-bold">*</span>
+              {/* <span className="text-red-500 font-bold">*</span> */}
               <br />
               <input
                 type="tel"
                 name="mobile"
                 id="mobile"
                 className="px-2 py-1 border border-slate-300 rounded-md mb-1 w-full"
-                required
               />
               <br />
               <label htmlFor="mail">E-mail</label>

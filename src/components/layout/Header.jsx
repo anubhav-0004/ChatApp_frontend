@@ -92,37 +92,52 @@ const Header = () => {
         </span>
         <div className=" flex-grow"></div>
         <div className="flex lg:gap-x-5 lg:pr-2 gap-x-1 max-md:hidden">
-          <IoSearch
-            className="text-2xl text-orange-50 cursor-pointer shadow-md rounded-[40%]"
-            onClick={openSearch}
-          />
-          <IoIosAddCircle
-            className="text-2xl text-orange-50 cursor-pointer shadow-md rounded-[40%] p-[0px]"
-            onClick={openNewGroup}
-          />
-          <MdGroups2
-            className="text-2xl text-orange-50 cursor-pointer shadow-md rounded-[40%]"
-            onClick={navigateToGrp}
-          />
-          <div className="relative inline-block">
-            <button className="rounded-lg">
-              <FaBell
-                className="text-2xl text-orange-50 cursor-pointer shadow-md rounded-[40%] p-[3px]"
-                onClick={openNotification}
-              />
-            </button>
-            <span className={`absolute top-0 right-0 inline-flex items-center justify-center p-[0.2rem] text-xs font-semibold leading-none text-white bg-[#f45252c1] rounded-full border transform translate-x-1/2 -translate-y-1/2 ${notificationCount ? "block" : "hidden"}`}>
-              {notificationCount}
-            </span>
-          </div>
-
-          <Link to={"/admin"}>
-            <MdOutlineAdminPanelSettings className="text-2xl text-orange-200 hover:text-orange-300 cursor-pointer shadow-md rounded-[40%]" />
-          </Link>
-          <IoMdLogOut
-            className="text-2xl text-orange-50 cursor-pointer shadow-md rounded-[40%]"
-            onClick={logOutHandler}
-          />
+          <abbr title="Search">
+            <IoSearch
+              className="text-2xl text-orange-50 cursor-pointer shadow-md rounded-[40%]"
+              onClick={openSearch}
+            />
+          </abbr>
+          <abbr title="Create Group">
+            <IoIosAddCircle
+              className="text-2xl text-orange-50 cursor-pointer shadow-md rounded-[40%] p-[0px]"
+              onClick={openNewGroup}
+            />
+          </abbr>
+          <abbr title="All Groups">
+            <MdGroups2
+              className="text-2xl text-orange-50 cursor-pointer shadow-md rounded-[40%]"
+              onClick={navigateToGrp}
+            />
+          </abbr>
+          <abbr title="Notifications">
+            <div className="relative inline-block">
+              <button className="rounded-lg">
+                <FaBell
+                  className="text-2xl text-orange-50 cursor-pointer shadow-md rounded-[40%] p-[3px]"
+                  onClick={openNotification}
+                />
+              </button>
+              <span
+                className={`absolute top-0 right-0 inline-flex items-center justify-center p-[0.2rem] text-xs font-semibold leading-none text-white bg-[#f45252c1] rounded-full border transform translate-x-1/2 -translate-y-1/2 ${
+                  notificationCount ? "block" : "hidden"
+                }`}
+              >
+                {notificationCount}
+              </span>
+            </div>
+          </abbr>
+          <abbr title="Admin Pannel">
+            <Link to={"/admin"}>
+              <MdOutlineAdminPanelSettings className="text-2xl text-orange-200 hover:text-orange-300 cursor-pointer shadow-md rounded-[40%]" />
+            </Link>
+          </abbr>
+          <abbr title="LogOut">
+            <IoMdLogOut
+              className="text-2xl text-orange-50 cursor-pointer shadow-md rounded-[40%]"
+              onClick={logOutHandler}
+            />
+          </abbr>
         </div>
         <MdGroups2
           className="text-2xl text-orange-50 md:hidden cursor-pointer shadow-md mr-2 rounded-[40%]"

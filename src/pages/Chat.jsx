@@ -113,7 +113,7 @@ const Chat = ({ socket }) => {
   useErrors(errors);
 
 
-  const userFirstName = user.name.split(" ")[0];
+  const userFirstName = user.name?.split(" ")[0];
   const cleanChatName = chatDetails?.name
   ?.split("-")
   ?.filter((name) => name.trim() !== userFirstName)
